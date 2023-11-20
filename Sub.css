@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #e3ebf4;
+    color: #041F35;
+    font-family: 'Inter', sans-serif;
+    margin: auto;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+a {
+    color: #041F35;
+    text-decoration: none;
+    transition: fade 0.7s;
+}
+
+a:hover {
+    color: #063c63;
+}
+
+.navbar {
+    width: 100vw;
+    background: #e3ebf4;
+    height: 4.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    z-index: 9;
+    box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.052);
+}
+
+.navbar-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navbar-end {
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navlinks {
+    font-weight: 500;
+}
+
+.navlinks:first-child {
+    padding-right: 18px;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 23px;
+}
+.header {
+    position: relative;
+    left: 0;
+    top: 4.5rem;
+    padding: 60px;
+    text-align: left;
+    font-style: sans-serif;
+    background: url(Image/Submit.png);
+    color: white;
+    font-size:small;
+  }
+.footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #0C67AB;
+    color: white;
+    text-align:left;
+}
+.container {
+    position:relative;
+    display:block;
+}
