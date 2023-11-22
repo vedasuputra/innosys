@@ -62,17 +62,17 @@
     <h2 style="font-family: sans-serif;">General</h2>
     <form action="Submission.php" method="post" enctype="multipart/form-data">
                 <label for="name">Name</label><br>
-                <input type="text" id="name" placeholder="Example: Rudaya" required>
+                <input type="text" id="name" placeholder="Example: Rudaya" name="name" required>
              
         <div class="flex-container">
             <div>
                 <label for="date">Date of Creation</label><br>
-                <input type="date" id="date" required>
+                <input type="date" id="date" name="date" required>
             </div>
 
             <div>
                 <label for="category">Category</label><br>
-                <select id="category"  required>
+                <select id="category" name="category" required>
                     <option value="thesis">Thesis</option>
                     <option value="interships">Interships</option>
                     <option value="others">Others</option>
@@ -83,7 +83,7 @@
         <div class="flex-container">
             <div>
                 <label for="type">Type</label><br>
-                <select id="type" required>
+                <select id="type" name="type" required>
                     <option value="website">Website</option>
                     <option value="desktopapp">Desktop App</option>
                     <option value="mobileapp">Mobile App</option>
@@ -93,7 +93,7 @@
 
             <div>
                 <label for="concentration">Concentration</label><br>
-                <select id="concentration" required>
+                <select id="concentration" name="concentration" required>
                     <option value="cybersecurity">Cybersecurity</option>
                     <option value="managementis">Management Information System</option>
                     <option value="engineeringnbusinessin">Engineering and Business Intelligencce</option>
@@ -105,20 +105,20 @@
         <div class="flex-container">
             <div>
                 <label for="inolink">Innovation Link</label><br>
-                <input type="url" id="inolink" placeholder="https://" required>
+                <input type="url" id="inolink" name="inolink" placeholder="https://" required>
             </div>
 
             <div>
                 <label for="youtube">YouTube Link (Optional)</label><br>
-                <input type="url" id="youtube" placeholder="https://">
+                <input type="url" id="youtube" name="youtube" placeholder="https://">
             </div>
         </div>
 
         <label for="images">Images</label><br>
-        <input type="file" id="images" placeholder="Upload your Image" required><br>
+        <input type="file" id="images" name="images" placeholder="Upload your Image" required><br>
 
         <label for="description">Description</label><br>
-        <textarea id="description" rows="15" cols="50"></textarea><br>
+        <textarea id="description" name="description" rows="15" cols="50"></textarea><br>
     </form>
 
     <h2 style="font-family: sans-serif;">Creators</h2>
