@@ -8,6 +8,7 @@ body {
   background: #e3ebf4;
   color: #041f35;
   font-family: "Inter", sans-serif;
+  font-weight: 500;
   margin: auto;
   font-size: 15px;
   line-height: 1.4;
@@ -255,28 +256,136 @@ a:hover {
 .category-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 15px;
+  gap: 20px;
 }
 
 .category-container > div {
   background: #fff;
-  padding-top: 18px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   border-radius: 6px;
-  height: 300px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  gap: 43%;
+}
+
+.category-container > div:hover, .type-container > div:hover {
+  cursor: pointer;
 }
 
 .category-details > h2 {
   font-weight: 500;
   font-size: 22px;
-}
-
-.category-details {
-  position: absolute;
-  top: 0px;
+  margin-bottom: 3px;
 }
 
 .category-icon {
-  font-size: 25px;
+  font-size: 28px;
+}
+
+.category-desc {
+  font-family: "Inter", sans-serif;
+  font-weight: normal;
+  font-size: 13px;
+  letter-spacing: 0px;
+  line-height: 1.4;
+  color: #818f9a;
+}
+
+.type-container {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  gap: 20px;
+}
+
+.type-container > div {
+  background: #fff;
+  padding-top: 15px;
+  padding-left: 16px;
+  padding-right: 17px;
+  padding-bottom: 16px;
+  border-radius: 6px;
+  height: 50px;
+}
+
+.type-name {
+  text-align: right;
+  float: right;
+  line-height: 1.4;
+  padding-left: 60px;
+  overflow: hidden;
+  max-width: 26ch;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.type-icon {
+  font-size: 20px;
+  float: left;
+}
+
+.statistics-selector {
+  position: relative;
+  font-family: Inter;
+  border: 1px solid #041f35;
+  border-radius: 6px;
+}
+
+.statistics-selector select {
+  display: none; 
+}
+
+.select-selected {
+  background-color: #fff;
+  border-radius: 6px;
+  z-index: 99;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  font-family: FontAwesome;
+  content: "\f078";
+  right: 13px;
+  font-size: 13px;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  content: "\f077";
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #041f35;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: #fff;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #041f35;
+  border-radius: 6px;
+  margin-top: 7px;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: #eee;
+  border-radius: 6px;
 }
