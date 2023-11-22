@@ -1,4 +1,5 @@
 <?php
+if(isset($_POST["submit"])){
     $name = $_POST['name'];
     $date = $_POST['date'];
     $category = $_POST['category'];
@@ -11,13 +12,15 @@
     $group = $_POST['group'];
     $id = $_POST['id'];
     $email = $_POST['email'];
+    }
 
     //Database Connection
-    $conn = new mysqli('localhost','root','','test');
-    if($conn->connect_error){
-        die('Connection Failed : '.$conn->connect_error);
-    }else{
-       $stmt = $conn->prepare("insert into innovationsystemdb(name, date, category, type, concentration, inolink, youtube, images, description, group, id, email)
-       values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    }
+    $conn = new mysqli('localhost','root','','innovationsystemdb');
+    
+    $query = "INSERT INTO innovationsystemdb.sql VALUES('', '$name', '$date', '$category', '$type', '$concentration', '$inolink', '$youtube', '$images', '$description', '$group', '$id', '$email')";
+    mysqli_query($conn, $query);
+    echo
+    "
+    <script> alert('Your innovation has been submitted succesfully'); </script>
+    ";
 ?>

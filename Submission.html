@@ -62,12 +62,12 @@
     <h2>General</h2>
     <form action="Submission.php" method="post" enctype="multipart/form-data">
                 <label for="name">Name</label><br>
-                <input type="text" id="name" placeholder="Example: Rudaya" name="name" required>
+                <input type="text" id="name" placeholder="Example: Rudaya" name="name" required value="">
              
         <div class="flex-container">
             <div>
                 <label for="date">Date of Creation</label><br>
-                <input type="date" id="date" name="date" required>
+                <input type="date" id="date" name="date" required value="">
             </div>
 
             <div>
@@ -105,17 +105,17 @@
         <div class="flex-container">
             <div>
                 <label for="inolink">Innovation Link</label><br>
-                <input type="url" id="inolink" name="inolink" placeholder="https://" required>
+                <input type="url" id="inolink" name="inolink" placeholder="https://" required value="">
             </div>
 
             <div>
                 <label for="youtube">YouTube Link (Optional)</label><br>
-                <input type="url" id="youtube" name="youtube" placeholder="https://">
+                <input type="url" id="youtube" name="youtube" placeholder="https://" value="">
             </div>
         </div>
 
         <label for="images">Images</label><br>
-        <input type="file" id="images" name="images" placeholder="Upload your Image" required><br>
+        <input type="file" id="images" name="images" placeholder="Upload your Image" required value=""><br>
 
         <label for="description">Description</label><br>
         <textarea id="description" name="description" rows="15" cols="50"></textarea><br>
@@ -134,17 +134,17 @@
 
             <div>
                 <label for="name">Name</label><br>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required value=""> 
             </div>
 
             <div>
                 <label for="id">ID (NIDN/NIM)</label><br>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required value=""> 
             </div>
 
             <div>
                 <label for="email">Email</label><br>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required value=""> 
             </div>
         </div>
 
@@ -157,36 +157,15 @@
             </div>
 
             <div>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required value=""> 
             </div>
 
             <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required value=""> 
             </div>
 
             <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
-            </div>
-        </div>
-
-        <div class="flex-container">
-            <div>
-                <select id="group" name="group" required>
-                    <option value="student">Student</option>
-                    <option value="lecturer">Lecturer</option>
-                </select>
-            </div>
-
-            <div>
-                <input type="text" id="name" name="group" placeholder="Example: Ammulia Rizqie" required> 
-            </div>
-
-            <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
-            </div>
-
-            <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required value=""> 
             </div>
         </div>
 
@@ -199,15 +178,36 @@
             </div>
 
             <div>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="group" placeholder="Example: Ammulia Rizqie" required value=""> 
             </div>
 
             <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required value=""> 
             </div>
 
             <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required value=""> 
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div>
+                <select id="group" name="group" required>
+                    <option value="student">Student</option>
+                    <option value="lecturer">Lecturer</option>
+                </select>
+            </div>
+
+            <div>
+                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required value=""> 
+            </div>
+
+            <div>
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required value=""> 
+            </div>
+
+            <div>
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required value=""> 
             </div>
         </div>
 
