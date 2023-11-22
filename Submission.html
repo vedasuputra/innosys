@@ -59,7 +59,12 @@
     </div>
 
     <div class="container">
+    
+    <div>
     <h2>General</h2>
+    <h3 id="h3">Basic Information</h3>
+    </div>
+
     <form action="Submission.php" method="post" enctype="multipart/form-data">
                 <label for="name">Name</label><br>
                 <input type="text" id="name" placeholder="Example: Rudaya" name="name" required value="">
@@ -73,9 +78,9 @@
             <div>
                 <label for="category">Category</label><br>
                 <select id="category" name="category" required>
-                    <option value="thesis">Thesis</option>
-                    <option value="interships">Interships</option>
-                    <option value="others">Others</option>
+                    <option value="Categ001">Thesis</option>
+                    <option value="Categ002">Interships</option>
+                    <option value="Categ003">Others</option>
                 </select><br>
             </div>
         </div>
@@ -84,20 +89,20 @@
             <div>
                 <label for="type">Type</label><br>
                 <select id="type" name="type" required>
-                    <option value="website">Website</option>
-                    <option value="desktopapp">Desktop App</option>
-                    <option value="mobileapp">Mobile App</option>
-                    <option value="others">Others</option>
+                    <option value="Ty001">Website</option>
+                    <option value="Ty002">Desktop App</option>
+                    <option value="Ty003">Mobile App</option>
+                    <option value="Ty004">Others</option>
                 </select>
             </div>
 
             <div>
                 <label for="concentration">Concentration</label><br>
                 <select id="concentration" name="concentration" required>
-                    <option value="cybersecurity">Cybersecurity</option>
-                    <option value="managementis">Management Information System</option>
-                    <option value="engineeringnbusinessin">Engineering and Business Intelligencce</option>
-                    <option value="others">Others</option>
+                    <option value="Conc001">Cybersecurity</option>
+                    <option value="Conc002">Management Information System</option>
+                    <option value="Conc003">Engineering and Business Intelligencce</option>
+                    <option value="Conc004">Others</option>
                 </select>
             </div>
         </div>
@@ -114,15 +119,16 @@
             </div>
         </div>
 
+        <!-- cari  -->
         <label for="images">Images</label><br>
         <input type="file" id="images" name="images" placeholder="Upload your Image" required value=""><br>
 
         <label for="description">Description</label><br>
         <textarea id="description" name="description" rows="15" cols="50"></textarea><br>
-    </form>
+
 
     <h2>Creators</h2>
-    <form action="Submission.php" method="post" enctype="multipart/form-data">
+    
         <div class="flex-container">
             <div>
                 <label for="group">Type</label><br>
@@ -213,6 +219,7 @@
 
         <input type="submit">
     </form><br>
+
     </div>
 
 

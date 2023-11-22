@@ -78,6 +78,9 @@ a:hover {
     color: white;
     font-size:small;
   }
+#h3{
+    font-family: Inter;
+}
 .footer {
     position: relative;
     left: 0;
