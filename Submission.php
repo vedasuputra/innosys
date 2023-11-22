@@ -11,4 +11,13 @@
     $group = $_POST['group'];
     $id = $_POST['id'];
     $email = $_POST['email'];
+
+    //Database Connection
+    $conn = new mysqli('localhost','root','','test');
+    if($conn->connect_error){
+        die('Connection Failed : '.$conn->connect_error);
+    }else{
+       $stmt = $conn->prepare("insert into innovationsystemdb(name, date, category, type, concentration, inolink, youtube, images, description, group, id, email)
+       values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    }
 ?>
