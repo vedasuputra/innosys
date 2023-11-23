@@ -1,0 +1,14 @@
+@font-face {
+    font-family: Inter;
+    src: url(font/Inter-VariableFont_slnt\,wght.ttf);
+
+}
+body{
+    font-family: Inter;
+    margin: auto;
+    background-image: url(photos/Loginbg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
