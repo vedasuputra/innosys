@@ -8,7 +8,24 @@
 </head>
 <body>
     
-    <h1 class="title">Log into your account. </h1>
+    <div class="title">
+        <h1 style="color: white;">Log into your account.</h1>
+        <h5 style="color: #CCD2D6;">Access your dashboard.</h5>
+    </div>
+
+    <form action="login.php" method="post" enctype="multipart/form-data">
+        <div>
+            <label style="color: white;" for="IDUser">ID (NIDN/NIM)</label><br>
+            <input type="text" id="IDUser" placeholder="Example: 1915090000" name="IDUser" required value="">
+        </div>
+        <div>
+            <label style="color: white;" for="UserPass">Password</label><br>
+            <input type="text" id="UserPass" placeholder="Password" name="UserPass" required value="">
+        </div>
+    
+        <input type="submit">
+        
+    </form>
 
 </body>
 </html>
