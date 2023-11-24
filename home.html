@@ -9,6 +9,7 @@
         <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
         <div class="navbar"> 
@@ -200,28 +201,28 @@
                     <h1 class="section-title">Type</h1>
                     <div class="type-container">
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bx-globe'></i>
                             <div class="type-name">
                                 Website
                             </div>
+                            <i class='type-icon bx bx-globe'></i>
                         </div>
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bx-desktop'></i>
                             <div class="type-name">
                                 Desktop App
                             </div>
+                            <i class='type-icon bx bx-desktop'></i>
                         </div>
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bx-mobile'></i>
                             <div class="type-name">
                                 Mobile App
                             </div>
+                            <i class='type-icon bx bx-mobile'></i>
                         </div>
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bx-dots-horizontal-rounded'></i>
                             <div class="type-name">
                                 Others
                             </div>
+                            <i class='type-icon bx bx-dots-horizontal-rounded'></i>
                         </div>
                     </div>
                 </div>
@@ -229,49 +230,155 @@
                     <h1 class="section-title">Concentration</h1>
                     <div class="type-container">
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bxs-lock-alt'></i>
                             <div class="type-name">
                                 Cybersecurity
                             </div>
+                            <i class='type-icon bx bxs-lock-alt'></i>
                         </div>
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bxs-business'></i>
                             <div class="type-name">
                                 Management Information System
                             </div>
+                            <i class='type-icon bx bxs-business'></i>
                         </div>
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bxs-cog'></i>
                             <div class="type-name">
                                 Engineering and Business Intelligence
                             </div>
+                            <i class='type-icon bx bxs-cog'></i>
                         </div>
                         <div onclick="javascript:location.href='#'">
-                            <i class='type-icon bx bx-dots-horizontal-rounded'></i>
                             <div class="type-name">
                                 Others
+                            </div>
+                            <i class='type-icon bx bx-dots-horizontal-rounded'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="statisticsCategory" class="tabcontent">
+                <div class="section-head" style="margin-top: 2.5rem;">
+                    <div>
+                        <h1 class="section-title">Statistics</h1>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn">By category</button>
+                            <div id="myDropdown" class="dropdown-content">
+                            <a class="droplinks" onclick="openTab(event, 'statisticsCategory')" id="defaultOpen">By category</a>
+                            <a class="droplinks" onclick="openTab(event, 'statisticsType')">By type</a>
+                            <a class="droplinks" onclick="openTab(event, 'statisticsConcentration')">By concentration</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="section-head" style="margin-top: 2.5rem;">
-                <div>
-                    <h1 class="section-title">Statistics</h1>
-                </div>
-                <div class="navbar-end">
-                    <div class="statistics-selector" style="width:200px;">
-                        <select>
-                            <option value="category">By category</option>
-                            <option value="category">By category</option>
-                            <option value="type">By type</option>
-                            <option value="concentration">By concentration</option>
-                        </select>
+                <div class="statistics-container">
+                    <div class="statistics-left">
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>172</h1>
+                            <span>Total Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>26</h1>
+                            <span>Thesis Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>64</h1>
+                            <span>Internship Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>82</h1>
+                            <span>Other Innovations</span>
+                        </div>
+                    </div>
+                    <div class="statistics-right">
+                        <canvas id="categoryChart"></canvas>
                     </div>
                 </div>
             </div>
 
+            <div id="statisticsType" class="tabcontent">
+                <div class="section-head" style="margin-top: 2.5rem;">
+                    <div>
+                        <h1 class="section-title">Statistics</h1>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="dropdown">
+                            <button onclick="myFunction2()" class="dropbtn">By type</button>
+                            <div id="myDropdown2" class="dropdown-content">
+                            <a class="droplinks" onclick="openTab(event, 'statisticsCategory')">By category</a>
+                            <a class="droplinks" onclick="openTab(event, 'statisticsType')">By type</a>
+                            <a class="droplinks" onclick="openTab(event, 'statisticsConcentration')">By concentration</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="statistics-container">
+                    <div class="statistics-left">
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>20</h1>
+                            <span>Website Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>69</h1>
+                            <span>Desktop App Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>112</h1>
+                            <span>Mobile App Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>29</h1>
+                            <span>Other Innovations</span>
+                        </div>
+                    </div>
+                    <div class="statistics-right">
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="statisticsConcentration" class="tabcontent">
+                <div class="section-head" style="margin-top: 2.5rem;">
+                    <div>
+                        <h1 class="section-title">Statistics</h1>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="dropdown">
+                            <button onclick="myFunction3()" class="dropbtn">By concentration</button>
+                            <div id="myDropdown3" class="dropdown-content">
+                            <a class="droplinks" onclick="openTab(event, 'statisticsCategory')">By category</a>
+                            <a class="droplinks" onclick="openTab(event, 'statisticsType')">By type</a>
+                            <a class="droplinks" onclick="openTab(event, 'statisticsConcentration')">By concentration</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="statistics-container">
+                    <div class="statistics-left">
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>100</h1>
+                            <span>Cybersecurity Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>129</h1>
+                            <span>Management Information System Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>29</h1>
+                            <span>Engineering and Business Intelligence Innovations</span>
+                        </div>
+                        <div class="statistics-text" onclick="javascript:location.href='#'">
+                            <h1>14</h1>
+                            <span>Other Innovations</span>
+                        </div>
+                    </div>
+                    <div class="statistics-right">
+                        <canvas id="concentrationChart"></canvas>
+                    </div>
+                </div>    
+            </div>
         </div>
 
               <script type="text/javascript">
@@ -317,86 +424,400 @@
                 }
                 });
             </script>
+            
+            <script type="text/javascript">
+                const ctx = document.getElementById('categoryChart').getContext('2d');
+
+                Chart.defaults.font.family = "Inter";
+                Chart.defaults.font.size = 15;
+                Chart.defaults.color = '#041f35';
+                Chart.defaults.font.weight = 500;
+                Chart.defaults.plugins.tooltip.cornerRadius = 4;
+                Chart.defaults.plugins.tooltip.padding = 12;
+                Chart.defaults.plugins.tooltip.caretSize = 0;
+                Chart.defaults.plugins.tooltip.usePointStyle = true;
+                Chart.defaults.plugins.tooltip.labelPointStyle = 'circle';
+                Chart.defaults.plugins.tooltip.backgroundColor = '#041f35';
+                Chart.defaults.plugins.tooltip.mode = 'index';
+                Chart.defaults.plugins.tooltip.boxPadding = 2;
+                Chart.defaults.plugins.tooltip.boxHeight = 11;
+                Chart.defaults.plugins.tooltip.bodySpacing = 3;
+                Chart.defaults.plugins.tooltip.multiKeyBackground = 'rgb(0,0,0,0)';
+                Chart.defaults.interaction.intersect = false;
+                Chart.defaults.interaction.mode = 'x';
+
+                const categoryChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                        datasets: [{ // [0]
+                            label: 'Others',
+                            backgroundColor: "#0c67ac",
+                            data: [20, 10, 11, 21, 6, 15],
+                            }, { // [1]
+                            label: 'Internship',
+                            backgroundColor: "#2d9cf1",
+                            data: [10, 20, 15, 3, 4, 12],
+                            }, { // [2]
+                            label: 'Thesis',
+                            backgroundColor: "#75bef6",
+                            data: [3, 2, 4, 5, 5, 7],
+                        }]
+                    },
+                    
+                    options: {
+                        animation: {
+                            duration: 0
+                        },
+
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+
+                            y: {
+                                stacked: true
+                            },
+                            
+                            yAxes: [{
+                                gridLines: {
+                                    display: true,
+                                    color: "#e8eff6"
+                                },
+                                stacked: true
+                            }],
+
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: true,
+                                    color: "#e8eff6"
+                                },
+                                stacked: true
+                            }]
+                        },
+
+                        maintainAspectRatio: false,
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+                                itemSort: function(a, b) {
+                                    return b.datasetIndex - a.datasetIndex;
+                                },
+                                callbacks: {
+                                    footer: function(items) {
+                                        return 'Total: ' + items.reduce((a, b) => a + b.parsed.y, 0)
+                                    }
+                                }
+                            }
+                        }
+                    }    
+                });    
+
+                function toggleData(value){
+                    const showValue = myChart.isDatasetVisible(value);
+                    if(showValue === true) {
+                        myChart.hide(value);
+                    }
+                    if(showValue === false) {
+                        myChart.show(value);
+                    }
+                }
+        
+            </script>
+
+            <script type="text/javascript">
+                const ctx2 = document.getElementById('typeChart').getContext('2d');
+
+                Chart.defaults.font.family = "Inter";
+                Chart.defaults.font.size = 15;
+                Chart.defaults.color = '#041f35';
+                Chart.defaults.font.weight = 500;
+                Chart.defaults.plugins.tooltip.cornerRadius = 4;
+                Chart.defaults.plugins.tooltip.padding = 12;
+                Chart.defaults.plugins.tooltip.caretSize = 0;
+                Chart.defaults.plugins.tooltip.usePointStyle = true;
+                Chart.defaults.plugins.tooltip.labelPointStyle = 'circle';
+                Chart.defaults.plugins.tooltip.backgroundColor = '#041f35';
+                Chart.defaults.plugins.tooltip.mode = 'index';
+                Chart.defaults.plugins.tooltip.boxPadding = 2;
+                Chart.defaults.plugins.tooltip.boxHeight = 11;
+                Chart.defaults.plugins.tooltip.bodySpacing = 3;
+                Chart.defaults.plugins.tooltip.multiKeyBackground = 'rgb(0,0,0,0)';
+                Chart.defaults.interaction.intersect = false;
+                Chart.defaults.interaction.mode = 'x';
+
+                const typeChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                        datasets: [{ // [0]
+                            label: 'Others',
+                            backgroundColor: "#0c67ac",
+                            data: [60, 30, 10, 25, 4, 11],
+                            }, { // [1]
+                            label: 'Mobile App',
+                            backgroundColor: "#2d9cf1",
+                            data: [29, 16, 13, 4, 12, 19],
+                            }, { // [2]
+                            label: 'Desktop App',
+                            backgroundColor: "#75bef6",
+                            data: [18, 12, 42, 50, 56, 19],
+                            }, { // [3]
+                            label: 'Website',
+                            backgroundColor: "#bde0fb",
+                            data: [43, 22, 46, 25, 51, 72],
+                        }]
+                    },
+                    
+                    options: {
+                        animation: {
+                            duration: 0
+                        },
+
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+
+                            y: {
+                                stacked: true
+                            },
+                            
+                            yAxes: [{
+                                gridLines: {
+                                    display: true,
+                                    color: "#e8eff6"
+                                },
+                                stacked: true
+                            }],
+
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: true,
+                                    color: "#e8eff6"
+                                },
+                                stacked: true
+                            }]
+                        },
+
+                        maintainAspectRatio: false,
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+                                itemSort: function(a, b) {
+                                    return b.datasetIndex - a.datasetIndex;
+                                },
+                                callbacks: {
+                                    footer: function(items) {
+                                        return 'Total: ' + items.reduce((a, b) => a + b.parsed.y, 0)
+                                    }
+                                }
+                            }
+                        }
+                    }    
+                });    
+
+            </script>
+
+            <script type="text/javascript">
+                const ctx3 = document.getElementById('concentrationChart').getContext('2d');
+
+                Chart.defaults.font.family = "Inter";
+                Chart.defaults.font.size = 15;
+                Chart.defaults.color = '#041f35';
+                Chart.defaults.font.weight = 500;
+                Chart.defaults.plugins.tooltip.cornerRadius = 4;
+                Chart.defaults.plugins.tooltip.padding = 12;
+                Chart.defaults.plugins.tooltip.caretSize = 0;
+                Chart.defaults.plugins.tooltip.usePointStyle = true;
+                Chart.defaults.plugins.tooltip.labelPointStyle = 'circle';
+                Chart.defaults.plugins.tooltip.backgroundColor = '#041f35';
+                Chart.defaults.plugins.tooltip.mode = 'index';
+                Chart.defaults.plugins.tooltip.boxPadding = 2;
+                Chart.defaults.plugins.tooltip.boxHeight = 11;
+                Chart.defaults.plugins.tooltip.bodySpacing = 3;
+                Chart.defaults.plugins.tooltip.multiKeyBackground = 'rgb(0,0,0,0)';
+                Chart.defaults.interaction.intersect = false;
+                Chart.defaults.interaction.mode = 'x';
+
+                const concentrationChart = new Chart(ctx3, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                        datasets: [{ // [0]
+                            label: 'Others',
+                            backgroundColor: "#0c67ac",
+                            data: [40, 50, 70, 20, 10, 5],
+                            }, { // [1]
+                            label: 'Engineering and Business Intelligence',
+                            backgroundColor: "#2d9cf1",
+                            data: [4, 6, 12, 18, 20, 22],
+                            }, { // [2]
+                            label: 'Management Information System',
+                            backgroundColor: "#75bef6",
+                            data: [30, 60, 20, 50, 10, 11],
+                            }, { // [3]
+                            label: 'Cybersecurity',
+                            backgroundColor: "#bde0fb",
+                            data: [32, 37, 39, 31, 36, 34],
+                        }]
+                    },
+                    
+                    options: {
+                        animation: {
+                            duration: 0
+                        },
+
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+
+                            y: {
+                                stacked: true
+                            },
+                            
+                            yAxes: [{
+                                gridLines: {
+                                    display: true,
+                                    color: "#e8eff6"
+                                },
+                                stacked: true
+                            }],
+
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: true,
+                                    color: "#e8eff6"
+                                },
+                                stacked: true
+                            }]
+                        },
+
+                        maintainAspectRatio: false,
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+                                itemSort: function(a, b) {
+                                    return b.datasetIndex - a.datasetIndex;
+                                },
+                                callbacks: {
+                                    footer: function(items) {
+                                        return 'Total: ' + items.reduce((a, b) => a + b.parsed.y, 0)
+                                    }
+                                }
+                            }
+                        }
+                    }    
+                });    
+
+            </script>
 
             <script>
-                var x, i, j, l, ll, selElmnt, a, b, c;
-                x = document.getElementsByClassName("statistics-selector");
-                l = x.length;
-                for (i = 0; i < l; i++) {
-                selElmnt = x[i].getElementsByTagName("select")[0];
-                ll = selElmnt.length;
-                /*for each element, create a new DIV that will act as the selected item:*/
-                a = document.createElement("DIV");
-                a.setAttribute("class", "select-selected");
-                a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-                x[i].appendChild(a);
-                /*for each element, create a new DIV that will contain the option list:*/
-                b = document.createElement("DIV");
-                b.setAttribute("class", "select-items select-hide");
-                for (j = 1; j < ll; j++) {
-                    /*for each option in the original select element,
-                    create a new DIV that will act as an option item:*/
-                    c = document.createElement("DIV");
-                    c.innerHTML = selElmnt.options[j].innerHTML;
-                    c.addEventListener("click", function(e) {
-                        /*when an item is clicked, update the original select box,
-                        and the selected item:*/
-                        var y, i, k, s, h, sl, yl;
-                        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                        sl = s.length;
-                        h = this.parentNode.previousSibling;
-                        for (i = 0; i < sl; i++) {
-                        if (s.options[i].innerHTML == this.innerHTML) {
-                            s.selectedIndex = i;
-                            h.innerHTML = this.innerHTML;
-                            y = this.parentNode.getElementsByClassName("same-as-selected");
-                            yl = y.length;
-                            for (k = 0; k < yl; k++) {
-                            y[k].removeAttribute("class");
-                            }
-                            this.setAttribute("class", "same-as-selected");
-                            break;
-                        }
-                        }
-                        h.click();
-                    });
-                    b.appendChild(c);
+                /* When the user clicks on the button, 
+                toggle between hiding and showing the dropdown content */
+                function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
                 }
-                x[i].appendChild(b);
-                a.addEventListener("click", function(e) {
-                    /*when the select box is clicked, close any other select boxes,
-                    and open/close the current select box:*/
-                    e.stopPropagation();
-                    closeAllSelect(this);
-                    this.nextSibling.classList.toggle("select-hide");
-                    this.classList.toggle("select-arrow-active");
-                    });
-                }
-                function closeAllSelect(elmnt) {
-                /*a function that will close all select boxes in the document,
-                except the current select box:*/
-                var x, y, i, xl, yl, arrNo = [];
-                x = document.getElementsByClassName("select-items");
-                y = document.getElementsByClassName("select-selected");
-                xl = x.length;
-                yl = y.length;
-                for (i = 0; i < yl; i++) {
-                    if (elmnt == y[i]) {
-                    arrNo.push(i)
-                    } else {
-                    y[i].classList.remove("select-arrow-active");
-                    }
-                }
-                for (i = 0; i < xl; i++) {
-                    if (arrNo.indexOf(i)) {
-                    x[i].classList.add("select-hide");
-                    }
-                }
-                }
-                /*if the user clicks anywhere outside the select box,
-                then close all select boxes:*/
-                document.addEventListener("click", closeAllSelect);
-            </script>
                 
+                // Close the dropdown if the user clicks outside of it
+                window.onclick = function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                    }
+                }
+                }
+            </script>
+
+            <script>
+                /* When the user clicks on the button, 
+                toggle between hiding and showing the dropdown content */
+                function myFunction2() {
+                document.getElementById("myDropdown2").classList.toggle("show");
+                }
+                
+                // Close the dropdown if the user clicks outside of it
+                window.onclick = function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                    }
+                }
+                }
+            </script>
+
+            <script>
+                /* When the user clicks on the button, 
+                toggle between hiding and showing the dropdown content */
+                function myFunction3() {
+                document.getElementById("myDropdown3").classList.toggle("show");
+                }
+                
+                // Close the dropdown if the user clicks outside of it
+                window.onclick = function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                    }
+                }
+                }
+            </script>
+
+            <script>
+                function openTab(evt, tabName) {
+                var j, tabcontent, droplinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (j = 0; j < tabcontent.length; j++) {
+                    tabcontent[j].style.display = "none";
+                }
+                droplinks = document.getElementsByClassName("tablinks");
+                for (j = 0; j < droplinks.length; j++) {
+                    droplinks[j].className = droplinks[i].className.replace(" active", "");
+                }
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+                }
+                
+                // Get the element with id="defaultOpen" and click on it
+                document.getElementById("defaultOpen").click();
+            </script>
+
     </body>
 </html>

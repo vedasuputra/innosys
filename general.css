@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #e3ebf4;
+  background: #e8eff6;
   color: #041f35;
   font-family: "Inter", sans-serif;
   font-weight: 500;
@@ -26,7 +26,7 @@ a:hover {
 
 .navbar {
   width: 100vw;
-  background: #e3ebf4;
+  background: #e8eff6;
   height: 4.5rem;
   position: fixed;
   top: 0;
@@ -34,8 +34,8 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-left: 4.5rem;
+  padding-right: 4.5rem;
   z-index: 9;
   box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.052);
 }
@@ -86,7 +86,7 @@ a:hover {
 .headline-content {
   top: 50%;
   transform: translate(0%, -50%);
-  left: 2.5rem;
+  left: 4.5rem;
   position: absolute;
   width: 500px;
 }
@@ -255,7 +255,7 @@ a:hover {
 
 .category-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -293,6 +293,10 @@ a:hover {
   letter-spacing: 0px;
   line-height: 1.4;
   color: #818f9a;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
 }
 
 .type-container {
@@ -310,82 +314,147 @@ a:hover {
   padding-bottom: 16px;
   border-radius: 6px;
   height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .type-name {
-  text-align: right;
-  float: right;
   line-height: 1.4;
-  padding-left: 60px;
   overflow: hidden;
-  max-width: 26ch;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  padding-right: 40px;
 }
 
 .type-icon {
   font-size: 20px;
-  float: left;
+  text-align: right;
 }
 
-.statistics-selector {
+.dropbtn {
   position: relative;
   font-family: Inter;
   border: 1px solid #041f35;
   border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  padding: 10px 12px;
+  font-weight: 500;
+  width: 175px;
+  text-align: left;
+  font-size: 15px;
 }
 
-.statistics-selector select {
-  display: none; 
-}
-
-.select-selected {
-  background-color: #fff;
-  border-radius: 6px;
-  z-index: 99;
-}
-
-/*style the arrow inside the select element:*/
-.select-selected:after {
+.dropbtn:after {
   position: absolute;
   font-family: FontAwesome;
   content: "\f078";
   right: 13px;
   font-size: 13px;
+  padding-top: 1px;
 }
 
-/*point the arrow upwards when the select box is open (active):*/
-.select-selected.select-arrow-active:after {
-  content: "\f077";
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-/*style the items (options), including the selected item:*/
-.select-items div,.select-selected {
-  color: #041f35;
-  padding: 8px 12px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  user-select: none;
-}
-
-/*style items (options):*/
-.select-items {
-  position: absolute;
+.dropdown-content {
   background-color: #fff;
-  top: 100%;
-  left: 0;
-  right: 0;
   border: 1px solid #041f35;
   border-radius: 6px;
   margin-top: 7px;
-}
-
-/*hide the items when the select box is closed:*/
-.select-hide {
   display: none;
+  position: absolute;
+  z-index: 99;
+  width: 175px;
 }
 
-.select-items div:hover, .same-as-selected {
-  background-color: #eee;
+.dropdown-content a {
+  color: #041f35;
+  padding: 6px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:first-child {
+  padding-top: 10px;
+}
+
+.dropdown-content a:last-child {
+  padding-bottom: 10px;
+}
+
+.dropdown a:hover {
+  background-color: #f1f5f9;
+  cursor: pointer;
+}
+.dropdown a:first-child:hover {  
+  border-radius: 6px 6px 0px 0px;
+}
+
+.dropdown a:last-child:hover {  
+  border-radius: 0px 0px 6px 6px;
+}
+
+.show {
+  display: block;
+}
+
+.statistics-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.statistics-left {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.statistics-left > div {
+  background: #fff;
+  padding-right: 60px;
+  padding-left: 60px;
   border-radius: 6px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.statistics-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics-text > h1 {
+  font-size: 80px;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 3px!important;
+  line-height: 1;
+}
+
+.statistics-right {
+  background: #fff;
+  padding: 30px;
+  height: 500px;
+  border-radius: 6px;
+}
+
+.legend {
+  border-radius: 3px;
+  cursor: pointer;
+  border: solid 0;
+}
+
+.tabcontent, .searchContent {
+  display: none
 }
