@@ -78,6 +78,21 @@ a:hover {
     color: white;
     font-size:small;
   }
+#h3{
+    font-family: Inter;
+    color: #818F9A;
+    float: right;
+}
+.description{
+    border-color: #053050;
+    position: absolute;
+    right: 100px;
+    width: 633.59px;
+    height: 434.94px;
+}
+.box-name{
+    border: #053050;
+}
 .footer {
     position: relative;
     left: 0;

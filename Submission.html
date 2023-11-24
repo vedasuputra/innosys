@@ -59,23 +59,37 @@
     </div>
 
     <div class="container">
+    
+    <div>
+    <h3 id="h3">Basic Information</h3><br>
     <h2>General</h2>
+
+    
+    </div>
+
     <form action="Submission.php" method="post" enctype="multipart/form-data">
+            <div class="box-name">
                 <label for="name">Name</label><br>
-                <input type="text" id="name" placeholder="Example: Rudaya" name="name" required>
+                <input type="text" id="name" placeholder="Example: Rudaya" name="name" required value="">
+            </div>
+            <div class="description">
+                <label for="description">Description</label><br>
+                    <textarea id="description" name="description" rows="15" cols="50" placeholder="Example: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula egestas, sollicitudin nisl a, malesuada justo..."></textarea><br>
+            </div>
              
         <div class="flex-container">
             <div>
                 <label for="date">Date of Creation</label><br>
-                <input type="date" id="date" name="date" required>
+                <input type="date" id="date" name="date" required value="">
             </div>
 
             <div>
                 <label for="category">Category</label><br>
                 <select id="category" name="category" required>
-                    <option value="thesis">Thesis</option>
-                    <option value="interships">Interships</option>
-                    <option value="others">Others</option>
+                    <option style="color: #818F9A"; disabled selected hidden>Select one</option>
+                    <option value="Categ001">Thesis</option>
+                    <option value="Categ002">Interships</option>
+                    <option value="Categ003">Others</option>
                 </select><br>
             </div>
         </div>
@@ -84,20 +98,22 @@
             <div>
                 <label for="type">Type</label><br>
                 <select id="type" name="type" required>
-                    <option value="website">Website</option>
-                    <option value="desktopapp">Desktop App</option>
-                    <option value="mobileapp">Mobile App</option>
-                    <option value="others">Others</option>
+                    <option style="color: #818F9A"; disabled selected hidden>Select what applies</option>
+                    <option value="Ty001">Website</option>
+                    <option value="Ty002">Desktop App</option>
+                    <option value="Ty003">Mobile App</option>
+                    <option value="Ty004">Others</option>
                 </select>
             </div>
 
             <div>
                 <label for="concentration">Concentration</label><br>
                 <select id="concentration" name="concentration" required>
-                    <option value="cybersecurity">Cybersecurity</option>
-                    <option value="managementis">Management Information System</option>
-                    <option value="engineeringnbusinessin">Engineering and Business Intelligencce</option>
-                    <option value="others">Others</option>
+                    <option style="color: #818F9A"; disabled selected hidden>Select one</option>
+                    <option value="Conc001">Cybersecurity</option>
+                    <option value="Conc002">Management Information System</option>
+                    <option value="Conc003">Engineering and Business Intelligencce</option>
+                    <option value="Conc004">Others</option>
                 </select>
             </div>
         </div>
@@ -105,28 +121,25 @@
         <div class="flex-container">
             <div>
                 <label for="inolink">Innovation Link</label><br>
-                <input type="url" id="inolink" name="inolink" placeholder="https://" required>
+                <input type="url" id="inolink" name="inolink" placeholder="https://" required value="">
             </div>
 
             <div>
                 <label for="youtube">YouTube Link (Optional)</label><br>
-                <input type="url" id="youtube" name="youtube" placeholder="https://">
+                <input type="url" id="youtube" name="youtube" placeholder="https://" value="">
             </div>
         </div>
 
+        <!-- cari  -->
         <label for="images">Images</label><br>
-        <input type="file" id="images" name="images" placeholder="Upload your Image" required><br>
-
-        <label for="description">Description</label><br>
-        <textarea id="description" name="description" rows="15" cols="50"></textarea><br>
-    </form>
+        <input type="file" id="images" name="images" placeholder="Upload your Image" required value=""><br>
 
     <h2>Creators</h2>
-    <form action="Submission.php" method="post" enctype="multipart/form-data">
+    
         <div class="flex-container">
             <div>
                 <label for="group">Type</label><br>
-                <select id="group" name="group" required>
+                <select id="group" name="group">
                     <option value="student">Student</option>
                     <option value="lecturer">Lecturer</option>
                 </select>
@@ -134,85 +147,86 @@
 
             <div>
                 <label for="name">Name</label><br>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" value=""> 
             </div>
 
             <div>
                 <label for="id">ID (NIDN/NIM)</label><br>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
             </div>
 
             <div>
                 <label for="email">Email</label><br>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
             </div>
         </div>
 
         <div class="flex-container">
             <div>
-                <select id="group" name="group" required>
+                <select id="group" name="group">
                     <option value="student">Student</option>
                     <option value="lecturer">Lecturer</option>
                 </select>
             </div>
 
             <div>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" value=""> 
             </div>
 
             <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
             </div>
 
             <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
             </div>
         </div>
 
         <div class="flex-container">
             <div>
-                <select id="group" name="group" required>
+                <select id="group" name="group">
                     <option value="student">Student</option>
                     <option value="lecturer">Lecturer</option>
                 </select>
             </div>
 
             <div>
-                <input type="text" id="name" name="group" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="group" placeholder="Example: Ammulia Rizqie" value=""> 
             </div>
 
             <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
             </div>
 
             <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
             </div>
         </div>
 
         <div class="flex-container">
             <div>
-                <select id="group" name="group" required>
+                <select id="group" name="group">
                     <option value="student">Student</option>
                     <option value="lecturer">Lecturer</option>
                 </select>
             </div>
 
             <div>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" required> 
+                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" value=""> 
             </div>
 
             <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" required> 
+                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
             </div>
 
             <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" required> 
+                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
             </div>
         </div>
 
         <input type="submit">
     </form><br>
+
     </div>
 
 
