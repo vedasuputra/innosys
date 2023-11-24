@@ -19,13 +19,4 @@ else{
     }
     $conn->close();
 }
-
-
-//if(isset($_POST["submit"])){
-//    $IDUser = $_POST['IDUser'];
-//    $UserPass = $_POST['UserPass'];
-//}
-
-//$query = "INSERT INTO user (IDUser, UserPass) VALUES ($IDUser, $UserPass)";
-//$upload= mysqli_query($conn, $query);
 ?>
