@@ -7,12 +7,11 @@
         <link rel="stylesheet" href="home.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
-        <div class="navbar"> 
+        <nav> 
             <div class="navbar-start">
                 <div style="padding-right: 13px;">
                     <a href="home.html">
@@ -29,11 +28,27 @@
                     <a class="navlinks" href="catalogue.html">Catalogue</a>
                 </div>
                 <div>
-                    <a href="#"><i class='bx bx-search' style="padding-right: 5px; font-size: 25px;"></i></a>
-                    <a href="#"><i class='bx bx-log-in-circle' style="font-size: 26px;"></i></a>
+                    <i class='bx bx-search icon-search' aria-hidden="trues" style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
+                    <div class="search-form">
+                        <div class="search-flex">
+                            <div>
+                                <i class='bx bx-search' style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem;"></i>
+                            </div>
+                            <div>
+                                <form action="">
+                                    <input type="search" placeholder="Click here to search...">
+                                </form>
+                            </div>
+                            <div>
+                                <i class='bx bx-x search-close' style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#"><i class='bx bx-log-in-circle' style="font-size: 26px; padding-top: 0.3rem;"></i></a>
                 </div>
             </div>
-        </div>  
+        </nav> 
+
         <div class="headline">
             <div class="headline-content">
                 <h1 class="headline-title">Welcome to Innovation System</h1>
@@ -41,7 +56,8 @@
                 <button type="button" class="headline-button">View Catalogue</button>
             </div>
         </div>
-        <div class="container" id="cCarousel">
+
+        <div class="container">
             <div class="section-head">
                 <div>
                     <h1 class="section-title">Highlight</h1>
@@ -380,6 +396,24 @@
                 </div>    
             </div>
         </div>
+
+        <footer>
+            <div>
+                <h3>Innovation System</h3>
+                © Universitas Pendidikan Ganesha<br>
+                Copyright 2023. All Rights Reserved
+            </div>
+            <div>
+                <h4>Pages</h4>
+                <a href="#">Dashboard</a>
+                <a href="#">Catalogue</a>
+            </div>
+            <div>
+                <h4>Others</h4>
+                <a href="#">Help</a>
+                <a href="#">Submit</a>
+            </div>
+        </footer>
 
               <script type="text/javascript">
                 // Select the carousel you'll need to manipulate and the buttons you'll add events to
@@ -819,5 +853,14 @@
                 document.getElementById("defaultOpen").click();
             </script>
 
+            <script>
+                $(".icon-search").on("click", function(){
+                $(".search-form").fadeToggle();
+                });
+
+                $(".search-close").on("click", function(){
+                $(".search-form").fadeToggle();
+                });
+            </script>
     </body>
 </html>
