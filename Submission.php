@@ -25,7 +25,7 @@ if(isset($_POST["submit"])){
 
     //Database Connection
     $conn = new mysqli('localhost','root','','innovationsystemdb');
-    $query = "INSERT INTO innovationdata (NameInnov, Description, SubmDate, Img, Link, Status, IDCateg, IDConc, IDType, CreatorID) VALUES ('$name', '$description', '$date', '$nama_file', '$inolink', 'Pending', '$category', '$concentration', '$type', 'Cre001')";
+    $query = "INSERT INTO innovationdata (IDInnov, NameInnov, Description, CreDate, SubmDate, Img, Link, Status, IDCateg, IDConc, IDType, CreatorID) VALUES ('Inno0001', '$name', '$description', '$date', '0000-00-00', '$nama_file', '$inolink', 'Pending', '$category', '$concentration', '$type', 'Cre001')";
     $upload= mysqli_query($conn, $query);
 
     if($upload){
