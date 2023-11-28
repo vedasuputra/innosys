@@ -1,0 +1,828 @@
+<html>
+
+<head>
+  <title>Admin Dashboard | SIFORS Innovation System</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="general.css">
+  <link rel="stylesheet" href="admin.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <nav>
+    <div class="navbar-start">
+      <div style="padding-right: 13px;">
+        <a href="home.html">
+          <img src="..\photos\favicon.png" width="43px" height="43px">
+        </a>
+      </div>
+      <div class="title">
+        <a href="home.html">Innovation System</a>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <div style="padding-right: 34px;">
+        <a class="navlinks" href="home.html">Homepage</a>
+        <a class="navlinks" href="catalogue.html">Catalogue</a>
+      </div>
+      <div>
+        <i class='bx bx-search icon-search' aria-hidden="trues"
+          style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
+        <div class="search-form">
+          <div class="search-flex">
+            <div>
+              <i class='bx bx-search' style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem;"></i>
+            </div>
+            <div>
+              <form action="">
+                <input type="search" placeholder="Click here to search...">
+              </form>
+            </div>
+            <div>
+              <i class='bx bx-x search-close'
+                style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
+            </div>
+          </div>
+        </div>
+        <a href="#"><i class='bx bx-log-in-circle' style="font-size: 26px; padding-top: 0.3rem;"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="navpadding"></div>
+
+  <div class="headline admin">
+    <div class="headline-content">
+      <h1 class="headline-title">Welcome, Admin</h1>
+      <p>This is your dashboard, where you can see submissions that are waiting for approval, the status of recent
+        submissions, and more. </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="statisticsCategory" class="tabcontent">
+      <div class="section-head">
+        <div>
+          <h1 class="section-title">Statistics</h1>
+        </div>
+        <div class="navbar-end">
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">By category</button>
+            <div id="myDropdown" class="dropdown-content">
+              <a class="droplinks" onclick="openTab(event, 'statisticsCategory')" id="defaultOpen">By
+                category</a>
+              <a class="droplinks" onclick="openTab(event, 'statisticsType')">By type</a>
+              <a class="droplinks" onclick="openTab(event, 'statisticsConcentration')">By
+                concentration</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistics-container">
+        <div class="statistics-left">
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>172</h1>
+            <span>Total Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>26</h1>
+            <span>Thesis Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>64</h1>
+            <span>Internship Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>82</h1>
+            <span>Other Innovations</span>
+          </div>
+        </div>
+        <div class="statistics-right">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="statisticsType" class="tabcontent">
+      <div class="section-head">
+        <div>
+          <h1 class="section-title">Statistics</h1>
+        </div>
+        <div class="navbar-end">
+          <div class="dropdown">
+            <button onclick="myFunction2()" class="dropbtn">By type</button>
+            <div id="myDropdown2" class="dropdown-content">
+              <a class="droplinks" onclick="openTab(event, 'statisticsCategory')">By category</a>
+              <a class="droplinks" onclick="openTab(event, 'statisticsType')">By type</a>
+              <a class="droplinks" onclick="openTab(event, 'statisticsConcentration')">By
+                concentration</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistics-container">
+        <div class="statistics-left">
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>20</h1>
+            <span>Website Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>69</h1>
+            <span>Desktop App Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>112</h1>
+            <span>Mobile App Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>29</h1>
+            <span>Other Innovations</span>
+          </div>
+        </div>
+        <div class="statistics-right">
+          <canvas id="typeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="statisticsConcentration" class="tabcontent">
+      <div class="section-head">
+        <div>
+          <h1 class="section-title">Statistics</h1>
+        </div>
+        <div class="navbar-end">
+          <div class="dropdown">
+            <button onclick="myFunction3()" class="dropbtn">By concentration</button>
+            <div id="myDropdown3" class="dropdown-content">
+              <a class="droplinks" onclick="openTab(event, 'statisticsCategory')">By category</a>
+              <a class="droplinks" onclick="openTab(event, 'statisticsType')">By type</a>
+              <a class="droplinks" onclick="openTab(event, 'statisticsConcentration')">By
+                concentration</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistics-container">
+        <div class="statistics-left">
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>100</h1>
+            <span>Cybersecurity Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>129</h1>
+            <span>Management Information System Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>29</h1>
+            <span>Engineering and Business Intelligence Innovations</span>
+          </div>
+          <div class="statistics-text" onclick="javascript:location.href='#'">
+            <h1>14</h1>
+            <span>Other Innovations</span>
+          </div>
+        </div>
+        <div class="statistics-right">
+          <canvas id="concentrationChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top: 2.5rem;">
+      <h1 class="section-title">Waiting for Approval (2)</h1>
+    </div>
+
+    <div class="innovation-creators" style="margin-top: 0;">
+      <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div>
+          <div class="creator-name"><span class="status pending">Pending</span>Rudaya~Connect The Art</div>
+          <div class="creator-role bigger-margin">Submitted on September 12, 2023</div>
+        </div>
+        <div>
+          <i class='bx bx-chevron-right more-icon'></i>
+        </div>
+      </div>
+      <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div>
+          <div class="creator-name"><span class="status pending">Pending</span>Rudaya~Connect The Art</div>
+          <div class="creator-role bigger-margin">Submitted on September 12, 2023</div>
+        </div>
+        <div>
+          <i class='bx bx-chevron-right more-icon'></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top: 2.5rem;">
+      <div>
+        <h1 class="section-title">Innovations History</h1>
+      </div>
+      <div class="navbar-end">
+        <button onclick="javascript:location.href='history.html';" class="general-button">View All</button>
+      </div>
+    </div>
+
+    <div class="innovation-creators" style="margin-top: 0;">
+      <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div>
+          <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Informasi Manajemen Sampah
+            Terpadu Milik Kita</div>
+          <div class="creator-role bigger-margin">Reviewed on September 06, 2023</div>
+        </div>
+        <div>
+          <i class='bx bx-chevron-right more-icon'></i>
+        </div>
+      </div>
+      <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div>
+          <div class="creator-name"><span class="status rejected">Rejected</span>Sistem Inovasi Prodi Sistem Informasi
+            UNDIKSHA</div>
+          <div class="creator-role bigger-margin">Reviewed on September 01, 2023</div>
+        </div>
+        <div>
+          <i class='bx bx-chevron-right more-icon'></i>
+        </div>
+      </div>
+    </div>
+    <div class="innovation-creators">
+      <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div>
+          <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Prestasi Prodi Sistem Informasi
+            UNDIKSHA</div>
+          <div class="creator-role bigger-margin">Reviewed on September 01, 2023</div>
+        </div>
+        <div>
+          <i class='bx bx-chevron-right more-icon'></i>
+        </div>
+      </div>
+      <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div>
+          <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Perwalian Prodi Sistem Informasi
+            UNDIKSHA</div>
+          <div class="creator-role bigger-margin">Reviewed on September 01, 2023</div>
+        </div>
+        <div>
+          <i class='bx bx-chevron-right more-icon'></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top: 2.5rem;">
+      <div>
+        <h1 class="section-title">Newest Innovations</h1>
+      </div>
+      <div class="navbar-end">
+        <button onclick="javascript:location.href='catalogue.html';" class="general-button">View Catalogue</button>
+      </div>
+    </div>
+    <div class="wrapper">
+      <ul class="carousel" data-target="carousel">
+        <li class="card" data-target="card">
+          <a href="innovation.html"><img src="..\photos\card1.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="innovation.html">Sistem Informasi Manajemen Sampah Terpadu Milik Kita</a>
+              </div>
+              <div class="card-category"><a href="#">Thesis</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 12, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card2.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Rudaya~Connect The Art</a></div>
+              <div class="card-category"><a href="#">Internship</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 9, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card3.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Elektropedia</a></div>
+              <div class="card-category"><a href="#">Others</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 7, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card4.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Sistem Inovasi Prodi Sistem Informasi UNDIKSHA</a></div>
+              <div class="card-category"><a href="#">Thesis</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 4, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card5.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Sistem Prestasi Prodi Sistem Informasi UNDIKSHA</a>
+              </div>
+              <div class="card-category"><a href="#">Internship</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 3, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card6.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Sistem Perwalian Prodi Sistem Informasi UNDIKSHA</a>
+              </div>
+              <div class="card-category"><a href="#">Thesis</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 2, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card7.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Workstate: The Platform for Freelance Services</a></div>
+              <div class="card-category"><a href="#">Others</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 1, 2023</div>
+            </div>
+        </li>
+        <li class="card" data-target="card">
+          <a href="#"><img src="..\photos\card8.jpg"></a>
+          <div class="card-content">
+            <div>
+              <div class="card-title"><a href="#">Melody: The NFT Music Platform for a Revolutionary
+                  Future</a></div>
+              <div class="card-category"><a href="#">Others</a></div>
+            </div>
+            <div class="card-details">
+              <div>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+              </div>
+              <div>September 1, 2023</div>
+            </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    <div>
+      <h3>Innovation System</h3>
+      © Universitas Pendidikan Ganesha<br>
+      Copyright 2023. All Rights Reserved
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <a href="#">Dashboard</a>
+      <a href="#">Catalogue</a>
+    </div>
+    <div>
+      <h4>Others</h4>
+      <a href="#">Help</a>
+      <a href="#">Submit</a>
+    </div>
+  </footer>
+
+  <script type="text/javascript">
+    const ctx = document.getElementById('categoryChart').getContext('2d');
+
+    Chart.defaults.font.family = "Inter";
+    Chart.defaults.font.size = 15;
+    Chart.defaults.color = '#041f35';
+    Chart.defaults.font.weight = 500;
+    Chart.defaults.plugins.tooltip.cornerRadius = 4;
+    Chart.defaults.plugins.tooltip.padding = 12;
+    Chart.defaults.plugins.tooltip.caretSize = 0;
+    Chart.defaults.plugins.tooltip.usePointStyle = true;
+    Chart.defaults.plugins.tooltip.labelPointStyle = 'circle';
+    Chart.defaults.plugins.tooltip.backgroundColor = '#041f35';
+    Chart.defaults.plugins.tooltip.mode = 'index';
+    Chart.defaults.plugins.tooltip.boxPadding = 2;
+    Chart.defaults.plugins.tooltip.boxHeight = 11;
+    Chart.defaults.plugins.tooltip.bodySpacing = 3;
+    Chart.defaults.plugins.tooltip.multiKeyBackground = 'rgb(0,0,0,0)';
+    Chart.defaults.interaction.intersect = false;
+    Chart.defaults.interaction.mode = 'x';
+
+    const categoryChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+        datasets: [{ // [0]
+          label: 'Others',
+          backgroundColor: "#0c67ac",
+          data: [20, 10, 11, 21, 6, 15],
+        }, { // [1]
+          label: 'Internship',
+          backgroundColor: "#2d9cf1",
+          data: [10, 20, 15, 3, 4, 12],
+        }, { // [2]
+          label: 'Thesis',
+          backgroundColor: "#75bef6",
+          data: [3, 2, 4, 5, 5, 7],
+        }]
+      },
+
+      options: {
+        animation: {
+          duration: 0
+        },
+
+        scales: {
+          x: {
+            stacked: true
+          },
+
+          y: {
+            stacked: true
+          },
+
+          yAxes: [{
+            gridLines: {
+              display: true,
+              color: "#e8eff6"
+            },
+            stacked: true
+          }],
+
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
+            gridLines: {
+              display: true,
+              color: "#e8eff6"
+            },
+            stacked: true
+          }]
+        },
+
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            display: false
+          },
+
+          tooltip: {
+            itemSort: function (a, b) {
+              return b.datasetIndex - a.datasetIndex;
+            },
+            callbacks: {
+              footer: function (items) {
+                return 'Total: ' + items.reduce((a, b) => a + b.parsed.y, 0)
+              }
+            }
+          }
+        }
+      }
+    });
+
+    function toggleData(value) {
+      const showValue = myChart.isDatasetVisible(value);
+      if (showValue === true) {
+        myChart.hide(value);
+      }
+      if (showValue === false) {
+        myChart.show(value);
+      }
+    }
+
+  </script>
+
+  <script type="text/javascript">
+    const ctx2 = document.getElementById('typeChart').getContext('2d');
+
+    Chart.defaults.font.family = "Inter";
+    Chart.defaults.font.size = 15;
+    Chart.defaults.color = '#041f35';
+    Chart.defaults.font.weight = 500;
+    Chart.defaults.plugins.tooltip.cornerRadius = 4;
+    Chart.defaults.plugins.tooltip.padding = 12;
+    Chart.defaults.plugins.tooltip.caretSize = 0;
+    Chart.defaults.plugins.tooltip.usePointStyle = true;
+    Chart.defaults.plugins.tooltip.labelPointStyle = 'circle';
+    Chart.defaults.plugins.tooltip.backgroundColor = '#041f35';
+    Chart.defaults.plugins.tooltip.mode = 'index';
+    Chart.defaults.plugins.tooltip.boxPadding = 2;
+    Chart.defaults.plugins.tooltip.boxHeight = 11;
+    Chart.defaults.plugins.tooltip.bodySpacing = 3;
+    Chart.defaults.plugins.tooltip.multiKeyBackground = 'rgb(0,0,0,0)';
+    Chart.defaults.interaction.intersect = false;
+    Chart.defaults.interaction.mode = 'x';
+
+    const typeChart = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+        datasets: [{ // [0]
+          label: 'Others',
+          backgroundColor: "#0c67ac",
+          data: [60, 30, 10, 25, 4, 11],
+        }, { // [1]
+          label: 'Mobile App',
+          backgroundColor: "#2d9cf1",
+          data: [29, 16, 13, 4, 12, 19],
+        }, { // [2]
+          label: 'Desktop App',
+          backgroundColor: "#75bef6",
+          data: [18, 12, 42, 50, 56, 19],
+        }, { // [3]
+          label: 'Website',
+          backgroundColor: "#bde0fb",
+          data: [43, 22, 46, 25, 51, 72],
+        }]
+      },
+
+      options: {
+        animation: {
+          duration: 0
+        },
+
+        scales: {
+          x: {
+            stacked: true
+          },
+
+          y: {
+            stacked: true
+          },
+
+          yAxes: [{
+            gridLines: {
+              display: true,
+              color: "#e8eff6"
+            },
+            stacked: true
+          }],
+
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
+            gridLines: {
+              display: true,
+              color: "#e8eff6"
+            },
+            stacked: true
+          }]
+        },
+
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            display: false
+          },
+
+          tooltip: {
+            itemSort: function (a, b) {
+              return b.datasetIndex - a.datasetIndex;
+            },
+            callbacks: {
+              footer: function (items) {
+                return 'Total: ' + items.reduce((a, b) => a + b.parsed.y, 0)
+              }
+            }
+          }
+        }
+      }
+    });
+
+  </script>
+
+  <script type="text/javascript">
+    const ctx3 = document.getElementById('concentrationChart').getContext('2d');
+
+    Chart.defaults.font.family = "Inter";
+    Chart.defaults.font.size = 15;
+    Chart.defaults.color = '#041f35';
+    Chart.defaults.font.weight = 500;
+    Chart.defaults.plugins.tooltip.cornerRadius = 4;
+    Chart.defaults.plugins.tooltip.padding = 12;
+    Chart.defaults.plugins.tooltip.caretSize = 0;
+    Chart.defaults.plugins.tooltip.usePointStyle = true;
+    Chart.defaults.plugins.tooltip.labelPointStyle = 'circle';
+    Chart.defaults.plugins.tooltip.backgroundColor = '#041f35';
+    Chart.defaults.plugins.tooltip.mode = 'index';
+    Chart.defaults.plugins.tooltip.boxPadding = 2;
+    Chart.defaults.plugins.tooltip.boxHeight = 11;
+    Chart.defaults.plugins.tooltip.bodySpacing = 3;
+    Chart.defaults.plugins.tooltip.multiKeyBackground = 'rgb(0,0,0,0)';
+    Chart.defaults.interaction.intersect = false;
+    Chart.defaults.interaction.mode = 'x';
+
+    const concentrationChart = new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+        datasets: [{ // [0]
+          label: 'Others',
+          backgroundColor: "#0c67ac",
+          data: [40, 50, 70, 20, 10, 5],
+        }, { // [1]
+          label: 'Engineering and Business Intelligence',
+          backgroundColor: "#2d9cf1",
+          data: [4, 6, 12, 18, 20, 22],
+        }, { // [2]
+          label: 'Management Information System',
+          backgroundColor: "#75bef6",
+          data: [30, 60, 20, 50, 10, 11],
+        }, { // [3]
+          label: 'Cybersecurity',
+          backgroundColor: "#bde0fb",
+          data: [32, 37, 39, 31, 36, 34],
+        }]
+      },
+
+      options: {
+        animation: {
+          duration: 0
+        },
+
+        scales: {
+          x: {
+            stacked: true
+          },
+
+          y: {
+            stacked: true
+          },
+
+          yAxes: [{
+            gridLines: {
+              display: true,
+              color: "#e8eff6"
+            },
+            stacked: true
+          }],
+
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
+            gridLines: {
+              display: true,
+              color: "#e8eff6"
+            },
+            stacked: true
+          }]
+        },
+
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            display: false
+          },
+
+          tooltip: {
+            itemSort: function (a, b) {
+              return b.datasetIndex - a.datasetIndex;
+            },
+            callbacks: {
+              footer: function (items) {
+                return 'Total: ' + items.reduce((a, b) => a + b.parsed.y, 0)
+              }
+            }
+          }
+        }
+      }
+    });
+
+  </script>
+
+  <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+
+  <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction2() {
+      document.getElementById("myDropdown2").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+
+  <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction3() {
+      document.getElementById("myDropdown3").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+
+  <script>
+    function openTab(evt, tabName) {
+      var j, tabcontent, droplinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (j = 0; j < tabcontent.length; j++) {
+        tabcontent[j].style.display = "none";
+      }
+      droplinks = document.getElementsByClassName("tablinks");
+      for (j = 0; j < droplinks.length; j++) {
+        droplinks[j].className = droplinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+  </script>
+
+  <script>
+    $(".icon-search").on("click", function () {
+      $(".search-form").fadeToggle();
+    });
+
+    $(".search-close").on("click", function () {
+      $(".search-form").fadeToggle();
+    });
+  </script>
+
+</body>
+
+</html>
