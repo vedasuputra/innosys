@@ -1,13 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration { display: none; }
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+@keyframes fade-dark {
+  from {
+    filter: brightness(50%);
+  }
+
+  to {
+    filter: brightness(100%);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 
 body {
   background: #e8eff6;
@@ -22,10 +44,10 @@ body {
 a {
   color: #041f35;
   text-decoration: none;
-  transition: fade 0.7s;
+  transition: all 0.7s ease;
 }
 
-a:hover {
+a:hover, .more-icon:hover, .less-icon:hover {
   color: #063c63;
 }
 
@@ -41,7 +63,7 @@ nav {
   align-items: center;
   padding-left: 4.5rem;
   padding-right: 4.5rem;
-  z-index: 9;
+  z-index: 99999999;
   box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.052);
 }
 
@@ -103,17 +125,21 @@ nav {
   font-size: 23px;
 }
 
-.headline {
-  height: 675px;
+.navpadding {
+  position: static;
+  height: 4.5rem;
   width: 100%;
-  position: relative;
   top: 0;
   left: 0;
-  background: linear-gradient(
-      90deg,
+}
+
+.headline {
+  height: 565px;
+  width: 100%;
+  position: relative;
+  background: linear-gradient(90deg,
       rgba(5, 46, 75, 0.8),
-      rgba(0, 0, 0, 0.3) 80%
-    ),
+      rgba(0, 0, 0, 0.3) 80%),
     url("../photos/headlinehome.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -135,7 +161,7 @@ nav {
   color: #f3f4f6;
   line-height: 1.2;
   margin-bottom: 22px;
-  margin-top: 4rem;
+  margin-top: 0;
 }
 
 .headline-content p {
@@ -210,7 +236,7 @@ nav {
   display: flex;
   position: absolute;
   left: 0;
-  transition: all 1s ease;
+  transition: all 0.6s ease;
 }
 
 .card {
@@ -297,7 +323,7 @@ nav {
   gap: 20px;
 }
 
-.category-container > div {
+.category-container>div {
   background: #fff;
   padding-top: 20px;
   padding-left: 20px;
@@ -310,11 +336,12 @@ nav {
   gap: 43%;
 }
 
-.category-container > div:hover, .type-container > div:hover {
+.category-container>div:hover,
+.type-container>div:hover {
   cursor: pointer;
 }
 
-.category-details > h2 {
+.category-details>h2 {
   font-weight: 500;
   font-size: 22px;
   margin-bottom: 3px;
@@ -344,7 +371,7 @@ nav {
   gap: 20px;
 }
 
-.type-container > div {
+.type-container>div {
   background: #fff;
   padding-top: 15px;
   padding-left: 16px;
@@ -430,11 +457,12 @@ nav {
   background-color: #f1f5f9;
   cursor: pointer;
 }
-.dropdown a:first-child:hover {  
+
+.dropdown a:first-child:hover {
   border-radius: 6px 6px 0px 0px;
 }
 
-.dropdown a:last-child:hover {  
+.dropdown a:last-child:hover {
   border-radius: 0px 0px 6px 6px;
 }
 
@@ -455,7 +483,7 @@ nav {
   gap: 20px;
 }
 
-.statistics-left > div {
+.statistics-left>div {
   background: #fff;
   padding-right: 60px;
   padding-left: 60px;
@@ -472,11 +500,11 @@ nav {
   flex-direction: column;
 }
 
-.statistics-text > h1 {
+.statistics-text>h1 {
   font-size: 80px;
   font-weight: 500;
   margin: 0;
-  margin-bottom: 3px!important;
+  margin-bottom: 3px !important;
   line-height: 1;
 }
 
@@ -494,7 +522,7 @@ nav {
 }
 
 .tabcontent {
-  display: none
+  display: none;
 }
 
 footer {
@@ -505,30 +533,32 @@ footer {
   padding-right: 4.5rem;
   padding-top: 3rem;
   padding-bottom: 3rem;
-  background: #0C67AB;
-  color: #fff!important;
+  background: #0c67ab;
+  color: #fff !important;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 70px;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 footer a {
-  color: #fff!important;
+  color: #fff !important;
   display: block;
   line-height: 1.8;
 }
 
-footer h3, h4 {
-  font-weight: 500;
+footer h3,
+h4 {
   margin: 0;
 }
 
 footer h3 {
   font-size: 30px;
   margin-bottom: 35px;
+  font-weight: 500;
 }
 
 footer h4 {
   margin-bottom: 45px;
+  font-weight: 600;
 }
