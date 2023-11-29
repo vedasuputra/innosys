@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="general.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </head>
 
 <body>
@@ -70,31 +74,33 @@
             </div>
             <div class="navbar-end">
                 <div class="button-wrapper">
-                    <button class="swipe-button" data-action="slideLeft" style="margin-right: 7px;"><i
-                            class='bx bx-chevron-left' style="font-size: 30px;"></i></button>
-                    <button class="swipe-button" data-action="slideRight"><i class='bx bx-chevron-right'
+                    <button class="swipe-button am-prev" style="margin-right: 7px;"><i class='bx bx-chevron-left'
+                            style="font-size: 30px;"></i></button>
+                    <button class="swipe-button am-next"><i class='bx bx-chevron-right'
                             style="font-size: 30px;"></i></button>
                 </div>
             </div>
         </div>
-        <div class="wrapper">
-            <ul class="carousel" data-target="carousel">
-                <li class="card" data-target="card">
+        <div class="owl-carousel owl-theme">
+            <div class="item">
+                <div class="items">
                     <a href="innovation.html"><img src="..\photos\card1.jpg"></a>
                     <div class="card-content">
                         <div>
-                            <div class="card-title"><a href="innovation.html">Sistem Informasi Manajemen Sampah Terpadu Milik Kita</a>
+                            <div class="card-title"><a href="innovation.html">Sistem Informasi Manajemen Sampah Terpadu
+                                    Milik Kita</a>
                             </div>
                             <div class="card-category"><a href="#">Thesis</a></div>
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 12, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+                <div class="items">
                     <a href="#"><img src="..\photos\card2.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -103,12 +109,13 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 9, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+                <div class="items">
                     <a href="#"><img src="..\photos\card3.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -117,12 +124,13 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 7, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+                <div class="items">
                     <a href="#"><img src="..\photos\card4.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -131,12 +139,15 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 4, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="items">
                     <a href="#"><img src="..\photos\card5.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -146,12 +157,13 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 3, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+                <div class="items">
                     <a href="#"><img src="..\photos\card6.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -161,12 +173,13 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 2, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+                <div class="items">
                     <a href="#"><img src="..\photos\card7.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -175,12 +188,13 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 1, 2023</div>
                         </div>
-                </li>
-                <li class="card" data-target="card">
+                    </div>
+                </div>
+                <div class="items">
                     <a href="#"><img src="..\photos\card8.jpg"></a>
                     <div class="card-content">
                         <div>
@@ -190,12 +204,13 @@
                         </div>
                         <div class="card-details">
                             <div>
-                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
                             </div>
                             <div>September 1, 2023</div>
                         </div>
-                </li>
-            </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="categories-container">
@@ -431,47 +446,32 @@
         </div>
     </footer>
 
-    <script type="text/javascript">
-        // Select the carousel you'll need to manipulate and the buttons you'll add events to
-        const carousel = document.querySelector("[data-target='carousel']");
-        const card = carousel.querySelector("[data-target='card']");
-        const leftButton = document.querySelector("[data-action='slideLeft']");
-        const rightButton = document.querySelector("[data-action='slideRight']");
+    <script>
+        $(function () {
+            // Owl Carousel
+            var owl = $(".owl-carousel");
+            owl.owlCarousel({
+                items: 1,
+                margin: 20,
+                loop: false,
+                nav: false,
+                dots: false,
+                pagination: false
+            });
 
-        // Prepare to limit the direction in which the carousel can slide,
-        // and to control how much the carousel advances by each time.
-        // In order to slide the carousel so that only three cards are perfectly visible each time,
-        // you need to know the carousel width, and the margin placed on a given card in the carousel
-        const carouselWidth = carousel.offsetWidth;
-        const cardStyle = card.currentStyle || window.getComputedStyle(card);
-        const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
+            var owl = $('.owl-carousel');
+            owl.owlCarousel();
+            // Go to the next item
+            $('.am-next').click(function () {
+                owl.trigger('next.owl.carousel');
+            })
+            // Go to the previous item
+            $('.am-prev').click(function () {
+                // With optional speed parameter
+                // Parameters has to be in square bracket '[]'
+                owl.trigger('prev.owl.carousel', [300]);
+            })
 
-        // Count the number of total cards you have
-        const cardCount = carousel.querySelectorAll("[data-target='card']").length;
-
-        // Define an offset property to dynamically update by clicking the button controls
-        // as well as a maxX property so the carousel knows when to stop at the upper limit
-        let offset = 0;
-        const maxX = -(
-            (cardCount / 4) * carouselWidth +
-            cardMarginRight * (cardCount / 4) -
-            carouselWidth -
-            cardMarginRight
-        );
-
-        // Add the click events
-        leftButton.addEventListener("click", function () {
-            if (offset !== 0) {
-                offset += carouselWidth + cardMarginRight;
-                carousel.style.transform = `translateX(${offset}px)`;
-            }
-        });
-
-        rightButton.addEventListener("click", function () {
-            if (offset !== maxX) {
-                offset -= carouselWidth + cardMarginRight;
-                carousel.style.transform = `translateX(${offset}px)`;
-            }
         });
     </script>
 

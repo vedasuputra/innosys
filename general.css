@@ -231,27 +231,22 @@ url("../photos/headlinehome.jpg");
   cursor: pointer;
 }
 
-.carousel {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  width: 100%;
-  display: flex;
-  position: absolute;
-  left: 0;
-  transition: all 0.6s ease;
-}
-
-.card {
+.items {
   background: #fff;
   height: 24rem;
   border-radius: 6px;
-  min-width: 320px;
-  margin-right: 20px;
-  display: inline-block;
+  flex: 4;
+  flex-wrap: nowrap;
 }
 
-.card img {
+.item {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+.items img {
   width: 100%;
   height: 12rem;
   object-fit: cover;
@@ -302,14 +297,6 @@ url("../photos/headlinehome.jpg");
   width: auto;
   height: auto;
   position: relative;
-}
-
-.wrapper {
-  height: 24rem;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  margin: 0 auto;
 }
 
 .categories-container {
@@ -382,19 +369,17 @@ url("../photos/headlinehome.jpg");
   padding-bottom: 16px;
   border-radius: 6px;
   height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 20px;
+  display: grid; 
+  justify-content: end; 
+  grid-template-columns: 8fr 2fr;
+  gap: 10px;
 }
 
 .type-name {
   line-height: 1.4;
+  white-space: nowrap;
   overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  display: -webkit-box;
-  padding-right: 40px;
+  text-overflow: ellipsis;
 }
 
 .type-icon {
@@ -416,6 +401,10 @@ url("../photos/headlinehome.jpg");
   font-size: 15px;
 }
 
+.profilebtn {
+  cursor: pointer;
+}
+
 .dropbtn:after {
   position: absolute;
   font-family: FontAwesome;
@@ -434,39 +423,75 @@ url("../photos/headlinehome.jpg");
   background-color: #fff;
   border: 1px solid #041f35;
   border-radius: 6px;
-  margin-top: 7px;
+  margin-top: 11px;
   display: none;
   position: absolute;
   z-index: 99;
   width: 175px;
+  animation: all 0.7s ease;
 }
 
-.dropdown-content a {
-  color: #041f35;
-  padding: 6px 12px;
+.dropdown-content a, .user-dropdown a {
+  color: hsl(207, 86%, 11%);
   text-decoration: none;
   display: block;
 }
 
+.dropdown-content a {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccd2d6;
+}
+
+.user-dropdown a {
+  border-bottom: 1px solid #ccd2d6;
+  padding-left: 11px;
+  padding-right: 16px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.user-dropdown a:first-child {
+  padding-top: 6px;
+}
+
+.user-dropdown a:last-child {
+  padding-bottom: 6px;
+  border-bottom: 0;
+}
+
 .dropdown-content a:first-child {
-  padding-top: 10px;
+  padding-top: 9px;
 }
 
 .dropdown-content a:last-child {
-  padding-bottom: 10px;
+  padding-bottom: 9px;
+  border-bottom: 0;
 }
 
-.dropdown a:hover {
+.dropdown a:hover, .user-dropdown a:hover {
   background-color: #f1f5f9;
   cursor: pointer;
 }
 
-.dropdown a:first-child:hover {
+.dropdown a:first-child:hover, .user-dropdown a:first-child:hover {
   border-radius: 6px 6px 0px 0px;
 }
 
-.dropdown a:last-child:hover {
+.dropdown a:last-child:hover, .user-dropdown a:last-child:hover {
   border-radius: 0px 0px 6px 6px;
+}
+
+.user-dropdown {
+  background-color: #fff;
+  border: 1px solid #041f35;
+  border-radius: 6px;
+  margin-top: 6px;
+  display: none;
+  position: absolute;
+  z-index: 99;
+  width: auto;
+  font-size: 14px;
+  right: 4.5rem;
 }
 
 .show {
@@ -524,7 +549,7 @@ url("../photos/headlinehome.jpg");
   border: solid 0;
 }
 
-.tabcontent {
+.tabcontent, .tabcontent2 {
   display: none;
 }
 
@@ -583,6 +608,12 @@ footer h4 {
   margin-top: 0px;
   line-height: 1.3;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 100%;
+  display: inline-block;
 }
 
 .innovation-creators {
@@ -591,6 +622,7 @@ footer h4 {
   align-items: center;
   gap: 20px;
   margin-top: 0;
+  min-width: 0;
 }
 
 .innovation-creators:not(:first-child) {
@@ -604,14 +636,23 @@ footer h4 {
   padding-right: 18px;
   padding-top: 18px;
   padding-bottom: 18px;
-  flex: 2;
-  display: flex;
+  flex: 4;
+  display: grid;
   justify-content: space-between;
+  grid-template-columns: 8fr 2fr;
   align-items: top;
+  min-width: 0;
+  gap: 10px;
+}
+
+.right {
+  text-align: right;
+  float: right;
 }
 
 .creators-info div {
   display: block;
+  min-width: 0;
 }
 
 .creation-date,
@@ -660,4 +701,7 @@ footer h4 {
 
 .creator-name {
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

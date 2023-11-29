@@ -7,9 +7,13 @@
   <link rel="stylesheet" href="general.css">
   <link rel="stylesheet" href="admin.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
   <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </head>
 
 <body>
@@ -48,7 +52,11 @@
             </div>
           </div>
         </div>
-        <a href="#"><i class='bx bx-log-in-circle' style="font-size: 26px; padding-top: 0.3rem;"></i></a>
+        <i class='bx bx-shield profilebtn' onclick="profileFunction()" style="font-size: 25px; padding-top: 0.3rem;"></i>
+        <div id="profileDropdown" class="user-dropdown">
+          <a class="droplinks" href="user.html">Dashboard</a>
+          <a class="droplinks" href="#">Logout</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -202,7 +210,7 @@
           <div class="creator-role bigger-margin">Submitted on September 12, 2023</div>
         </div>
         <div>
-          <i class='bx bx-chevron-right more-icon'></i>
+          <i class='bx bx-chevron-right more-icon right'></i>
         </div>
       </div>
       <div class="creators-info pointer" onclick="javascript:location.href='#'">
@@ -211,7 +219,7 @@
           <div class="creator-role bigger-margin">Submitted on September 12, 2023</div>
         </div>
         <div>
-          <i class='bx bx-chevron-right more-icon'></i>
+          <i class='bx bx-chevron-right more-icon right'></i>
         </div>
       </div>
     </div>
@@ -233,7 +241,7 @@
           <div class="creator-role bigger-margin">Reviewed on September 06, 2023</div>
         </div>
         <div>
-          <i class='bx bx-chevron-right more-icon'></i>
+          <i class='bx bx-chevron-right more-icon right'></i>
         </div>
       </div>
       <div class="creators-info pointer" onclick="javascript:location.href='#'">
@@ -243,7 +251,7 @@
           <div class="creator-role bigger-margin">Reviewed on September 01, 2023</div>
         </div>
         <div>
-          <i class='bx bx-chevron-right more-icon'></i>
+          <i class='bx bx-chevron-right more-icon right'></i>
         </div>
       </div>
     </div>
@@ -255,7 +263,7 @@
           <div class="creator-role bigger-margin">Reviewed on September 01, 2023</div>
         </div>
         <div>
-          <i class='bx bx-chevron-right more-icon'></i>
+          <i class='bx bx-chevron-right more-icon right'></i>
         </div>
       </div>
       <div class="creators-info pointer" onclick="javascript:location.href='#'">
@@ -265,7 +273,7 @@
           <div class="creator-role bigger-margin">Reviewed on September 01, 2023</div>
         </div>
         <div>
-          <i class='bx bx-chevron-right more-icon'></i>
+          <i class='bx bx-chevron-right more-icon right'></i>
         </div>
       </div>
     </div>
@@ -278,24 +286,26 @@
         <button onclick="javascript:location.href='catalogue.html';" class="general-button">View Catalogue</button>
       </div>
     </div>
-    <div class="wrapper">
-      <ul class="carousel" data-target="carousel">
-        <li class="card" data-target="card">
+    <div class="owl-carousel owl-theme">
+      <div class="item">
+        <div class="items">
           <a href="innovation.html"><img src="..\photos\card1.jpg"></a>
           <div class="card-content">
             <div>
-              <div class="card-title"><a href="innovation.html">Sistem Informasi Manajemen Sampah Terpadu Milik Kita</a>
+              <div class="card-title"><a href="innovation.html">Sistem Informasi Manajemen Sampah Terpadu
+                  Milik Kita</a>
               </div>
               <div class="card-category"><a href="#">Thesis</a></div>
             </div>
             <div class="card-details">
               <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
               </div>
               <div>September 12, 2023</div>
             </div>
-        </li>
-        <li class="card" data-target="card">
+          </div>
+        </div>
+        <div class="items">
           <a href="#"><img src="..\photos\card2.jpg"></a>
           <div class="card-content">
             <div>
@@ -304,12 +314,13 @@
             </div>
             <div class="card-details">
               <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
               </div>
               <div>September 9, 2023</div>
             </div>
-        </li>
-        <li class="card" data-target="card">
+          </div>
+        </div>
+        <div class="items">
           <a href="#"><img src="..\photos\card3.jpg"></a>
           <div class="card-content">
             <div>
@@ -318,12 +329,13 @@
             </div>
             <div class="card-details">
               <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
               </div>
               <div>September 7, 2023</div>
             </div>
-        </li>
-        <li class="card" data-target="card">
+          </div>
+        </div>
+        <div class="items">
           <a href="#"><img src="..\photos\card4.jpg"></a>
           <div class="card-content">
             <div>
@@ -332,71 +344,13 @@
             </div>
             <div class="card-details">
               <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
+                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
               </div>
               <div>September 4, 2023</div>
             </div>
-        </li>
-        <li class="card" data-target="card">
-          <a href="#"><img src="..\photos\card5.jpg"></a>
-          <div class="card-content">
-            <div>
-              <div class="card-title"><a href="#">Sistem Prestasi Prodi Sistem Informasi UNDIKSHA</a>
-              </div>
-              <div class="card-category"><a href="#">Internship</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-              </div>
-              <div>September 3, 2023</div>
-            </div>
-        </li>
-        <li class="card" data-target="card">
-          <a href="#"><img src="..\photos\card6.jpg"></a>
-          <div class="card-content">
-            <div>
-              <div class="card-title"><a href="#">Sistem Perwalian Prodi Sistem Informasi UNDIKSHA</a>
-              </div>
-              <div class="card-category"><a href="#">Thesis</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-              </div>
-              <div>September 2, 2023</div>
-            </div>
-        </li>
-        <li class="card" data-target="card">
-          <a href="#"><img src="..\photos\card7.jpg"></a>
-          <div class="card-content">
-            <div>
-              <div class="card-title"><a href="#">Workstate: The Platform for Freelance Services</a></div>
-              <div class="card-category"><a href="#">Others</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-              </div>
-              <div>September 1, 2023</div>
-            </div>
-        </li>
-        <li class="card" data-target="card">
-          <a href="#"><img src="..\photos\card8.jpg"></a>
-          <div class="card-content">
-            <div>
-              <div class="card-title"><a href="#">Melody: The NFT Music Platform for a Revolutionary
-                  Future</a></div>
-              <div class="card-category"><a href="#">Others</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-              </div>
-              <div>September 1, 2023</div>
-            </div>
-        </li>
-      </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -418,6 +372,61 @@
       <a href="#">Submit</a>
     </div>
   </footer>
+
+  <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function profileFunction() {
+        document.getElementById("profileDropdown").classList.toggle("show");
+    }
+  
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.profilebtn')) {
+            var dropdowns = document.getElementsByClassName("user-dropdown");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+  </script>
+
+  <script>
+    $(function () {
+        // Owl Carousel
+        var owl = $(".owl-carousel");
+        owl.owlCarousel({
+            items: 1,
+            margin: 20,
+            loop: false,
+            nav: false,
+            dots: false,
+            pagination: false,
+            mouseDrag: false,
+            touchDrag: false,
+            pullDrag: false,
+            freeDrag: false,
+        });
+
+        var owl = $('.owl-carousel');
+        owl.owlCarousel();
+        // Go to the next item
+        $('.am-next').click(function () {
+            owl.trigger('next.owl.carousel');
+        })
+        // Go to the previous item
+        $('.am-prev').click(function () {
+            // With optional speed parameter
+            // Parameters has to be in square bracket '[]'
+            owl.trigger('prev.owl.carousel', [300]);
+        })
+
+    });
+  </script>
 
   <script type="text/javascript">
     const ctx = document.getElementById('categoryChart').getContext('2d');

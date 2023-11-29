@@ -134,6 +134,11 @@ img {
   border-radius: 6px;
   line-height: 1;
   width: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .filter-button:not(:first-child) {
@@ -152,6 +157,7 @@ img {
   align-self: flex-start;
   top: 6.5rem;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .innovation-link {
