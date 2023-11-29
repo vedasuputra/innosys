@@ -226,9 +226,10 @@ nav {
   padding-top: 6px;
   padding-bottom: 6px;
   font-size: 13px;
+  transition: all 0.7s ease-in-out;
 }
 
-.swipe-button:hover {
+.swipe-button:hover, .general-button:hover {
   background: #0a5993;
   cursor: pointer;
 }
@@ -270,7 +271,7 @@ nav {
 .filter-button:hover,
 .creators-info:hover,
 .innovation-link:hover {
-  box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.09);
+  box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.1);
 }
 
 .items,
@@ -280,7 +281,8 @@ nav {
 .statistics-right,
 .filter-button,
 .creators-info,
-.innovation-link {
+.innovation-link,
+.general-button {
   transition: all 0.7s ease-in-out;
 }
 
@@ -601,7 +603,7 @@ footer {
 }
 
 footer a {
-  color: #fff !important;
+  color: #fff;
   display: block;
   line-height: 1.8;
 }
@@ -620,6 +622,10 @@ footer h3 {
 footer h4 {
   margin-bottom: 45px;
   font-weight: 600;
+}
+
+footer a:hover {
+  color: #ddd;
 }
 
 .general-button {
