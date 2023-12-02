@@ -1,0 +1,26 @@
+.user {
+  background: linear-gradient(90deg,
+  rgba(5, 46, 75, 0.8),
+  rgba(0, 0, 0, 0.3) 80%),
+url("../photos/headlineuser.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: 50%;
+}
+
+.user-stat-number {
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.user-stat-icon {
+  font-size: 53px;
+}
+
+.user-stat-detail {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

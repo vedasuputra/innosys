@@ -1,0 +1,188 @@
+img {
+  vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.slideshow {
+  position: relative;
+  width: 100%;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+  animation-name: fade-dark;
+  animation-duration: 0.7s;
+}
+
+.mySlides img {
+  height: 565px;
+  object-fit: cover;
+  width: 100%;
+  object-position: center;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  color: #e5e8ea;
+  font-size: 45px;
+  user-select: none;
+  -webkit-user-select: none;
+  transform: translate(0%, -50%);
+  padding: 25px;
+  z-index: 99;
+}
+
+.prev:hover,
+.next:hover {
+  color: #fff;
+}
+
+.mySlides::before {
+  content: "";
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  background: linear-gradient(270deg, rgba(3, 31, 51, 0.9) 0%, rgba(0, 0, 0, 0) 50%), linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 50%), linear-gradient(90deg, rgba(3, 31, 51, 0.9) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+}
+
+.row {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  z-index: 99;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 0.7s ease;
+  border-radius: 6px;
+}
+
+.demo-border {
+  border-radius: 6px;
+  border: 2px solid #fff;
+  display: inline-block;
+}
+
+.active,
+.demo:hover {
+  filter: brightness(50%);
+}
+
+.innovation-container {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 60px;
+  padding-top: 1rem;
+}
+
+.innovation-main h1 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 1.2;
+}
+
+.innovation-right h4,
+.creators-header h4 {
+  font-weight: 600;
+  display: block;
+}
+
+.innovation-right h4 {
+  margin-bottom: 12px;
+}
+
+.creation-date {
+  margin-top: 18px;
+}
+
+.innovation-text {
+  margin-top: 40px;
+  margin-bottom: 50px;
+  line-height: 1.5;
+}
+
+.filter-button {
+  background: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  cursor: pointer;
+  display: block;
+  border-radius: 6px;
+  line-height: 1;
+  width: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.filter-button:not(:first-child) {
+  margin-top: 10px;
+}
+
+.filter-button:last-child {
+  margin-bottom: 30px;
+}
+
+.innovation-right {
+  display: block;
+  position: -webkit-sticky;
+  position: sticky;
+  height: auto;
+  align-self: flex-start;
+  top: 6.5rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.innovation-link {
+  background: #fff;
+  height: auto;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  border-radius: 6px;
+  padding: 12px;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.innovation-link strong {
+  font-weight: 600;
+  display: block;
+}
+
+.innovation-link a {
+  color: #818f9a;
+  font-size: 14px;
+}
+
+.creators-header {
+  display: flex;
+  justify-content: space-between;
+}
