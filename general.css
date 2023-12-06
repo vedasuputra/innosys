@@ -88,7 +88,7 @@ nav {
 }
 
 .search-form input {
-  width: 85vw;
+  width: 84vw;
   margin: 0 auto;
   display: block;
   height: 4.5rem;
@@ -227,11 +227,22 @@ nav {
   padding-bottom: 6px;
   font-size: 13px;
   transition: all 0.7s ease-in-out;
+  width: fit-content!important;
 }
 
 .swipe-button:hover, .general-button:hover {
   background: #0a5993;
   cursor: pointer;
+}
+
+.white {
+  background: #fff;
+  color: #041f35;
+}
+
+.white:hover {
+  cursor: pointer;
+  background: #fff;
 }
 
 .items {
@@ -248,6 +259,14 @@ nav {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
   flex-wrap: nowrap;
+}
+
+.item-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.items-3 {
+  flex: 3;
 }
 
 .items img {
@@ -270,8 +289,11 @@ nav {
 .statistics-right:hover,
 .filter-button:hover,
 .creators-info:hover,
-.innovation-link:hover {
-  box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.1);
+.innovation-link:hover,
+.general-button:hover,
+.swipe-button:hover,
+.headline-button:hover {
+  box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.14);
 }
 
 .items,
@@ -282,8 +304,10 @@ nav {
 .filter-button,
 .creators-info,
 .innovation-link,
-.general-button {
-  transition: all 0.7s ease-in-out;
+.general-button,
+.swipe-button:hover,
+.headline-button:hover {
+  transition: all 0.5s ease-in-out;
 }
 
 .card-title {
@@ -747,4 +771,11 @@ footer a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.pagination-container {
+  display: grid;
+  grid-template-columns: 1fr 9fr 1fr;
+  gap: 20px;
+  width: 100%;
 }

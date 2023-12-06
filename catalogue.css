@@ -1,0 +1,135 @@
+.catalogue {
+  background: linear-gradient(90deg,
+  rgba(5, 46, 75, 0.8),
+  rgba(0, 0, 0, 0.3) 80%),
+url("../photos/headlinecatalogue.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: 50%;
+}
+
+.catalogue-container {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+  gap: 30px;
+  width: 100%;
+}
+
+.owl-carousel {
+  margin-bottom: 21px;
+}
+
+.number {
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 15px;
+  margin-right: 6px;
+  font-weight: 500;
+}
+
+.accordion {
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  background-color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  transition: 0.4s;
+  font-family: Inter, sans-serif;
+  padding: 0;
+}
+
+.accordion:after {
+  content: '\f078';
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+  font-family: FontAwesome;
+}
+
+.turnedon:after {
+  content: "\f077";
+}
+
+.panel {
+  padding: 0;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  height: fit-content;
+}
+
+.panel input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.panel:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.panel input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.panel input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.panel .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.filter-container {
+  display: grid;
+  grid-template-columns: 1fr 9fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.filters-container {
+  background: #fff;
+  border-radius: 6px;
+  height: auto;
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
