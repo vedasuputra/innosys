@@ -1,8 +1,10 @@
 .user {
-  background: linear-gradient(90deg,
-  rgba(5, 46, 75, 0.8),
-  rgba(0, 0, 0, 0.3) 80%),
-url("../photos/headlineuser.jpg");
+  background: linear-gradient(
+      90deg,
+      rgba(5, 46, 75, 0.8),
+      rgba(0, 0, 0, 0.3) 80%
+    ),
+    url("photos/headlineuser.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
