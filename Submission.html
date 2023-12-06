@@ -1,235 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="icon" type="image/jpg" href="Image/SI.jpg">
+  <head>
+    <link rel="icon" type="image/jpg" href="Image/SI.jpg" />
     <title>Innovation System</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Sub.css">
-    <link rel="stylesheet" href="general.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Sub.css" />
+    <link rel="stylesheet" href="general.css" />
     <title>Document</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-</head>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  </head>
 
-<style>
+  <style>
     .flex-container {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
+  </style>
 
-</style>
-
-<body>
+  <body>
     <div class="navbar">
-            <div class="navbar-start">
-                <div style="padding-right: 13px;">
-                    <a href="home.html">
-                        <img src="https://i.ibb.co/q1rJ2G2/SI-removebg-preview.png" width="43px" height="43px">
-                    </a>
-                </div>
-                <div class="title">
-                    <a href="home.html">Information Systems</a>
-                </div>
-            </div>
-            <div class="navbar-end">
-                <div style="padding-right: 34px;">
-                    <a class="navlinks" href="home.html">Homepage</a>
-                    <a class="navlinks" href="catalogue.html">Catalogue</a>
-                </div>
-                <div>
-                    <a href="/"><i class='bx bx-search' style="padding-right: 5px; font-size: 25px;"></i></a>
-                    <a href="/"><i class='bx bx-log-in-circle' style="font-size: 26px;"></i></a>
-                </div>
-            </div>
-    </div>  
-
-    <div class="headline" style="background: linear-gradient(
-        90deg,
-        rgba(5, 46, 75, 0.8),
-        rgba(0, 0, 0, 0.3) 80%
-      ),
-      url(photos/Submit.png);">
-        <div class="headline-content">
-            <h1 class="headline-title">Submit Your Innovation</h1>
-            <p>Your submission will be reviewed for approval once it is submitted, so make sure that you’ve written your submission carefully.</p>
+      <div class="navbar-start">
+        <div style="padding-right: 13px">
+          <a href="home.html">
+            <img
+              src="https://i.ibb.co/q1rJ2G2/SI-removebg-preview.png"
+              width="43px"
+              height="43px"
+            />
+          </a>
         </div>
+        <div class="title">
+          <a href="home.html">Information Systems</a>
+        </div>
+      </div>
+      <div class="navbar-end">
+        <div style="padding-right: 34px">
+          <a class="navlinks" href="home.html">Homepage</a>
+          <a class="navlinks" href="catalogue.html">Catalogue</a>
+        </div>
+        <div>
+          <a href="/"
+            ><i
+              class="bx bx-search"
+              style="padding-right: 5px; font-size: 25px"
+            ></i
+          ></a>
+          <a href="/"
+            ><i class="bx bx-log-in-circle" style="font-size: 26px"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="headline"
+      style="
+        background: linear-gradient(
+            90deg,
+            rgba(5, 46, 75, 0.8),
+            rgba(0, 0, 0, 0.3) 80%
+          ),
+          url(photos/Submit.png);
+      "
+    >
+      <div class="headline-content">
+        <h1 class="headline-title">Submit Your Innovation</h1>
+        <p>
+          Your submission will be reviewed for approval once it is submitted, so
+          make sure that you’ve written your submission carefully.
+        </p>
+      </div>
     </div>
 
     <div class="container">
-    
-    <div>
-    <h3 id="h3">Basic Information</h3><br>
-    <h2>General</h2>
+      <div>
+        <h3 id="h3">Basic Information</h3>
+        <br />
+        <h2>General</h2>
+      </div>
 
-    
-    </div>
-
-    <form action="Submission.php" method="post" enctype="multipart/form-data">
-            <div class="box-name">
-                <label for="name">Name</label><br>
-                <input type="text" id="name" placeholder="Example: Rudaya" name="name" required value="">
-            </div>
-            <div class="description">
-                <label for="description">Description</label><br>
-                    <textarea id="description" name="description" rows="15" cols="50" placeholder="Example: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula egestas, sollicitudin nisl a, malesuada justo..."></textarea><br>
-            </div>
-             
-        <div class="flex-container">
-            <div>
-                <label for="date">Date of Creation</label><br>
-                <input type="date" id="date" name="date" required value="">
-            </div>
-
-            <div>
-                <label for="category">Category</label><br>
-                <select id="category" name="category" required>
-                    <option style="color: #818F9A"; disabled selected hidden>Select one</option>
-                    <option value="Categ001">Thesis</option>
-                    <option value="Categ002">Interships</option>
-                    <option value="Categ003">Others</option>
-                </select><br>
-            </div>
+      <form action="baru.php" method="post" enctype="multipart/form-data">
+        <div class="box-name">
+          <label for="name">Name</label><br />
+          <input
+            type="text"
+            id="name"
+            placeholder="Example: Rudaya"
+            name="name"
+            required
+            value=""
+          />
+        </div>
+        <div class="description">
+          <label for="description">Description</label><br />
+          <textarea
+            id="description"
+            name="description"
+            rows="15"
+            cols="50"
+            placeholder="Example: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula egestas, sollicitudin nisl a, malesuada justo..."
+          ></textarea
+          ><br />
         </div>
 
         <div class="flex-container">
-            <div>
-                <label for="type">Type</label><br>
-                <select id="type" name="type" required>
-                    <option style="color: #818F9A"; disabled selected hidden>Select what applies</option>
-                    <option value="Ty001">Website</option>
-                    <option value="Ty002">Desktop App</option>
-                    <option value="Ty003">Mobile App</option>
-                    <option value="Ty004">Others</option>
-                </select>
-            </div>
+          <div>
+            <label for="date">Date of Creation</label><br />
+            <input type="date" id="date" name="date" required value="" />
+          </div>
 
-            <div>
-                <label for="concentration">Concentration</label><br>
-                <select id="concentration" name="concentration" required>
-                    <option style="color: #818F9A"; disabled selected hidden>Select one</option>
-                    <option value="Conc001">Cybersecurity</option>
-                    <option value="Conc002">Management Information System</option>
-                    <option value="Conc003">Engineering and Business Intelligencce</option>
-                    <option value="Conc004">Others</option>
-                </select>
-            </div>
+          <div>
+            <label for="category">Category</label><br />
+            <select id="category" name="category" required>
+              <option style="color: #818f9a" ; disabled selected hidden>
+                Select one
+              </option>
+              <option value="1">Thesis</option>
+              <option value="2">Interships</option>
+              <option value="3">Others</option></select
+            ><br />
+          </div>
         </div>
-        
-        <div class="flex-container">
-            <div>
-                <label for="inolink">Innovation Link</label><br>
-                <input type="url" id="inolink" name="inolink" placeholder="https://" required value="">
-            </div>
 
-            <div>
-                <label for="youtube">YouTube Link (Optional)</label><br>
-                <input type="url" id="youtube" name="youtube" placeholder="https://" value="">
-            </div>
+        <div class="flex-container">
+          <div>
+            <label for="type">Type</label><br />
+            <select id="type" name="type" required>
+              <option style="color: #818f9a" ; disabled selected hidden>
+                Select what applies
+              </option>
+              <option value="1">Website</option>
+              <option value="2">Desktop App</option>
+              <option value="3">Mobile App</option>
+              <option value="4">Others</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="concentration">Concentration</label><br />
+            <select id="concentration" name="concentration" required>
+              <option style="color: #818f9a" ; disabled selected hidden>
+                Select one
+              </option>
+              <option value="1">Cybersecurity</option>
+              <option value="2">Management Information System</option>
+              <option value="3">Engineering and Business Intelligencce</option>
+              <option value="4">Others</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex-container">
+          <div>
+            <label for="inolink">Innovation Link</label><br />
+            <input
+              type="url"
+              id="inolink"
+              name="inolink"
+              placeholder="https://"
+              required
+              value=""
+            />
+          </div>
+
+          <div>
+            <label for="youtube">YouTube Link (Optional)</label><br />
+            <input
+              type="url"
+              id="youtube"
+              name="youtube"
+              placeholder="https://"
+              value=""
+            />
+          </div>
         </div>
 
         <!-- cari  -->
-        <label for="images">Images</label><br>
-        <input type="file" id="images" name="images" placeholder="Upload your Image" required value=""><br>
+        <label for="images">Images</label><br />
+        <input
+          type="file"
+          id="images"
+          name="images"
+          placeholder="Upload your Image"
+          required
+          value=""
+        /><br />
 
-    <h2>Creators</h2>
-    
+        <h2>Creators</h2>
+
         <div class="flex-container">
-            <div>
-                <label for="group">Type</label><br>
-                <select id="group" name="group">
-                    <option value="student">Student</option>
-                    <option value="lecturer">Lecturer</option>
-                </select>
-            </div>
+          <div>
+            <label for="group">Type</label><br />
+            <select id="group" name="group">
+              <option value="student">Student</option>
+              <option value="lecturer">Lecturer</option>
+            </select>
+          </div>
 
-            <div>
-                <label for="name">Name</label><br>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" value=""> 
-            </div>
+          <div>
+            <label for="name">Name</label><br />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Example: Ammulia Rizqie"
+              value=""
+            />
+          </div>
 
-            <div>
-                <label for="id">ID (NIDN/NIM)</label><br>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
-            </div>
+          <div>
+            <label for="id">ID (NIDN/NIM)</label><br />
+            <input
+              type="text"
+              id="id"
+              name="id"
+              placeholder="Example: 2215091055"
+              value=""
+            />
+          </div>
 
-            <div>
-                <label for="email">Email</label><br>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
-            </div>
+          <div>
+            <label for="email">Email</label><br />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Example: domain@xyz.com"
+              value=""
+            />
+          </div>
         </div>
 
         <div class="flex-container">
-            <div>
-                <select id="group" name="group">
-                    <option value="student">Student</option>
-                    <option value="lecturer">Lecturer</option>
-                </select>
-            </div>
+          <div>
+            <select id="group" name="group">
+              <option value="student">Student</option>
+              <option value="lecturer">Lecturer</option>
+            </select>
+          </div>
 
-            <div>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" value=""> 
-            </div>
+          <div>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Example: Ammulia Rizqie"
+              value=""
+            />
+          </div>
 
-            <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
-            </div>
+          <div>
+            <input
+              type="text"
+              id="id"
+              name="id"
+              placeholder="Example: 2215091055"
+              value=""
+            />
+          </div>
 
-            <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
-            </div>
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Example: domain@xyz.com"
+              value=""
+            />
+          </div>
         </div>
 
         <div class="flex-container">
-            <div>
-                <select id="group" name="group">
-                    <option value="student">Student</option>
-                    <option value="lecturer">Lecturer</option>
-                </select>
-            </div>
+          <div>
+            <select id="group" name="group">
+              <option value="student">Student</option>
+              <option value="lecturer">Lecturer</option>
+            </select>
+          </div>
 
-            <div>
-                <input type="text" id="name" name="group" placeholder="Example: Ammulia Rizqie" value=""> 
-            </div>
+          <div>
+            <input
+              type="text"
+              id="name"
+              name="group"
+              placeholder="Example: Ammulia Rizqie"
+              value=""
+            />
+          </div>
 
-            <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
-            </div>
+          <div>
+            <input
+              type="text"
+              id="id"
+              name="id"
+              placeholder="Example: 2215091055"
+              value=""
+            />
+          </div>
 
-            <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
-            </div>
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Example: domain@xyz.com"
+              value=""
+            />
+          </div>
         </div>
 
         <div class="flex-container">
-            <div>
-                <select id="group" name="group">
-                    <option value="student">Student</option>
-                    <option value="lecturer">Lecturer</option>
-                </select>
-            </div>
+          <div>
+            <select id="group" name="group">
+              <option value="student">Student</option>
+              <option value="lecturer">Lecturer</option>
+            </select>
+          </div>
 
-            <div>
-                <input type="text" id="name" name="name" placeholder="Example: Ammulia Rizqie" value=""> 
-            </div>
+          <div>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Example: Ammulia Rizqie"
+              value=""
+            />
+          </div>
 
-            <div>
-                <input type="text" id="id" name="id" placeholder="Example: 2215091055" value=""> 
-            </div>
+          <div>
+            <input
+              type="text"
+              id="id"
+              name="id"
+              placeholder="Example: 2215091055"
+              value=""
+            />
+          </div>
 
-            <div>
-                <input type="email" id="email" name="email" placeholder="Example: domain@xyz.com" value=""> 
-            </div>
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Example: domain@xyz.com"
+              value=""
+            />
+          </div>
         </div>
 
-        <input type="submit">
-    </form><br>
-
+        <input type="submit" />
+      </form>
+      <br />
     </div>
-
-
-
-</body>
+  </body>
 </html>
