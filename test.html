@@ -1,260 +1,247 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+  integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous"></script>
 <style>
-  body {
-    background: #e8eff6;
+  /*! Image Uploader - v1.2.3 - 26/11/2019
+ * Copyright (c) 2019 Christian Bayer; Licensed MIT */
+  @font-face {
+    font-family: 'Image Uploader Icons';
+    src: url(../fonts/iu.eot);
+    src: url(../fonts/iu.eot) format('embedded-opentype'), url(../fonts/iu.ttf) format('truetype'), url(../fonts/iu.woff) format('woff'), url(../fonts/iu.svg) format('svg');
+    font-weight: 400;
+    font-style: normal
   }
 
-  .items {
-    background: #fff;
-    height: 24rem;
-    border-radius: 6px;
-    flex: 4;
-    flex-wrap: wrap;
-    margin-right: 20px;
+  [class*=iui-],
+  [class^=iui-] {
+    font-family: 'Image Uploader Icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
   }
 
-  .items:nth-child(4),
-  .items:nth-child(8) {
-    margin: 0;
+  .iui-close:before {
+    content: "\e900"
   }
 
-  .item {
-    display: flex;
+  .iui-cloud-upload:before {
+    content: "\e901"
   }
 
-  .items img {
-    width: 100%;
-    height: 12rem;
-    object-fit: cover;
-    border-radius: 6px 6px 0px 0px;
-    margin-bottom: 17px;
+  .image-uploader {
+    min-height: 10rem;
+    border: 1px solid #d9d9d9;
+    position: relative
   }
 
-  .card-content {
-    padding-left: 20px;
-    padding-right: 20px;
+  .image-uploader.drag-over {
+    background-color: #f3f3f3
   }
 
-  .card-title {
-    font-family: "Inter", sans-serif;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 1.2;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-  }
-
-  .card-category {
-    font-family: "Inter", sans-serif;
-    font-weight: normal;
-    font-size: 13px;
-    letter-spacing: 0px;
-    line-height: 25px;
-    color: #818f9a;
-  }
-
-  .card-details {
-    color: #818f9a;
-    font-size: 11px;
-    display: flex;
-    align-content: flex-start;
+  .image-uploader input[type=file] {
+    width: 0;
+    height: 0;
     position: absolute;
-    bottom: 19px;
-    width: 100%;
+    z-index: -1;
+    opacity: 0
   }
 
-
-  .swipe-button {
-    background: #0c67ab;
-    color: #f3f4f6;
-    border: none;
-    font-family: "Inter", sans-serif;
-    border-radius: 6px;
-    padding-left: 4px;
-    padding-right: 4px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    font-size: 13px;
+  .image-uploader .upload-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
   }
 
-  .button-wrapper {
-    width: auto;
-    height: auto;
+  .image-uploader .upload-text i {
+    display: block;
+    font-size: 3rem;
+    margin-bottom: .5rem
+  }
+
+  .image-uploader .upload-text span {
+    display: block
+  }
+
+  .image-uploader.has-files .upload-text {
+    display: none
+  }
+
+  .image-uploader .uploaded {
+    padding: .5rem;
+    line-height: 0
+  }
+
+  .image-uploader .uploaded .uploaded-image {
+    display: inline-block;
+    width: calc(16.6666667% - 1rem);
+    padding-bottom: calc(16.6666667% - 1rem);
+    height: 0;
     position: relative;
+    margin: .5rem;
+    background: #f3f3f3;
+    cursor: default
+  }
+
+  .image-uploader .uploaded .uploaded-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute
+  }
+
+  .image-uploader .uploaded .uploaded-image .delete-image {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: .2rem;
+    right: .2rem;
+    border-radius: 50%;
+    padding: .3rem;
+    line-height: 1;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-appearance: none;
+    border: none
+  }
+
+  .image-uploader .uploaded .uploaded-image:hover .delete-image {
+    display: block
+  }
+
+  .image-uploader .uploaded .uploaded-image .delete-image i {
+    display: block;
+    color: #fff;
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: 1.4rem;
+    line-height: 1.4rem
+  }
+
+  @media screen and (max-width:1366px) {
+    .image-uploader .uploaded .uploaded-image {
+      width: calc(20% - 1rem);
+      padding-bottom: calc(20% - 1rem)
+    }
+  }
+
+  @media screen and (max-width:992px) {
+    .image-uploader .uploaded {
+      padding: .4rem
+    }
+
+    .image-uploader .uploaded .uploaded-image {
+      width: calc(25% - .8rem);
+      padding-bottom: calc(25% - .4rem);
+      margin: .4rem
+    }
+  }
+
+  @media screen and (max-width:786px) {
+    .image-uploader .uploaded {
+      padding: .3rem
+    }
+
+    .image-uploader .uploaded .uploaded-image {
+      width: calc(33.3333333333% - .6rem);
+      padding-bottom: calc(33.3333333333% - .3rem);
+      margin: .3rem
+    }
+  }
+
+  @media screen and (max-width:450px) {
+    .image-uploader .uploaded {
+      padding: .2rem
+    }
+
+    .image-uploader .uploaded .uploaded-image {
+      width: calc(50% - .4rem);
+      padding-bottom: calc(50% - .4rem);
+      margin: .2rem
+    }
   }
 </style>
 
 <body>
-  <div class="button-wrapper">
-    <button class="swipe-button am-prev" data-action="slideLeft" style="margin-right: 7px;"><i
-        class='bx bx-chevron-left' style="font-size: 30px;"></i></button>
-    <button class="swipe-button am-next" data-action="slideRight"><i class='bx bx-chevron-right'
-        style="font-size: 30px;"></i></button>
-  </div>
-  <div class="owl-carousel owl-theme">
-    <div class="item">
-      <div class="items">
-        <a href="innovation.html"><img src="..\photos\card1.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="innovation.html">Sistem Informasi Manajemen Sampah Terpadu Milik Kita</a>
-            </div>
-            <div class="card-category"><a href="#">Thesis</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 12, 2023</div>
-          </div>
+  <div class='wrapper'>
+    <div class="upload">
+      <div class="upload-wrapper">
+        <div class="upload-img">
+          <!-- image here -->
         </div>
-      </div>
-      <div class="items">
-        <a href="#"><img src="..\photos\card2.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Rudaya~Connect The Art</a></div>
-            <div class="card-category"><a href="#">Internship</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 9, 2023</div>
-          </div>
+        <div class="upload-info">
+          <p>
+            <span class="upload-info-value">0</span> file(s) uploaded.
+          </p>
         </div>
-      </div>
-      <div class="items">
-        <a href="#"><img src="..\photos\card3.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Elektropedia</a></div>
-            <div class="card-category"><a href="#">Others</a></div>
+        <div class="upload-area">
+          <div class="upload-area-img">
+            <img src="assets/upload.png" alt="">
           </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 7, 2023</div>
-          </div>
+          <p class="upload-area-text">Select images or <span>browse</span>.</p>
         </div>
-      </div>
-      <div class="items">
-        <a href="#"><img src="..\photos\card4.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Sistem Inovasi Prodi Sistem Informasi UNDIKSHA</a></div>
-            <div class="card-category"><a href="#">Thesis</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 4, 2023</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <div class="items">
-        <a href="#"><img src="..\photos\card5.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Sistem Prestasi Prodi Sistem Informasi UNDIKSHA</a>
-            </div>
-            <div class="card-category"><a href="#">Internship</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 3, 2023</div>
-          </div>
-        </div>
-      </div>
-      <div class="items">
-        <a href="#"><img src="..\photos\card6.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Sistem Perwalian Prodi Sistem Informasi UNDIKSHA</a>
-            </div>
-            <div class="card-category"><a href="#">Thesis</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 2, 2023</div>
-          </div>
-        </div>
-      </div>
-      <div class="items">
-        <a href="#"><img src="..\photos\card7.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Workstate: The Platform for Freelance Services</a></div>
-            <div class="card-category"><a href="#">Others</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 1, 2023</div>
-          </div>
-        </div>
-      </div>
-      <div class="items">
-        <a href="#"><img src="..\photos\card8.jpg"></a>
-        <div class="card-content">
-          <div>
-            <div class="card-title"><a href="#">Melody: The NFT Music Platform for a Revolutionary
-                Future</a></div>
-            <div class="card-category"><a href="#">Others</a></div>
-          </div>
-          <div class="card-details">
-            <div>
-              <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px;"></i>
-            </div>
-            <div>September 1, 2023</div>
-          </div>
-        </div>
+        <input type="file" class="visually-hidden" id="upload-input" multiple>
       </div>
     </div>
   </div>
 
   <script>
-    $(function () {
-      // Owl Carousel
-      var owl = $(".owl-carousel");
-      owl.owlCarousel({
-        items: 1,
-        margin: 20,
-        loop: false,
-        nav: false,
-        dots: false,
-        pagination: false
+
+
+    $(document).ready(function () {
+      $(".upload-area").click(function () {
+        $('#upload-input').trigger('click');
       });
 
-      var owl = $('.owl-carousel');
-      owl.owlCarousel();
-      // Go to the next item
-      $('.am-next').click(function () {
-        owl.trigger('next.owl.carousel');
-      })
-      // Go to the previous item
-      $('.am-prev').click(function () {
-        // With optional speed parameter
-        // Parameters has to be in square bracket '[]'
-        owl.trigger('prev.owl.carousel', [300]);
-      })
+      $('#upload-input').change(event => {
+        if (event.target.files) {
+          let filesAmount = event.target.files.length;
+          $('.upload-img').html("");
 
+          for (let i = 0; i < filesAmount; i++) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+              let html = `
+                        <div class = "uploaded-img">
+                            <img src = "${event.target.result}">
+                            <button type = "button" class = "remove-btn">
+                                <i class = "fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+              $(".upload-img").append(html);
+            }
+            reader.readAsDataURL(event.target.files[i]);
+          }
+
+          $('.upload-info-value').text(filesAmount);
+          $('.upload-img').css('padding', "20px");
+        }
+      });
+
+      $(window).click(function (event) {
+        if ($(event.target).hasClass('remove-btn')) {
+          $(event.target).parent().remove();
+        } else if ($(event.target).parent().hasClass('remove-btn')) {
+          $(event.target).parent().parent().remove();
+        }
+      })
     });
   </script>
 </body>

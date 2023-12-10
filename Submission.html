@@ -1,363 +1,304 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link rel="icon" type="image/jpg" href="Image/SI.jpg" />
-    <title>Innovation System</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="Sub.css" />
-    <link rel="stylesheet" href="general.css" />
-    <title>Document</title>
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  </head>
+<html>
 
-  <style>
-    .flex-container {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-  </style>
+<head>
+  <title>Submission Form | SIFORS Innovation System</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="general.css">
+  <link rel="stylesheet" href="submission.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://christianbayer.github.io/image-uploader/dist/image-uploader.min.css">
+  <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
+</head>
 
-  <body>
-    <div class="navbar">
-      <div class="navbar-start">
-        <div style="padding-right: 13px">
-          <a href="home.html">
-            <img
-              src="https://i.ibb.co/q1rJ2G2/SI-removebg-preview.png"
-              width="43px"
-              height="43px"
-            />
-          </a>
-        </div>
-        <div class="title">
-          <a href="home.html">Information Systems</a>
-        </div>
+<body>
+  <nav>
+    <div class="navbar-start">
+      <div style="padding-right: 13px;">
+        <a href="home.html">
+          <img src="photos\favicon.png" width="43px" height="43px">
+        </a>
       </div>
-      <div class="navbar-end">
-        <div style="padding-right: 34px">
-          <a class="navlinks" href="home.html">Homepage</a>
-          <a class="navlinks" href="catalogue.html">Catalogue</a>
-        </div>
-        <div>
-          <a href="/"
-            ><i
-              class="bx bx-search"
-              style="padding-right: 5px; font-size: 25px"
-            ></i
-          ></a>
-          <a href="/"
-            ><i class="bx bx-log-in-circle" style="font-size: 26px"></i
-          ></a>
-        </div>
+      <div class="title">
+        <a href="home.html">Innovation System</a>
       </div>
     </div>
-
-    <div
-      class="headline"
-      style="
-        background: linear-gradient(
-            90deg,
-            rgba(5, 46, 75, 0.8),
-            rgba(0, 0, 0, 0.3) 80%
-          ),
-          url(photos/Submit.png);
-      "
-    >
-      <div class="headline-content">
-        <h1 class="headline-title">Submit Your Innovation</h1>
-        <p>
-          Your submission will be reviewed for approval once it is submitted, so
-          make sure that you’ve written your submission carefully.
-        </p>
+    <div class="navbar-end">
+      <div style="padding-right: 34px;">
+        <a class="navlinks" href="home.html">Homepage</a>
+        <a class="navlinks" href="catalogue.html">Catalogue</a>
       </div>
-    </div>
-
-    <div class="container">
       <div>
-        <h3 id="h3">Basic Information</h3>
-        <br />
-        <h2>General</h2>
+        <i class='bx bx-search icon-search' aria-hidden="trues"
+          style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
+        <div class="search-form">
+          <div class="search-flex">
+            <div>
+              <i class='bx bx-search' style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem;"></i>
+            </div>
+            <div>
+              <form action="">
+                <input type="search" placeholder="Click here to search...">
+              </form>
+            </div>
+            <div>
+              <i class='bx bx-x search-close'
+                style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
+            </div>
+          </div>
+        </div>
+        <i class='bx bx-user-circle profilebtn' onclick="profileFunction()"
+          style="font-size: 25px; padding-top: 0.3rem;"></i>
+        <div id="profileDropdown" class="user-dropdown">
+          <a class="droplinks" href="user.html">Dashboard</a>
+          <a class="droplinks" href="submit.html">Submit</a>
+          <a class="droplinks" href="help.html">Help</a>
+          <a class="droplinks" href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="navpadding"></div>
+
+  <div class="headline submission">
+    <div class="headline-content">
+      <h1 class="headline-title">Submit Your Innovation</h1>
+      <p>Your submission will be reviewed for approval once it is submitted, so make sure that you’ve written your
+        submission carefully.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <form method="POST" action="" enctype="multipart/form-data">
+      <div class="section-title" style="margin-bottom: 20px;">Submission Form</div>
+      <div class="submission-container">
+        <div>
+          <div class="submission-item">
+            <div>
+              <label for="NameInnov"> Name </label>
+              <input type="text" name="NameInnov" placeholder="Input the innovation name..." required>
+            </div>
+            <div>
+              <label for="IDCateg"> Category </label>
+              <select name="IDCateg" required>
+                <option value="" disabled selected hidden>Select a category...</option>
+                <option value="1"> Thesis</option>
+                <option value="2"> Internship</option>
+                <option value="3"> Others</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="submission-item">
+            <div>
+              <label for="IDType">Type</label>
+              <select name="IDType" required>
+                <option value="" disabled selected hidden>Select a type...</option>
+                <option value="1"> Website</option>
+                <option value="2"> Desktop App</option>
+                <option value="3"> Mobile App</option>
+                <option value="4"> Others</option>
+              </select>
+            </div>
+            <div>
+              <label for="IDConc"> Concentration </label>
+              <select name="IDConc" required>
+                <option value="" disabled selected hidden>Select a concentration...</option>
+                <option value="1"> Cybersecurity</option>
+                <option value="2"> Management Information System</option>
+                <option value="3"> Engineering and Business Intelligence</option>
+                <option value="4"> Others</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="submission-item">
+            <div>
+              <div class="input-container">
+                <label for="CreDate">Creation Date</label>
+                <i class="bx bx-calendar-alt"></i>
+                <input id="creationdate" placeholder="Insert date here..." name="CreDate" required />
+              </div>
+            </div>
+            <div>
+              <div class="input-container">
+                <label for="SubmDate">Submission Date</label>
+                <i class="bx bx-calendar-alt"></i>
+                <input id="submissiondate" placeholder="Insert date here..." name="SubmDate" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="submission-item">
+            <div>
+              <div class="input-container">
+                <label for="Link">Innovation Link</label>
+                <i class='bx bx-link'></i>
+                <input type="url" name="Link" placeholder="https://" required>
+              </div>
+            </div>
+            <div>
+              <div class="input-container">
+                <label for="LinkYT">YouTube Link (Optional)</label>
+                <i class='bx bx-link'></i>
+                <input type="url" name="LinkYT" placeholder="https://">
+              </div>
+            </div>
+          </div>
+
+          <div class="field_wrapper">
+            <div>
+              <label for="user">Creators (NIM/NIDN)</label>
+              <div class="user-input">
+                <input type="text" name="IDUser[]" value="" placeholder="Insert 10-character ID..." maxlength="10"
+                  required />
+                <a href="javascript:void(0);" class="add_button" title="Add field"><i class='bx bx-plus'></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="Description">Description </label>
+          <textarea name="Description" placeholder="Add description here..." required></textarea>
+        </div>
+
       </div>
 
-      <form action="baru.php" method="post" enctype="multipart/form-data">
-        <div class="box-name">
-          <label for="name">Name</label><br />
-          <input
-            type="text"
-            id="name"
-            placeholder="Example: Rudaya"
-            name="name"
-            required
-            value=""
-          />
-        </div>
-        <div class="description">
-          <label for="description">Description</label><br />
-          <textarea
-            id="description"
-            name="description"
-            rows="15"
-            cols="50"
-            placeholder="Example: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula egestas, sollicitudin nisl a, malesuada justo..."
-          ></textarea
-          ><br />
-        </div>
+      <label for="Images">Images</label>
+      <div class="input-images">
+        <div class="input-images-1" style="padding-top: .5rem;"></div>
+      </div>
 
-        <div class="flex-container">
-          <div>
-            <label for="date">Date of Creation</label><br />
-            <input type="date" id="date" name="date" required value="" />
-          </div>
+      <input type="submit" value="Submit" class="submit" name="submit">
+    </form>
+  </div>
 
-          <div>
-            <label for="category">Category</label><br />
-            <select id="category" name="category" required>
-              <option style="color: #818f9a" ; disabled selected hidden>
-                Select one
-              </option>
-              <option value="1">Thesis</option>
-              <option value="2">Interships</option>
-              <option value="3">Others</option></select
-            ><br />
-          </div>
-        </div>
-
-        <div class="flex-container">
-          <div>
-            <label for="type">Type</label><br />
-            <select id="type" name="type" required>
-              <option style="color: #818f9a" ; disabled selected hidden>
-                Select what applies
-              </option>
-              <option value="1">Website</option>
-              <option value="2">Desktop App</option>
-              <option value="3">Mobile App</option>
-              <option value="4">Others</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="concentration">Concentration</label><br />
-            <select id="concentration" name="concentration" required>
-              <option style="color: #818f9a" ; disabled selected hidden>
-                Select one
-              </option>
-              <option value="1">Cybersecurity</option>
-              <option value="2">Management Information System</option>
-              <option value="3">Engineering and Business Intelligencce</option>
-              <option value="4">Others</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex-container">
-          <div>
-            <label for="inolink">Innovation Link</label><br />
-            <input
-              type="url"
-              id="inolink"
-              name="inolink"
-              placeholder="https://"
-              required
-              value=""
-            />
-          </div>
-
-          <div>
-            <label for="youtube">YouTube Link (Optional)</label><br />
-            <input
-              type="url"
-              id="youtube"
-              name="youtube"
-              placeholder="https://"
-              value=""
-            />
-          </div>
-        </div>
-
-        <!-- cari  -->
-        <label for="images">Images</label><br />
-        <input
-          type="file"
-          id="images"
-          name="images"
-          placeholder="Upload your Image"
-          required
-          value=""
-        /><br />
-
-        <h2>Creators</h2>
-
-        <div class="flex-container">
-          <div>
-            <label for="group">Type</label><br />
-            <select id="group" name="group">
-              <option value="student">Student</option>
-              <option value="lecturer">Lecturer</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="name">Name</label><br />
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Example: Ammulia Rizqie"
-              value=""
-            />
-          </div>
-
-          <div>
-            <label for="id">ID (NIDN/NIM)</label><br />
-            <input
-              type="text"
-              id="id"
-              name="id"
-              placeholder="Example: 2215091055"
-              value=""
-            />
-          </div>
-
-          <div>
-            <label for="email">Email</label><br />
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Example: domain@xyz.com"
-              value=""
-            />
-          </div>
-        </div>
-
-        <div class="flex-container">
-          <div>
-            <select id="group" name="group">
-              <option value="student">Student</option>
-              <option value="lecturer">Lecturer</option>
-            </select>
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Example: Ammulia Rizqie"
-              value=""
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="id"
-              name="id"
-              placeholder="Example: 2215091055"
-              value=""
-            />
-          </div>
-
-          <div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Example: domain@xyz.com"
-              value=""
-            />
-          </div>
-        </div>
-
-        <div class="flex-container">
-          <div>
-            <select id="group" name="group">
-              <option value="student">Student</option>
-              <option value="lecturer">Lecturer</option>
-            </select>
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="name"
-              name="group"
-              placeholder="Example: Ammulia Rizqie"
-              value=""
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="id"
-              name="id"
-              placeholder="Example: 2215091055"
-              value=""
-            />
-          </div>
-
-          <div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Example: domain@xyz.com"
-              value=""
-            />
-          </div>
-        </div>
-
-        <div class="flex-container">
-          <div>
-            <select id="group" name="group">
-              <option value="student">Student</option>
-              <option value="lecturer">Lecturer</option>
-            </select>
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Example: Ammulia Rizqie"
-              value=""
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="id"
-              name="id"
-              placeholder="Example: 2215091055"
-              value=""
-            />
-          </div>
-
-          <div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Example: domain@xyz.com"
-              value=""
-            />
-          </div>
-        </div>
-
-        <input type="submit" />
-      </form>
-      <br />
+  <footer>
+    <div>
+      <h3>Innovation System</h3>
+      © Universitas Pendidikan Ganesha<br>
+      Copyright 2023. All Rights Reserved
     </div>
-  </body>
+    <div>
+      <h4>Pages</h4>
+      <a href="#">Dashboard</a>
+      <a href="#">Catalogue</a>
+    </div>
+    <div>
+      <h4>Others</h4>
+      <a href="#">Help</a>
+      <a href="#">Submit</a>
+    </div>
+  </footer>
+
+  <script>
+    $(".icon-search").on("click", function () {
+      $(".search-form").fadeToggle();
+    });
+
+    $(".search-close").on("click", function () {
+      $(".search-form").fadeToggle();
+    });
+  </script>
+
+  <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function profileFunction() {
+      document.getElementById("profileDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.profilebtn')) {
+        var dropdowns = document.getElementsByClassName("user-dropdown");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      var maxField = 10; //Input fields increment limitation
+      var addButton = $('.add_button'); //Add button selector
+      var wrapper = $('.field_wrapper'); //Input field wrapper
+      var fieldHTML = '<div class="user-input"><input type="text" name="IDUser[]" value="" placeholder="Insert 10-character ID..." maxlength="10" required/><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a>'; //New input field html 
+      var x = 1; //Initial field counter is 1
+
+      // Once add button is clicked
+      $(addButton).click(function () {
+        x++; //Increase field counter
+        $(wrapper).append(fieldHTML); //Add field html
+      });
+
+      // Once remove button is clicked
+      $(wrapper).on('click', '.remove_button', function (e) {
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrease field counter
+      });
+    });
+  </script>
+
+  <script>
+    const picker1 = new easepick.create({
+      element: "#creationdate",
+      css: [
+        'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
+        'easepick.css',
+      ],
+      zIndex: 9999999,
+      AmpPlugin: {
+        dropdown: {
+          months: true,
+          years: true
+        }
+      },
+      plugins: ['AmpPlugin']
+    });
+  </script>
+
+  <script>
+    const picker2 = new easepick.create({
+      element: "#submissiondate",
+      css: [
+        'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
+        'easepick.css',
+      ],
+      zIndex: 9999999,
+      AmpPlugin: {
+        dropdown: {
+          months: true,
+          years: true
+        }
+      },
+      plugins: ['AmpPlugin']
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $('.input-images-1').imageUploader({
+        imagesInputName: 'Img[]',
+        label: 'Upload up to 6 images (Max 2MB per image)',
+        maxSize: 2 * 1024 * 1024,
+        maxFiles: 6
+      });
+    });
+  </script>
+  <script src="https://christianbayer.github.io/image-uploader/dist/image-uploader.min.js"
+    type="text/javascript"></script>
+
+</body>
+
 </html>
