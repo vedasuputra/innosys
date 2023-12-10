@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovation System</title>
+    <link rel="stylesheet" href="login.css"> 
+</head>
+<body>
+    
+    <div class="title">
+        <h1 style="color: white;">Log into your account.</h1>
+        <h5 style="color: #CCD2D6;">Access your dashboard.</h5>
+    </div>
+
+    <form action="login.php" method="post" enctype="multipart/form-data">
+        <div>
+            <label style="color: white;" for="IDUser">ID (NIDN/NIM)</label><br>
+            <input type="text" id="IDUser" placeholder="Example: 1915090000" name="IDUser" required value="">
+        </div>
+        <div>
+            <label style="color: white;" for="UserPass">Password</label><br>
+            <input type="text" id="UserPass" placeholder="Password" name="UserPass" required value="">
+        </div>
+    
+        <input type="submit">
+        
+    </form>
+
+</body>
+</html>

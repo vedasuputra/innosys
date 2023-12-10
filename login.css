@@ -1,18 +1,75 @@
-@font-face {
-    font-family: Inter;
-    src: url(font/Inter-VariableFont_slnt\,wght.ttf);
+body {
+  background: linear-gradient(90deg,
+  rgba(5, 46, 75, 0.8),
+  rgba(0, 0, 0, 0.3) 80%),
+url("photos/Loginbg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: 20%;
+  color: #fff;
+}
 
+h2, h1, h4 {
+  color: #fff!important;
+  font-weight: 500;
+  line-height: 0;
 }
-body{
-    font-family: Inter;
-    margin-left: 69px;
-    margin-top: 233px;
-    background-image: url(photos/Loginbg.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+
+h2 {
+  font-size: 25px;
+  position: absolute;
+  top: 6vh;
+  left: 4vw;
 }
-.title{
-    margin: auto;
+
+h1 {
+  font-size: 55px;
+  padding-bottom: 20px;
+}
+
+h4 {
+  font-size: 15px;
+  color: #CCD2D6!important;
+}
+
+.content {
+  left: 4vw;
+
+  top: 48%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  height: auto;
+  position: absolute;
+}
+
+form {
+  margin-top: 50px;
+}
+
+input[type="text"], input[type="password"] {
+  padding: 14px!important;
+  padding-left: 45px!important;
+}
+
+.input-container i {
+  position: absolute;
+  font-size: 24px;  
+  padding-left: 12px;
+  padding-top: 12px;
+  color: #041f35;
+}
+
+label {
+  margin-bottom: 7px!important;
+}
+
+.submit {
+  margin-top: 30px!important;
+}
+
+p {
+  position: absolute;
+  bottom: 6vh;
+  left: 4vw;
 }
