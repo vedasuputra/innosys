@@ -1,3 +1,43 @@
+<?php
+
+include "connect.php";
+// error_reporting(0);
+
+
+if (isset($_POST['submit'])) {
+    $NameInnov = $_POST['NameInnov'];
+    $Description = $_POST['Description'];
+    $SubmDate = $_POST['SubmDate'];
+    $CreDate = $_POST['CreDate'];
+    $Link = $_POST['Link'];
+    $LinkYT = $_POST['LinkYT'];
+    $IDConc = $_POST['IDConc'];
+    $IDCateg = $_POST['IDCateg'];
+    $IDType = $_POST['IDType'];
+    $id_user_array = $_POST['IDUser'];
+
+    $query = "INSERT INTO innovdata (NameInnov, Description, Status, SubmDate, CreDate, Link, LinkYoutube, IDConc, IDCateg, IDType) VALUES
+     ('$NameInnov','$Description','Pending','$SubmDate','$CreDate','$Link', '$LinkYT', '$IDConc', '$IDCateg', '$IDType')"; // Fix column name here
+
+    if (mysqli_query($koneksi, $query)) {
+        $IDInnov = mysqli_insert_id($koneksi);
+
+        foreach ($id_user_array as $IDUser) {
+            $query_user = "INSERT INTO userinnov (IDInnov, IDUser) VALUES ('$IDInnov', '$IDUser')";
+
+            if (!mysqli_query($koneksi, $query_user)) {
+                echo "error:" . $query_user . "<br>" . mysqli_error($koneksi);
+            }
+        }
+        echo "<script>alert('Your form has been submitted.'); </script>";
+    } else {
+        echo "<script>alert('Error. Please try again or contact the admin.'); </script>";
+    }
+}
+
+
+?>
+
 <html>
 
 <head>
