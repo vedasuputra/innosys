@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("Location: login.php");
+  exit();
+}
+
+
+$get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = ?");
+
+?>
+
 <html>
 
 <head>
@@ -8,8 +22,7 @@
   <link rel="stylesheet" href="user.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-  <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
   <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
@@ -33,8 +46,7 @@
         <a class="navlinks" href="catalogue.html">Catalogue</a>
       </div>
       <div>
-        <i class='bx bx-search icon-search' aria-hidden="trues"
-          style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
+        <i class='bx bx-search icon-search' aria-hidden="trues" style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
         <div class="search-form">
           <div class="search-flex">
             <div>
@@ -46,8 +58,7 @@
               </form>
             </div>
             <div>
-              <i class='bx bx-x search-close'
-                style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
+              <i class='bx bx-x search-close' style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
             </div>
           </div>
         </div>
@@ -66,7 +77,7 @@
 
   <div class="headline user">
     <div class="headline-content">
-      <h1 class="headline-title">Welcome, Kim Melianti Taehyung</h1>
+      <h1 class="headline-title">Welcome, <?php echo $_SESSION["nama"]; ?></h1>
       <p>This is your dashboard, where you can view the approved, pending, and rejected innovations that you have submitted.</p>
       <button onclick="javascript:location.href='submission.html'" type="button" class="headline-button">Submit Innovation</button>
     </div>
@@ -536,44 +547,44 @@
   </footer>
 
   <script>
-    $(function () {
-        // Owl Carousel
-        var owl = $(".owl-carousel");
-        owl.owlCarousel({
-            items: 1,
-            margin: 20,
-            loop: false,
-            nav: false,
-            dots: false,
-            pagination: false,
-            mouseDrag: false,
-            touchDrag: false,
-            pullDrag: false,
-            freeDrag: false,
-        });
+    $(function() {
+      // Owl Carousel
+      var owl = $(".owl-carousel");
+      owl.owlCarousel({
+        items: 1,
+        margin: 20,
+        loop: false,
+        nav: false,
+        dots: false,
+        pagination: false,
+        mouseDrag: false,
+        touchDrag: false,
+        pullDrag: false,
+        freeDrag: false,
+      });
 
-        var owl = $('.owl-carousel');
-        owl.owlCarousel();
-        // Go to the next item
-        $('.am-next').click(function () {
-            owl.trigger('next.owl.carousel');
-        })
-        // Go to the previous item
-        $('.am-prev').click(function () {
-            // With optional speed parameter
-            // Parameters has to be in square bracket '[]'
-            owl.trigger('prev.owl.carousel', [300]);
-        })
+      var owl = $('.owl-carousel');
+      owl.owlCarousel();
+      // Go to the next item
+      $('.am-next').click(function() {
+        owl.trigger('next.owl.carousel');
+      })
+      // Go to the previous item
+      $('.am-prev').click(function() {
+        // With optional speed parameter
+        // Parameters has to be in square bracket '[]'
+        owl.trigger('prev.owl.carousel', [300]);
+      })
 
     });
   </script>
 
   <script>
-    $(".icon-search").on("click", function () {
+    $(".icon-search").on("click", function() {
       $(".search-form").fadeToggle();
     });
 
-    $(".search-close").on("click", function () {
+    $(".search-close").on("click", function() {
       $(".search-form").fadeToggle();
     });
   </script>
@@ -586,7 +597,7 @@
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
@@ -608,7 +619,7 @@
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
@@ -630,7 +641,7 @@
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
@@ -648,21 +659,21 @@
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function myFunction4() {
-        document.getElementById("myDropdown4").classList.toggle("show");
+      document.getElementById("myDropdown4").classList.toggle("show");
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
+      }
     }
   </script>
 
@@ -670,21 +681,21 @@
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function myFunction5() {
-        document.getElementById("myDropdown5").classList.toggle("show");
+      document.getElementById("myDropdown5").classList.toggle("show");
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
+      }
     }
   </script>
 
@@ -692,21 +703,21 @@
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function myFunction6() {
-        document.getElementById("myDropdown6").classList.toggle("show");
+      document.getElementById("myDropdown6").classList.toggle("show");
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
+      }
     }
   </script>
 
@@ -714,21 +725,21 @@
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function myFunction7() {
-        document.getElementById("myDropdown7").classList.toggle("show");
+      document.getElementById("myDropdown7").classList.toggle("show");
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
+      }
     }
   </script>
 
@@ -736,21 +747,21 @@
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function profileFunction() {
-        document.getElementById("profileDropdown").classList.toggle("show");
+      document.getElementById("profileDropdown").classList.toggle("show");
     }
 
     // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-        if (!event.target.matches('.profilebtn')) {
-            var dropdowns = document.getElementsByClassName("user-dropdown");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+    window.onclick = function(event) {
+      if (!event.target.matches('.profilebtn')) {
+        var dropdowns = document.getElementsByClassName("user-dropdown");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
+      }
     }
   </script>
 
@@ -792,6 +803,6 @@
     document.getElementById("defaultOpen2").click();
   </script>
 
-  </body>
+</body>
 
 </html>

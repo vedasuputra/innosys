@@ -29,10 +29,16 @@ function loginUser($username, $password)
 
     if ($result->num_rows == 1) {
         // Login berhasil sebagai user
-        $_SESSION['username'] = $username;
-        $_SESSION['role'] = 'user';
-        header("Location: user.html");
-        exit();
+        $row = $result->fetch_assoc();
+
+        if (isset($row['Username'])) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = 'user';
+            $_SESSION['nama'] = $row['Username'];
+            header("Location: user.html");
+            exit();
+        }
     }
 
     // Coba mencari di tabel admin
@@ -41,6 +47,7 @@ function loginUser($username, $password)
 
     if ($result->num_rows == 1) {
         // Login berhasil sebagai admin
+        $_SESSION["loggedin"] = true;
         $_SESSION['username'] = $username;
         $_SESSION['role'] = 'admin';
         header("Location: admin.html");

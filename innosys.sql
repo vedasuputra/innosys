@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `IDAdmin` int(10) NOT NULL,
+  `IDAdmin` varchar(10) NOT NULL,
   `Password Admin` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -37,7 +37,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`IDAdmin`, `Password Admin`) VALUES
-(15059007, 'DendiSanjaya123');
+(0015059007, 'DendiSanjaya123');
 
 -- --------------------------------------------------------
 
