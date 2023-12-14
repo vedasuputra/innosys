@@ -3,12 +3,12 @@ session_start();
 
 // Periksa apakah pengguna sudah login
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("Location: login.php");
+  header("Location: loginfix.php");
   exit();
 }
 
 
-$get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = ?");
+// $get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = ?");
 
 ?>
 
@@ -67,7 +67,7 @@ $get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON inn
           <a class="droplinks" href="user.html">Dashboard</a>
           <a class="droplinks" href="submit.html">Submit</a>
           <a class="droplinks" href="help.html">Help</a>
-          <a class="droplinks" href="#">Logout</a>
+          <a class="droplinks" href="logout.php">Logout</a>
         </div>
       </div>
     </div>
