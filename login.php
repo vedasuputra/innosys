@@ -36,7 +36,7 @@ function loginUser($username, $password)
             $_SESSION['username'] = $username;
             $_SESSION['role'] = 'user';
             $_SESSION['nama'] = $row['Username'];
-            header("Location: user.html");
+            header("Location: user.php");
             exit();
         }
     }

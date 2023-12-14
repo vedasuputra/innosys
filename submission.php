@@ -16,8 +16,26 @@ if (isset($_POST['submit'])) {
     $IDType = $_POST['IDType'];
     $id_user_array = $_POST['IDUser'];
 
-    $query = "INSERT INTO innovdata (NameInnov, Description, Status, SubmDate, CreDate, Link, LinkYoutube, IDConc, IDCateg, IDType) VALUES
-     ('$NameInnov','$Description','Pending','$SubmDate','$CreDate','$Link', '$LinkYT', '$IDConc', '$IDCateg', '$IDType')"; // Fix column name here
+    $ImgArray = [];
+    if (is_array($_FILES['Img']['name'])) {
+        $totalFiles = count($_FILES['Img']['name']);
+
+        for ($i = 0; $i < $totalFiles; $i++) {
+            $Img = $_FILES['Img']['name'][$i];
+            $location = "photos/" . $Img;
+            move_uploaded_file($_FILES['Img']['tmp_name'][$i], $location);
+            $ImgArray[] = $Img;
+        }
+        $ImgString = implode(",", $ImgArray);
+    } else {
+        $Img = $_FILES['Img']['name'];
+        $location = "photos/" . $Img;
+        move_uploaded_file($_FILES['Img']['tmp_name'], $location);
+        $ImgString = $Img;
+    }
+
+    $query = "INSERT INTO innovdata (NameInnov, Description, Status, SubmDate, CreDate, Link, Img, LinkYoutube, IDConc, IDCateg, IDType) VALUES
+     ('$NameInnov','$Description','Pending','$SubmDate','$CreDate','$Link', '$ImgString', '$LinkYT', '$IDConc', '$IDCateg', '$IDType')"; // Fix column name here
 
     if (mysqli_query($koneksi, $query)) {
         $IDInnov = mysqli_insert_id($koneksi);
@@ -329,7 +347,7 @@ if (isset($_POST['submit'])) {
   <script>
     $(function () {
       $('.input-images-1').imageUploader({
-        imagesInputName: 'Img[]',
+        imagesInputName: 'Img',
         label: 'Upload up to 6 images (Max 2MB per image)',
         maxSize: 2 * 1024 * 1024,
         maxFiles: 6

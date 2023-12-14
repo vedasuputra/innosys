@@ -8,7 +8,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 
-$get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = ?");
+// $get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = ?");
 
 ?>
 

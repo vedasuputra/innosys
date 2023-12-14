@@ -17,25 +17,25 @@ h2, h1, h4 {
 }
 
 h2 {
-  font-size: 25px;
+  font-size: 15px;
   position: absolute;
   top: 6vh;
   left: 4vw;
 }
 
 h1 {
-  font-size: 55px;
-  padding-bottom: 20px;
+  font-size: 50px;
+  padding-bottom: 15px;
 }
 
 h4 {
-  font-size: 15px;
+  font-size: 13px;
   color: #CCD2D6!important;
 }
 
 .content {
   left: 4vw;
-
+  width: 32vw;
   top: 48%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -48,15 +48,15 @@ form {
 }
 
 input[type="text"], input[type="password"] {
-  padding: 14px!important;
+  padding: 11px!important;
   padding-left: 45px!important;
 }
 
 .input-container i {
   position: absolute;
-  font-size: 24px;  
+  font-size: 22px;  
   padding-left: 12px;
-  padding-top: 12px;
+  padding-top: 10px;
   color: #041f35;
 }
 
@@ -66,10 +66,13 @@ label {
 
 .submit {
   margin-top: 30px!important;
+  padding: 10px!important;
 }
 
 p {
   position: absolute;
   bottom: 6vh;
   left: 4vw;
+  font-size: 12px;
+  color: #CCD2D6;
 }
