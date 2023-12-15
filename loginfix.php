@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </a>
 
   <div class="content">
-    <h1>Log into your account.</h1>
+    <h1>Login Page</h1>
     <h4>Access your dashboard.</h4>
 
     <form action="loginfix.php" method="post" enctype="multipart/form-data">

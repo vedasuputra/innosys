@@ -22,14 +22,14 @@ if (isset($_POST['submit'])) {
 
         for ($i = 0; $i < $totalFiles; $i++) {
             $Img = $_FILES['Img']['name'][$i];
-            $location = "photos/" . $Img;
+            $location = "image/" . $Img;
             move_uploaded_file($_FILES['Img']['tmp_name'][$i], $location);
             $ImgArray[] = $Img;
         }
         $ImgString = implode(",", $ImgArray);
     } else {
         $Img = $_FILES['Img']['name'];
-        $location = "photos/" . $Img;
+        $location = "image/" . $Img;
         move_uploaded_file($_FILES['Img']['tmp_name'], $location);
         $ImgString = $Img;
     }
@@ -211,7 +211,7 @@ if (isset($_POST['submit'])) {
             <div>
               <label for="user">Creators (NIM/NIDN)</label>
               <div class="user-input">
-                <input type="text" name="IDUser[]" value="" placeholder="Insert 10-character ID..." maxlength="10"
+                <input type="text" name="IDUser[]" minlength="10" value="" placeholder="Insert 10-character ID..." maxlength="10"
                   required />
                 <a href="javascript:void(0);" class="add_button" title="Add field"><i class='bx bx-plus'></i></a>
               </div>
@@ -290,7 +290,7 @@ if (isset($_POST['submit'])) {
       var maxField = 10; //Input fields increment limitation
       var addButton = $('.add_button'); //Add button selector
       var wrapper = $('.field_wrapper'); //Input field wrapper
-      var fieldHTML = '<div class="user-input"><input type="text" name="IDUser[]" value="" placeholder="Insert 10-character ID..." maxlength="10" required/><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a>'; //New input field html 
+      var fieldHTML = '<div class="user-input"><input type="text" minlength="10" name="IDUser[]" value="" placeholder="Insert 10-character ID..." maxlength="10" required/><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a>'; //New input field html 
       var x = 1; //Initial field counter is 1
 
       // Once add button is clicked

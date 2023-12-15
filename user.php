@@ -77,7 +77,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
   <div class="headline user">
     <div class="headline-content">
-      <h1 class="headline-title">Welcome, <?php echo $_SESSION["nama"]; ?></h1>
+      <h1 class="headline-title" style="overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Welcome, <?php echo $_SESSION["nama"]; ?></h1>
       <p>This is your dashboard, where you can view the approved, pending, and rejected innovations that you have submitted.</p>
       <button onclick="javascript:location.href='submission.html'" type="button" class="headline-button">Submit Innovation</button>
     </div>
