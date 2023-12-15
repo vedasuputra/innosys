@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 03:03 PM
+-- Generation Time: Dec 15, 2023 at 07:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,15 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `IDAdmin` varchar(10) NOT NULL,
-  `Password Admin` varchar(50) NOT NULL
+  `PasswordAdmin` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`IDAdmin`, `Password Admin`) VALUES
-(0015059007, 'DendiSanjaya123');
+INSERT INTO `admin` (`IDAdmin`, `PasswordAdmin`) VALUES
+('0015059007', 'DendiSanjaya123');
 
 -- --------------------------------------------------------
 
@@ -138,6 +138,17 @@ INSERT INTO `innovdata` (`IDInnov`, `NameInnov`, `Description`, `Status`, `SubmD
 (31, 'FESTRA Business Plan Competition.', 'FESTRA also known as Festival Bahasa dan Sastra who held a business plan competition to hone students abilities to become more creative by developing ideas that have been given in accordance with the provisions listed. The Widih Kmie GG Bngitz team, which came from Information Systems Study Program students with four members, won first place with the theme Exploring Resources as a Movement in Striving for Sustainable Development Goals 2030.', 'Approve', '2023-07-23', '2022-12-20', 'https:/festra.buss.plan.com', '31.jpg', NULL, 3, 3, 4),
 (32, 'TWEAK#8 Essay Competition ', 'BEM FTK holds an annual event to celebrate the faculty\'s birthday which opens with various competitions, the event is called Together We Stand for FTK. A student named Ida Ayu Gede Putri Audrey Aurethashafa Pramudya Winayaka won a silver medal for an essay with the theme: Just because I\'m stupid, am I not worthy of aiming as high as the sky?', 'Approve', '2023-09-13', '2023-05-23', 'https:/tweak.delapan.bem.ftk.2023.com', '32.jpg', NULL, 4, 3, 4),
 (33, 'Cara Agar Tidak Mudah Marah', 'Cara Agar Tidak Mudah Marah is a collaborative masterpiece in the form of a book found in the public library of the Ganesha University of Education. The book raises topics originating from local research which found that the majority of people in the campus environment tend to have high temperament.', 'Approve', '2021-11-15', '2020-01-05', 'https:/cara.agar.tidak.mudah.marah.com', '33.jpg', NULL, 4, 3, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `innovpending`
+--
+
+CREATE TABLE `innovpending` (
+  `IDInnov` int(10) NOT NULL,
+  `nameInnov` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -398,7 +409,16 @@ INSERT INTO `userinnov` (`IDInnov`, `IDUser`) VALUES
 (33, '0004125412'),
 (33, '2015091011'),
 (33, '2015091060'),
-(33, '2115091011');
+(33, '2115091011'),
+(71, ''),
+(73, ''),
+(75, '0004125099'),
+(75, '2215091054'),
+(77, '0004125099'),
+(77, '2215091054'),
+(79, '0004125099'),
+(79, '2115091024'),
+(81, '');
 
 -- --------------------------------------------------------
 
@@ -478,6 +498,12 @@ ALTER TABLE `innovdata`
   ADD PRIMARY KEY (`IDInnov`);
 
 --
+-- Indexes for table `innovpending`
+--
+ALTER TABLE `innovpending`
+  ADD PRIMARY KEY (`IDInnov`);
+
+--
 -- Indexes for table `type`
 --
 ALTER TABLE `type`
@@ -509,13 +535,19 @@ ALTER TABLE `validation`
 -- AUTO_INCREMENT for table `innovdata`
 --
 ALTER TABLE `innovdata`
-  MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT for table `innovpending`
+--
+ALTER TABLE `innovpending`
+  MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `userinnov`
 --
 ALTER TABLE `userinnov`
-  MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `validation`

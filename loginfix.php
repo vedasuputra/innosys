@@ -55,7 +55,7 @@ function loginUser($username, $password)
   }
 
   // Login gagal
-  echo "Username atau password salah";
+  echo "<script> alert('Wrong username or password'); </script>";
   $conn->close();
 }
 

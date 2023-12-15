@@ -62,9 +62,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
           </div>
         </div>
-        <i class='bx bx-user-circle profilebtn' onclick="profileFunction()" style="font-size: 25px; padding-top: 0.3rem;"></i>
+        <i id="userIcon" class='bx bx-user-circle profilebtn' onclick="profileFunction()" style="font-size: 25px; padding-top: 0.3rem;"></i>
         <div id="profileDropdown" class="user-dropdown">
-          <a class="droplinks" href="user.html">Dashboard</a>
+          <a class="droplinks" href="user.php">Dashboard</a>
           <a class="droplinks" href="submit.html">Submit</a>
           <a class="droplinks" href="help.html">Help</a>
           <a class="droplinks" href="logout.php">Logout</a>
@@ -802,6 +802,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen2").click();
   </script>
+
+
 
 </body>
 
