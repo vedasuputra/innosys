@@ -8,5 +8,5 @@ session_unset();
 session_destroy();
 
 // Redirect ke halaman login (ganti "login.php" dengan halaman login Anda)
-header("Location: home.html");
+header("Location: home.php");
 exit();

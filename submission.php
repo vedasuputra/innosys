@@ -3,54 +3,68 @@
 include "connect.php";
 // error_reporting(0);
 
+$lecturer = "
+    SELECT IDUser, Username FROM user 
+    WHERE Role = 'Lecturer'
+    ORDER BY IDUser ASC
+";
+
+$lecturerresult = $koneksi->query($lecturer);
+
+$student = "
+    SELECT IDUser, Username FROM user 
+    WHERE Role = 'Student'
+    ORDER BY IDUser ASC
+";
+
+$studentresult = $koneksi->query($student);
 
 if (isset($_POST['submit'])) {
-    $NameInnov = $_POST['NameInnov'];
-    $Description = $_POST['Description'];
-    $SubmDate = $_POST['SubmDate'];
-    $CreDate = $_POST['CreDate'];
-    $Link = $_POST['Link'];
-    $LinkYT = $_POST['LinkYT'];
-    $IDConc = $_POST['IDConc'];
-    $IDCateg = $_POST['IDCateg'];
-    $IDType = $_POST['IDType'];
-    $id_user_array = $_POST['IDUser'];
+  $NameInnov = $_POST['NameInnov'];
+  $Description = $_POST['Description'];
+  $CreDate = $_POST['CreDate'];
+  $Link = $_POST['Link'];
+  $LinkYT = $_POST['LinkYT'];
+  $IDConc = $_POST['IDConc'];
+  $IDCateg = $_POST['IDCateg'];
+  $IDType = $_POST['IDType'];
+  $id_user_array = $_POST['IDUser'];
 
-    $ImgArray = [];
-    if (is_array($_FILES['Img']['name'])) {
-        $totalFiles = count($_FILES['Img']['name']);
+  $ImgArray = [];
+  if (is_array($_FILES['Img']['name'])) {
+    $totalFiles = count($_FILES['Img']['name']);
 
-        for ($i = 0; $i < $totalFiles; $i++) {
-            $Img = $_FILES['Img']['name'][$i];
-            $location = "image/" . $Img;
-            move_uploaded_file($_FILES['Img']['tmp_name'][$i], $location);
-            $ImgArray[] = $Img;
-        }
-        $ImgString = implode(",", $ImgArray);
-    } else {
-        $Img = $_FILES['Img']['name'];
-        $location = "image/" . $Img;
-        move_uploaded_file($_FILES['Img']['tmp_name'], $location);
-        $ImgString = $Img;
+    for ($i = 0; $i < $totalFiles; $i++) {
+      $Img = $_FILES['Img']['name'][$i];
+      $location = "image/" . $Img;
+      move_uploaded_file($_FILES['Img']['tmp_name'][$i], $location);
+      $ImgArray[] = $Img;
     }
+    $ImgString = implode(",", $ImgArray);
+  } else {
+    $Img = $_FILES['Img']['name'];
+    $location = "image/" . $Img;
+    move_uploaded_file($_FILES['Img']['tmp_name'], $location);
+    $ImgString = $Img;
+  }
 
-    $query = "INSERT INTO innovdata (NameInnov, Description, Status, SubmDate, CreDate, Link, Img, LinkYoutube, IDConc, IDCateg, IDType) VALUES
-     ('$NameInnov','$Description','Pending','$SubmDate','$CreDate','$Link', '$ImgString', '$LinkYT', '$IDConc', '$IDCateg', '$IDType')"; // Fix column name here
+  $query = "INSERT INTO innovdata (NameInnov, Description, Status, SubmDate, CreDate, Link, Img, LinkYoutube, IDConc, IDCateg, IDType) VALUES
+     ('$NameInnov','$Description','Pending', CURDATE(), '$CreDate','$Link', '$ImgString', '$LinkYT', '$IDConc', '$IDCateg', '$IDType')"; // Fix column name here
 
-    if (mysqli_query($koneksi, $query)) {
-        $IDInnov = mysqli_insert_id($koneksi);
+  if (mysqli_query($koneksi, $query)) {
+    $IDInnov = mysqli_insert_id($koneksi);
 
-        foreach ($id_user_array as $IDUser) {
-            $query_user = "INSERT INTO userinnov (IDInnov, IDUser) VALUES ('$IDInnov', '$IDUser')";
+    foreach ($id_user_array as $IDUser) {
+      $query_user = "INSERT INTO userinnov (IDInnov, IDUser) VALUES ('$IDInnov', '$IDUser')";
 
-            if (!mysqli_query($koneksi, $query_user)) {
-                echo "error:" . $query_user . "<br>" . mysqli_error($koneksi);
-            }
-        }
-        echo "<script>alert('Your form has been submitted.'); </script>";
-    } else {
-        echo "<script>alert('Error. Please try again or contact the admin.'); </script>";
+      if (!mysqli_query($koneksi, $query_user)) {
+        echo "error:" . $query_user . "<br>" . mysqli_error($koneksi);
+      }
     }
+    echo "<script>alert('Your form has been submitted.'); </script>";
+  } else {
+    echo "<script>alert('Error. Please try again or contact the admin.'); </script>";
+  }
 }
 
 
@@ -62,13 +76,16 @@ if (isset($_POST['submit'])) {
   <title>Submission Form | SIFORS Innovation System</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="select2.css">
   <link rel="stylesheet" href="general.css">
   <link rel="stylesheet" href="submission.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://christianbayer.github.io/image-uploader/dist/image-uploader.min.css">
   <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -134,11 +151,20 @@ if (isset($_POST['submit'])) {
       <div class="section-title" style="margin-bottom: 20px;">Submission Form</div>
       <div class="submission-container">
         <div>
+          <div style="margin-bottom: 16px;">
+            <label for="NameInnov"> Name </label>
+            <input type="text" name="NameInnov" placeholder="Input the innovation name..." required>
+          </div>
+
           <div class="submission-item">
             <div>
-              <label for="NameInnov"> Name </label>
-              <input type="text" name="NameInnov" placeholder="Input the innovation name..." required>
+              <div class="input-container">
+                <label for="CreDate">Creation Date</label>
+                <i class="bx bx-calendar-alt"></i>
+                <input id="creationdate" placeholder="Insert date here..." name="CreDate" required />
+              </div>
             </div>
+
             <div>
               <label for="IDCateg"> Category </label>
               <select name="IDCateg" required>
@@ -176,23 +202,6 @@ if (isset($_POST['submit'])) {
           <div class="submission-item">
             <div>
               <div class="input-container">
-                <label for="CreDate">Creation Date</label>
-                <i class="bx bx-calendar-alt"></i>
-                <input id="creationdate" placeholder="Insert date here..." name="CreDate" required />
-              </div>
-            </div>
-            <div>
-              <div class="input-container">
-                <label for="SubmDate">Submission Date</label>
-                <i class="bx bx-calendar-alt"></i>
-                <input id="submissiondate" placeholder="Insert date here..." name="SubmDate" required />
-              </div>
-            </div>
-          </div>
-
-          <div class="submission-item">
-            <div>
-              <div class="input-container">
                 <label for="Link">Innovation Link</label>
                 <i class='bx bx-link'></i>
                 <input type="url" name="Link" placeholder="https://" required>
@@ -209,10 +218,26 @@ if (isset($_POST['submit'])) {
 
           <div class="field_wrapper">
             <div>
-              <label for="user">Creators (NIM/NIDN)</label>
+              <label for="user">Creators</label>
               <div class="user-input">
-                <input type="text" name="IDUser[]" minlength="10" value="" placeholder="Insert 10-character ID..." maxlength="10"
-                  required />
+                <select class="js-placeholder js-states form-control" name="IDUser[]" required>
+                  <option></option>
+                  <optgroup label="Lecturers">
+                    <?php
+                    foreach ($lecturerresult as $row) {
+                      echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
+                    }
+                    ?>
+                  </optgroup>
+                  <optgroup label="Students">
+                    <?php
+                    foreach ($studentresult as $row) {
+                      echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
+                    }
+                    ?>
+                  </optgroup>
+                </select>
+
                 <a href="javascript:void(0);" class="add_button" title="Add field"><i class='bx bx-plus'></i></a>
               </div>
             </div>
@@ -286,17 +311,28 @@ if (isset($_POST['submit'])) {
   </script>
 
   <script>
+    $(".js-placeholder").select2({
+      placeholder: "Input the creator's data...",
+    });
+
     $(document).ready(function () {
       var maxField = 10; //Input fields increment limitation
       var addButton = $('.add_button'); //Add button selector
       var wrapper = $('.field_wrapper'); //Input field wrapper
-      var fieldHTML = '<div class="user-input"><input type="text" minlength="10" name="IDUser[]" value="" placeholder="Insert 10-character ID..." maxlength="10" required/><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a>'; //New input field html 
+      var fieldHTML = '<div class="user-input"><select class="js-placeholder js-states form-control" name="IDUser[]"><option></option><optgroup label="Lecturers"><?php foreach ($lecturerresult as $row) {
+        echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
+      } ?></optgroup><optgroup label="Students"><?php foreach ($studentresult as $row) {
+        echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
+      } ?></optgroup></select><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a></div>'; //New input field html 
       var x = 1; //Initial field counter is 1
 
       // Once add button is clicked
       $(addButton).click(function () {
         x++; //Increase field counter
         $(wrapper).append(fieldHTML); //Add field html
+        $(".js-placeholder").select2({
+          placeholder: "Input the creator's data...",
+        });
       });
 
       // Once remove button is clicked
@@ -360,3 +396,6 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+
+<!-- <input type="text" name="IDUser[]" minlength="10" value="" placeholder="Insert 10-character ID..." maxlength="10"
+                  required /> -->
