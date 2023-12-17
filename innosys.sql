@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2023 at 07:20 AM
+-- Generation Time: Dec 17, 2023 at 07:50 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -57,7 +57,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`IDCateg`, `NameCateg`) VALUES
 (1, 'Thesis'),
 (2, 'Internship'),
-(3, 'Others');
+(3, 'Others Category');
 
 -- --------------------------------------------------------
 
@@ -75,10 +75,10 @@ CREATE TABLE `concentration` (
 --
 
 INSERT INTO `concentration` (`IDConc`, `NameConc`) VALUES
-(1, 'Cyber Security'),
-(2, 'Management Information'),
-(3, 'Engineering and Business'),
-(4, 'Others');
+(1, 'Cybersecurity'),
+(2, 'Management Information System'),
+(3, 'Engineering and Business Intelligence'),
+(4, 'Others Concentration');
 
 -- --------------------------------------------------------
 
@@ -142,17 +142,6 @@ INSERT INTO `innovdata` (`IDInnov`, `NameInnov`, `Description`, `Status`, `SubmD
 -- --------------------------------------------------------
 
 --
--- Table structure for table `innovpending`
---
-
-CREATE TABLE `innovpending` (
-  `IDInnov` int(10) NOT NULL,
-  `nameInnov` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `type`
 --
 
@@ -167,9 +156,9 @@ CREATE TABLE `type` (
 
 INSERT INTO `type` (`IDType`, `NameType`) VALUES
 (1, 'Website'),
-(2, 'Desktop'),
-(3, 'MobileApp'),
-(4, 'Others');
+(2, 'Desktop App'),
+(3, 'Mobile App'),
+(4, 'Others Type');
 
 -- --------------------------------------------------------
 
@@ -429,7 +418,7 @@ INSERT INTO `userinnov` (`IDInnov`, `IDUser`) VALUES
 CREATE TABLE `validation` (
   `IDValid` int(10) NOT NULL,
   `IDInnov` int(10) NOT NULL,
-  `Decision` enum('Approve','Reject') NOT NULL,
+  `Decision` enum('Approve','Rejected') NOT NULL,
   `Note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -444,15 +433,15 @@ INSERT INTO `validation` (`IDValid`, `IDInnov`, `Decision`, `Note`) VALUES
 (5, 5, 'Approve', ''),
 (7, 7, 'Approve', ''),
 (8, 8, 'Approve', ''),
-(9, 9, 'Reject', 'Uploaded photos does not seem to match the invention given'),
+(9, 9, 'Rejected', 'Uploaded photos does not seem to match the invention given'),
 (10, 10, 'Approve', ''),
 (11, 11, 'Approve', ''),
 (13, 13, 'Approve', ''),
 (14, 14, 'Approve', ''),
-(15, 15, 'Reject', 'Description contains SARA or other offending materials'),
+(15, 15, 'Rejected', 'Description contains SARA or other offending materials'),
 (16, 16, 'Approve', ''),
 (17, 17, 'Approve', ''),
-(18, 18, 'Reject', 'A lecturer is wrongly labeled as a student'),
+(18, 18, 'Rejected', 'A lecturer is wrongly labeled as a student'),
 (19, 19, 'Approve', ''),
 (20, 20, 'Approve', ''),
 (21, 21, 'Approve', ''),
@@ -498,12 +487,6 @@ ALTER TABLE `innovdata`
   ADD PRIMARY KEY (`IDInnov`);
 
 --
--- Indexes for table `innovpending`
---
-ALTER TABLE `innovpending`
-  ADD PRIMARY KEY (`IDInnov`);
-
---
 -- Indexes for table `type`
 --
 ALTER TABLE `type`
@@ -536,12 +519,6 @@ ALTER TABLE `validation`
 --
 ALTER TABLE `innovdata`
   MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
-
---
--- AUTO_INCREMENT for table `innovpending`
---
-ALTER TABLE `innovpending`
-  MODIFY `IDInnov` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `userinnov`
