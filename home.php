@@ -65,7 +65,7 @@ include "loginfix.php";
             </div>
           </div>
         </div>
-        <?php if ($_SESSION['role']=='user'): ?>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role']=='user'): ?>
           <i id="userIcon" class='bx bx-user-circle profilebtn' onclick="profileFunction()"
             style="font-size: 25px; padding-top: 0.3rem;"></i>
           <div id="profileDropdown" class="user-dropdown">
@@ -74,7 +74,7 @@ include "loginfix.php";
             <a class="droplinks" href="help.html">Help</a>
             <a class="droplinks" href="logout.php">Logout</a>
           </div>
-        <?php elseif ($_SESSION['role']=='admin'): ?>
+        <?php elseif (isset($_SESSION['role']) && $_SESSION['role']=='admin'): ?>
           <i
             id="userIcon"
             class="bx bx-shield profilebtn"
