@@ -1,6 +1,75 @@
 <?php
 
+include "connect.php";
 include "loginfix.php";
+include "statistics.php";
+
+// Display data from innovdata
+$recordsPerPage = 8;
+$query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+          FROM innovdata 
+          JOIN type ON innovdata.IDType = type.IDType 
+          JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+          JOIN category ON innovdata.IDCateg = category.IDCateg 
+          WHERE innovdata.Status = 'Approved'
+          ORDER BY `innovdata`.`SubmDate` DESC
+          LIMIT $recordsPerPage";
+$result = mysqli_query($koneksi, $query);
+
+// All count
+$allCount = "SELECT COUNT(*) AS total FROM innovdata WHERE innovdata.Status = 'Approved'";
+$allCountResult = mysqli_query($koneksi, $allCount);
+$allCountRow = mysqli_fetch_assoc($allCountResult);
+$allCountTotal = $allCountRow['total'];
+
+// Category count
+$categoryCount = "SELECT category.NameCateg, COUNT(*) as categoryCount 
+                  FROM innovdata 
+                  JOIN category ON innovdata.IDCateg = category.IDCateg 
+                  WHERE innovdata.Status = 'Approved'
+                  GROUP BY category.NameCateg
+                  ORDER BY `category`.`IDCateg` ASC";
+$categoryCountResult = mysqli_query($koneksi, $categoryCount);
+$categoryCounts = array();
+
+while ($row = mysqli_fetch_assoc($categoryCountResult)) {
+  $categoryName = $row['NameCateg'];
+  $categoryCountTotal = $row['categoryCount'];
+  $categoryCounts[$categoryName] = $categoryCountTotal;
+}
+
+// Type count
+$typeCount = "SELECT type.NameType, COUNT(*) as typeCount 
+              FROM innovdata 
+              JOIN type ON innovdata.IDType = type.IDType 
+              WHERE innovdata.Status = 'Approved'
+              GROUP BY type.NameType
+              ORDER BY `type`.`IDType` ASC";
+$typeCountResult = mysqli_query($koneksi, $typeCount);
+$typeCounts = array();
+
+while ($row = mysqli_fetch_assoc($typeCountResult)) {
+  $typeName = $row['NameType'];
+  $typeCountTotal = $row['typeCount'];
+  $typeCounts[$typeName] = $typeCountTotal;
+}
+
+// Concentration count
+$concentrationCount = "SELECT concentration.NameConc, COUNT(*) as concentrationCount 
+                       FROM innovdata 
+                       JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+                       WHERE innovdata.Status = 'Approved'
+                       GROUP BY concentration.NameConc
+                       ORDER BY `concentration`.`IDConc` ASC";
+$concentrationCountResult = mysqli_query($koneksi, $concentrationCount);
+$concentrationCounts = array();
+
+while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
+  $concentrationName = $row['NameConc'];
+  $concentrationCountTotal = $row['concentrationCount'];
+  $concentrationCounts[$concentrationName] = $concentrationCountTotal;
+}
+
 ?>
 
 <html>
@@ -65,7 +134,7 @@ include "loginfix.php";
             </div>
           </div>
         </div>
-        <?php if (isset($_SESSION['role']) && $_SESSION['role']=='user'): ?>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'user'): ?>
           <i id="userIcon" class='bx bx-user-circle profilebtn' onclick="profileFunction()"
             style="font-size: 25px; padding-top: 0.3rem;"></i>
           <div id="profileDropdown" class="user-dropdown">
@@ -74,13 +143,9 @@ include "loginfix.php";
             <a class="droplinks" href="help.html">Help</a>
             <a class="droplinks" href="logout.php">Logout</a>
           </div>
-        <?php elseif (isset($_SESSION['role']) && $_SESSION['role']=='admin'): ?>
-          <i
-            id="userIcon"
-            class="bx bx-shield profilebtn"
-            onclick="profileFunction()"
-            style="font-size: 25px; padding-top: 0.3rem"
-          ></i>
+        <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+          <i id="userIcon" class="bx bx-shield profilebtn" onclick="profileFunction()"
+            style="font-size: 25px; padding-top: 0.3rem"></i>
           <div id="profileDropdown" class="user-dropdown">
             <a class="droplinks" href="user.html">Dashboard</a>
             <a class="droplinks" href="logout.php">Logout</a>
@@ -126,140 +191,53 @@ include "loginfix.php";
     </div>
     <div class="owl-carousel owl-theme">
       <div class="item">
-        <div class="items" onclick="javascript:location.href='innovation.html'">
-          <img src="photos\card1.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">
-                Sistem Informasi Manajemen Sampah Terpadu Milik Kita
-              </div>
-              <div class="card-category"><a href="#">Thesis</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 12, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card2.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">Rudaya~Connect The Art</div>
-              <div class="card-category"><a href="#">Internship</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 9, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card3.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">Elektropedia</div>
-              <div class="card-category"><a href="#">Others</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 7, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card4.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">
-                Sistem Inovasi Prodi Sistem Informasi UNDIKSHA
-              </div>
-              <div class="card-category"><a href="#">Thesis</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 4, 2023</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card5.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">
-                Sistem Prestasi Prodi Sistem Informasi UNDIKSHA
-              </div>
-              <div class="card-category"><a href="#">Internship</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 3, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card6.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">
-                Sistem Perwalian Prodi Sistem Informasi UNDIKSHA
-              </div>
-              <div class="card-category"><a href="#">Thesis</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 2, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card7.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">
-                Workstate: The Platform for Freelance Services
-              </div>
-              <div class="card-category"><a href="#">Others</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 1, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card8.jpg" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">
-                Melody: The NFT Music Platform for a Revolutionary Future
-              </div>
-              <div class="card-category"><a href="#">Others</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1"></i>
-              </div>
-              <div>September 1, 2023</div>
-            </div>
-          </div>
-        </div>
+        <?php
+
+        $counter = 0;
+
+        while ($row = mysqli_fetch_assoc($result)) {
+
+          $nameInnov = $row['NameInnov'];
+          $nametype = $row['NameType'];
+          $nameConst = $row['NameConc'];
+          $creDate = date("F j, Y", strtotime($row['CreDate']));
+          $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+          $categoryName = $row['NameCateg'];
+          $images = explode(",", $row['Img']);
+
+          if ($counter > 0 && $counter % 4 == 0) {
+            echo '</div>';
+            echo '<div class="item">';
+          }
+
+          echo '<div class="items" onclick="javascript:location.href=\'innovation.html\'">';
+          if (!empty($images[0])) {
+            echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
+          }
+          echo '<div class="card-content">';
+          echo '<div style="justify-content: normal;">';
+          echo '<div class="card-title">' . $nameInnov . '</div>';
+          echo '<div class="card-category">' . $categoryName . '</div>';
+          echo '</div>';
+          echo '<div class="card-details">';
+          echo '<div>';
+          echo '<i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>';
+          echo '</div>';
+          echo '<div>';
+          echo '<div>' . $SubmDate . '</div>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+
+          // Increment the counter
+          $counter++;
+
+          // Check if the counter is a multiple of 4
+        
+        }
+
+        ?>
       </div>
     </div>
 
@@ -358,24 +336,23 @@ include "loginfix.php";
           </div>
         </div>
       </div>
+
       <div class="statistics-container">
         <div class="statistics-left">
           <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>172</h1>
+            <h1>
+              <?php echo $allCountTotal; ?>
+            </h1>
             <span>Total Innovations</span>
           </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>26</h1>
-            <span>Thesis Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>64</h1>
-            <span>Internship Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>82</h1>
-            <span>Other Innovations</span>
-          </div>
+          <?php
+          foreach ($categoryCounts as $categoryName => $count) {
+            echo '<div class="statistics-text" onclick="javascript:location.href=\'#\'">';
+            echo '<h1>' . $count . '</h1>';
+            echo '<span>' . $categoryName . ' Innovations</span>';
+            echo '</div>';
+          }
+          ?>
         </div>
         <div class="statistics-right">
           <canvas id="categoryChart"></canvas>
@@ -401,22 +378,14 @@ include "loginfix.php";
       </div>
       <div class="statistics-container">
         <div class="statistics-left">
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>20</h1>
-            <span>Website Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>69</h1>
-            <span>Desktop App Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>112</h1>
-            <span>Mobile App Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>29</h1>
-            <span>Other Innovations</span>
-          </div>
+          <?php
+          foreach ($typeCounts as $typeName => $count) {
+            echo '<div class="statistics-text" onclick="javascript:location.href=\'#\'">';
+            echo '<h1>' . $count . '</h1>';
+            echo '<span>' . $typeName . ' Innovations</span>';
+            echo '</div>';
+          }
+          ?>
         </div>
         <div class="statistics-right">
           <canvas id="typeChart"></canvas>
@@ -444,22 +413,14 @@ include "loginfix.php";
       </div>
       <div class="statistics-container">
         <div class="statistics-left">
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>100</h1>
-            <span>Cybersecurity Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>129</h1>
-            <span>Management Information System Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>29</h1>
-            <span>Engineering and Business Intelligence Innovations</span>
-          </div>
-          <div class="statistics-text" onclick="javascript:location.href='#'">
-            <h1>14</h1>
-            <span>Other Innovations</span>
-          </div>
+          <?php
+          foreach ($concentrationCounts as $concentrationName => $count) {
+            echo '<div class="statistics-text" onclick="javascript:location.href=\'#\'">';
+            echo '<h1>' . $count . '</h1>';
+            echo '<span>' . $concentrationName . ' Innovations</span>';
+            echo '</div>';
+          }
+          ?>
         </div>
         <div class="statistics-right">
           <canvas id="concentrationChart"></canvas>
@@ -515,7 +476,10 @@ include "loginfix.php";
   </script>
 
   <script type="text/javascript">
-    const ctx = document.getElementById("categoryChart").getContext("2d");
+    const count_thesis = <?php echo json_encode($count_thesis); ?>;
+    const count_internship = <?php echo json_encode($count_internship); ?>;
+    const count_othercategory = <?php echo json_encode($count_othercategory); ?>;
+    const categoryyear = <?php echo json_encode($categoryyear); ?>;
 
     Chart.defaults.font.family = "Inter";
     Chart.defaults.font.size = 15;
@@ -535,154 +499,33 @@ include "loginfix.php";
     Chart.defaults.interaction.intersect = false;
     Chart.defaults.interaction.mode = "x";
 
-    const categoryChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
-        datasets: [
-          {
-            // [0]
-            label: "Others",
-            backgroundColor: "#0c67ac",
-            data: [20, 10, 11, 21, 6, 15],
-          },
-          {
-            // [1]
-            label: "Internship",
-            backgroundColor: "#2d9cf1",
-            data: [10, 20, 15, 3, 4, 12],
-          },
-          {
-            // [2]
-            label: "Thesis",
-            backgroundColor: "#75bef6",
-            data: [3, 2, 4, 5, 5, 7],
-          },
-        ],
-      },
-
-      options: {
-        animation: {
-          duration: 0,
+    const categoryChartData = {
+      labels: categoryyear,
+      datasets: [
+        {
+          // [0]
+          label: "Other Categories",
+          backgroundColor: "#0c67ac",
+          data: count_othercategory
         },
-
-        scales: {
-          x: {
-            stacked: true,
-          },
-
-          y: {
-            stacked: true,
-          },
-
-          yAxes: [
-            {
-              gridLines: {
-                display: true,
-                color: "#e8eff6",
-              },
-              stacked: true,
-            },
-          ],
-
-          xAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-              gridLines: {
-                display: true,
-                color: "#e8eff6",
-              },
-              stacked: true,
-            },
-          ],
+        {
+          // [1]
+          label: "Internship",
+          backgroundColor: "#2d9cf1",
+          data: count_internship
         },
-
-        maintainAspectRatio: false,
-
-        plugins: {
-          legend: {
-            display: false,
-          },
-
-          tooltip: {
-            itemSort: function (a, b) {
-              return b.datasetIndex - a.datasetIndex;
-            },
-            callbacks: {
-              footer: function (items) {
-                return "Total: " + items.reduce((a, b) => a + b.parsed.y, 0);
-              },
-            },
-          },
+        {
+          // [2]
+          label: "Thesis",
+          backgroundColor: "#75bef6",
+          data: count_thesis
         },
-      },
-    });
-
-    function toggleData(value) {
-      const showValue = myChart.isDatasetVisible(value);
-      if (showValue === true) {
-        myChart.hide(value);
-      }
-      if (showValue === false) {
-        myChart.show(value);
-      }
+      ],
     }
-  </script>
 
-  <script type="text/javascript">
-    const ctx2 = document.getElementById("typeChart").getContext("2d");
-
-    Chart.defaults.font.family = "Inter";
-    Chart.defaults.font.size = 15;
-    Chart.defaults.color = "#041f35";
-    Chart.defaults.font.weight = 500;
-    Chart.defaults.plugins.tooltip.cornerRadius = 4;
-    Chart.defaults.plugins.tooltip.padding = 12;
-    Chart.defaults.plugins.tooltip.caretSize = 0;
-    Chart.defaults.plugins.tooltip.usePointStyle = true;
-    Chart.defaults.plugins.tooltip.labelPointStyle = "circle";
-    Chart.defaults.plugins.tooltip.backgroundColor = "#041f35";
-    Chart.defaults.plugins.tooltip.mode = "index";
-    Chart.defaults.plugins.tooltip.boxPadding = 2;
-    Chart.defaults.plugins.tooltip.boxHeight = 11;
-    Chart.defaults.plugins.tooltip.bodySpacing = 3;
-    Chart.defaults.plugins.tooltip.multiKeyBackground = "rgb(0,0,0,0)";
-    Chart.defaults.interaction.intersect = false;
-    Chart.defaults.interaction.mode = "x";
-
-    const typeChart = new Chart(ctx2, {
+    const categoryChartConfig = {
       type: "bar",
-      data: {
-        labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
-        datasets: [
-          {
-            // [0]
-            label: "Others",
-            backgroundColor: "#0c67ac",
-            data: [60, 30, 10, 25, 4, 11],
-          },
-          {
-            // [1]
-            label: "Mobile App",
-            backgroundColor: "#2d9cf1",
-            data: [29, 16, 13, 4, 12, 19],
-          },
-          {
-            // [2]
-            label: "Desktop App",
-            backgroundColor: "#75bef6",
-            data: [18, 12, 42, 50, 56, 19],
-          },
-          {
-            // [3]
-            label: "Website",
-            backgroundColor: "#bde0fb",
-            data: [43, 22, 46, 25, 51, 72],
-          },
-        ],
-      },
+      data: categoryChartData,
 
       options: {
         animation: {
@@ -741,13 +584,20 @@ include "loginfix.php";
           },
         },
       },
-    });
+    };
+
+    const categoryChart = new Chart(
+      document.getElementById('categoryChart').getContext("2d"),
+      categoryChartConfig
+    );
   </script>
 
   <script type="text/javascript">
-    const ctx3 = document
-      .getElementById("concentrationChart")
-      .getContext("2d");
+    const count_website = <?php echo json_encode($count_website); ?>;
+    const count_desktop = <?php echo json_encode($count_desktop); ?>;
+    const count_mobile = <?php echo json_encode($count_mobile); ?>;
+    const count_othertype = <?php echo json_encode($count_othertype); ?>;
+    const typeyear = <?php echo json_encode($typeyear); ?>;
 
     Chart.defaults.font.family = "Inter";
     Chart.defaults.font.size = 15;
@@ -767,37 +617,163 @@ include "loginfix.php";
     Chart.defaults.interaction.intersect = false;
     Chart.defaults.interaction.mode = "x";
 
-    const concentrationChart = new Chart(ctx3, {
+    const typeChartData = {
+      labels: typeyear,
+      datasets: [
+        {
+          // [0]
+          label: "Others",
+          backgroundColor: "#0c67ac",
+          data: count_othertype,
+        },
+        {
+          // [1]
+          label: "Mobile App",
+          backgroundColor: "#2d9cf1",
+          data: count_mobile,
+        },
+        {
+          // [2]
+          label: "Desktop App",
+          backgroundColor: "#75bef6",
+          data: count_desktop,
+        },
+        {
+          // [3]
+          label: "Website",
+          backgroundColor: "#bde0fb",
+          data: count_website,
+        },
+      ],
+    }
+
+    const typeChartConfig = {
       type: "bar",
-      data: {
-        labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
-        datasets: [
-          {
+      data: typeChartData,
+
+      options: {
+        animation: {
+          duration: 0,
+        },
+
+        scales: {
+          x: {
+            stacked: true,
+          },
+
+          y: {
+            stacked: true,
+          },
+
+          yAxes: [
+            {
+              gridLines: {
+                display: true,
+                color: "#e8eff6",
+              },
+              stacked: true,
+            },
+          ],
+
+          xAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+              gridLines: {
+                display: true,
+                color: "#e8eff6",
+              },
+              stacked: true,
+            },
+          ],
+        },
+
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            display: false,
+          },
+
+          tooltip: {
+            itemSort: function (a, b) {
+              return b.datasetIndex - a.datasetIndex;
+            },
+            callbacks: {
+              footer: function (items) {
+                return "Total: " + items.reduce((a, b) => a + b.parsed.y, 0);
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const typeChart = new Chart(
+      document.getElementById('typeChart').getContext("2d"),
+      typeChartConfig
+    );
+  </script>
+
+  <script type="text/javascript">
+    const count_cyber = <?php echo json_encode($count_cyber); ?>;
+    const count_msi = <?php echo json_encode($count_msi); ?>;
+    const count_rib = <?php echo json_encode($count_rib); ?>;
+    const count_otherconc = <?php echo json_encode($count_otherconc); ?>;
+    const concyear = <?php echo json_encode($concyear); ?>;
+
+    Chart.defaults.font.family = "Inter";
+    Chart.defaults.font.size = 15;
+    Chart.defaults.color = "#041f35";
+    Chart.defaults.font.weight = 500;
+    Chart.defaults.plugins.tooltip.cornerRadius = 4;
+    Chart.defaults.plugins.tooltip.padding = 12;
+    Chart.defaults.plugins.tooltip.caretSize = 0;
+    Chart.defaults.plugins.tooltip.usePointStyle = true;
+    Chart.defaults.plugins.tooltip.labelPointStyle = "circle";
+    Chart.defaults.plugins.tooltip.backgroundColor = "#041f35";
+    Chart.defaults.plugins.tooltip.mode = "index";
+    Chart.defaults.plugins.tooltip.boxPadding = 2;
+    Chart.defaults.plugins.tooltip.boxHeight = 11;
+    Chart.defaults.plugins.tooltip.bodySpacing = 3;
+    Chart.defaults.plugins.tooltip.multiKeyBackground = "rgb(0,0,0,0)";
+    Chart.defaults.interaction.intersect = false;
+    Chart.defaults.interaction.mode = "x";
+
+    const concChartData = {
+      labels: concyear,
+      datasets: [
+        {
             // [0]
             label: "Others",
             backgroundColor: "#0c67ac",
-            data: [40, 50, 70, 20, 10, 5],
+            data: count_otherconc,
           },
           {
             // [1]
             label: "Engineering and Business Intelligence",
             backgroundColor: "#2d9cf1",
-            data: [4, 6, 12, 18, 20, 22],
+            data: count_rib,
           },
           {
             // [2]
             label: "Management Information System",
             backgroundColor: "#75bef6",
-            data: [30, 60, 20, 50, 10, 11],
+            data: count_msi,
           },
           {
             // [3]
             label: "Cybersecurity",
             backgroundColor: "#bde0fb",
-            data: [32, 37, 39, 31, 36, 34],
+            data: count_cyber,
           },
-        ],
-      },
+      ],
+    }
+
+    const concChartConfig = {
+      type: "bar",
+      data: concChartData,
 
       options: {
         animation: {
@@ -856,7 +832,12 @@ include "loginfix.php";
           },
         },
       },
-    });
+    };
+
+    const concentrationChart = new Chart(
+      document.getElementById('concentrationChart').getContext("2d"),
+      concChartConfig
+    );
   </script>
 
   <script>

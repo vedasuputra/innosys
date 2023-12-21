@@ -2,7 +2,7 @@
 session_start();
 
 // Periksa apakah pengguna sudah login
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION['role'] !== 'user') {
   header("Location: login.php");
   exit();
 }
@@ -32,17 +32,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <nav>
     <div class="navbar-start">
       <div style="padding-right: 13px;">
-        <a href="home.html">
+        <a href="home.php">
           <img src="photos\favicon.png" width="43px" height="43px">
         </a>
       </div>
       <div class="title">
-        <a href="home.html">Innovation System</a>
+        <a href="home.php">Innovation System</a>
       </div>
     </div>
     <div class="navbar-end">
       <div style="padding-right: 34px;">
-        <a class="navlinks" href="home.html">Homepage</a>
+        <a class="navlinks" href="home.php">Homepage</a>
         <a class="navlinks" href="catalogue.html">Catalogue</a>
       </div>
       <div>

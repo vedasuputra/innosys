@@ -289,6 +289,11 @@ nav {
 .card-content {
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 20px;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+  height: 11rem;
 }
 
 .items:hover,
@@ -359,8 +364,6 @@ select:active,
   font-size: 11px;
   display: flex;
   align-content: flex-start;
-  position: absolute;
-  bottom: 19px;
   width: 100%;
 }
 
@@ -592,8 +595,8 @@ select:active,
 
 .statistics-left>div {
   background: #fff;
-  padding-right: 60px;
-  padding-left: 60px;
+  padding-right: 40px;
+  padding-left: 40px;
   border-radius: 6px;
   height: 240px;
   display: flex;
