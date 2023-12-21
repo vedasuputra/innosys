@@ -211,23 +211,7 @@ if (isset($_POST['submit'])) {
     </form>
   </div>
 
-  <footer>
-    <div>
-      <h3>Innovation System</h3>
-      © Universitas Pendidikan Ganesha<br>
-      Copyright 2023. All Rights Reserved
-    </div>
-    <div>
-      <h4>Pages</h4>
-      <a href="#">Dashboard</a>
-      <a href="#">Catalogue</a>
-    </div>
-    <div>
-      <h4>Others</h4>
-      <a href="#">Help</a>
-      <a href="#">Submit</a>
-    </div>
-  </footer>
+  <?php include "footer.php"?>
 
   <script>
     $(".js-placeholder").select2({

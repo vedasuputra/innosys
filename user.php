@@ -5,13 +5,153 @@ include "connect.php";
 
 // Periksa apakah pengguna sudah login
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION['role'] !== 'user') {
+  session_unset();
+  session_destroy();
   header("Location: login.php");
   exit();
 }
 
+// Newest innovation
+$recordsPerPage = 4;
+$query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+          FROM innovdata 
+          JOIN type ON innovdata.IDType = type.IDType 
+          JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+          JOIN category ON innovdata.IDCateg = category.IDCateg 
+          JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+          WHERE  innovdata.Status = 'Approved' AND userinnov.IDUser = ?
+          ORDER BY `innovdata`.`creDate` DESC
+          LIMIT $recordsPerPage";
+          
+$stmt = mysqli_prepare($koneksi, $query);
+mysqli_stmt_bind_param($stmt, 'i',  $_SESSION['username']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-// $get1 = mysqli_query($conn, "SELECT * FROM innovdata INNER JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = ?");
+// All submitted innovations
+$allSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+              FROM innovdata 
+              JOIN type ON innovdata.IDType = type.IDType 
+              JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+              JOIN category ON innovdata.IDCateg = category.IDCateg 
+              JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+              WHERE userinnov.IDUser = ?
+              ORDER BY `innovdata`.`creDate` DESC";
 
+$allstmt = mysqli_prepare($koneksi, $allSubmit);
+mysqli_stmt_bind_param($allstmt, 'i',  $_SESSION['username']);
+mysqli_stmt_execute($allstmt);
+$allresult = mysqli_stmt_get_result($allstmt);
+
+// Accepted submitted innovations
+$acceptedSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+                  FROM innovdata 
+                  JOIN type ON innovdata.IDType = type.IDType 
+                  JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+                  JOIN category ON innovdata.IDCateg = category.IDCateg 
+                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                  WHERE userinnov.IDUser = ? AND innovdata.Status = 'Approved'
+                  ORDER BY `innovdata`.`creDate` DESC";
+
+$acceptedstmt = mysqli_prepare($koneksi, $acceptedSubmit);
+mysqli_stmt_bind_param($acceptedstmt, 'i',  $_SESSION['username']);
+mysqli_stmt_execute($acceptedstmt);
+$acceptedresult = mysqli_stmt_get_result($acceptedstmt);
+
+// Pending submitted innovations
+$pendingSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+                  FROM innovdata 
+                  JOIN type ON innovdata.IDType = type.IDType 
+                  JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+                  JOIN category ON innovdata.IDCateg = category.IDCateg 
+                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                  WHERE userinnov.IDUser = ? AND innovdata.Status = 'Pending'
+                  ORDER BY `innovdata`.`creDate` DESC";
+
+$pendingstmt = mysqli_prepare($koneksi, $pendingSubmit);
+mysqli_stmt_bind_param($pendingstmt, 'i',  $_SESSION['username']);
+mysqli_stmt_execute($pendingstmt);
+$pendingresult = mysqli_stmt_get_result($pendingstmt);
+
+// Rejected submitted innovations
+$rejectedSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+                  FROM innovdata 
+                  JOIN type ON innovdata.IDType = type.IDType 
+                  JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+                  JOIN category ON innovdata.IDCateg = category.IDCateg 
+                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                  WHERE userinnov.IDUser = ? AND innovdata.Status = 'Rejected'
+                  ORDER BY `innovdata`.`creDate` DESC";
+
+$rejectedstmt = mysqli_prepare($koneksi, $rejectedSubmit);
+mysqli_stmt_bind_param($rejectedstmt, 'i',  $_SESSION['username']);
+mysqli_stmt_execute($rejectedstmt);
+$rejectedresult = mysqli_stmt_get_result($rejectedstmt);
+?>
+
+<?php
+// All count
+$allCount = "SELECT COUNT(*) AS total 
+          FROM innovdata 
+          JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+          WHERE innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]}";
+$allCountResult = mysqli_query($koneksi, $allCount);
+$allCountRow = mysqli_fetch_assoc($allCountResult);
+$allCountTotal = $allCountRow['total'];
+
+// Category count
+$categoryCount = "SELECT 
+                  category.NameCateg,
+                  COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDCateg END) as categoryCount
+                  FROM category
+                  LEFT JOIN innovdata ON category.IDCateg = innovdata.IDCateg
+                  LEFT JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                  GROUP BY category.NameCateg
+                  ORDER BY category.IDCateg ASC";
+$categoryCountResult = mysqli_query($koneksi, $categoryCount);
+$categoryCounts = array();
+
+while ($row = mysqli_fetch_assoc($categoryCountResult)) {
+  $categoryName = $row['NameCateg'];
+  $categoryCountTotal = $row['categoryCount'];
+  $categoryCounts[$categoryName] = $categoryCountTotal;
+}
+
+// Type count
+$typeCount = "SELECT 
+              type.NameType,
+              COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDType END) as typeCount
+              FROM type
+              LEFT JOIN innovdata ON type.IDType = innovdata.IDType
+              LEFT JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+              GROUP BY type.NameType
+              ORDER BY type.IDType ASC";
+$typeCountResult = mysqli_query($koneksi, $typeCount);
+$typeCounts = array();
+
+while ($row = mysqli_fetch_assoc($typeCountResult)) {
+  $typeName = $row['NameType'];
+  $typeCountTotal = $row['typeCount'];
+  $typeCounts[$typeName] = $typeCountTotal;
+}
+
+// Concentration count
+$concCount = "SELECT 
+              concentration.NameConc,
+              COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDType END) as concCount
+              FROM concentration
+              LEFT JOIN innovdata ON concentration.IDConc = innovdata.IDConc
+              LEFT JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+              GROUP BY concentration.NameConc
+              ORDER BY concentration.IDConc ASC";
+$concCountResult = mysqli_query($koneksi, $concCount);
+$concCounts = array();
+
+while ($row = mysqli_fetch_assoc($concCountResult)) {
+  $concName = $row['NameConc'];
+  $concCountTotal = $row['concCount'];
+  $concCounts[$concName] = $concCountTotal;
+}
 ?>
 
 <html>
@@ -36,7 +176,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
     <div class="headline-content">
       <h1 class="headline-title" style="overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Welcome, <?php echo $_SESSION["nama"]; ?></h1>
       <p>This is your dashboard, where you can view the approved, pending, and rejected innovations that you have submitted.</p>
-      <button onclick="javascript:location.href='submission.html'" type="button" class="headline-button">Submit Innovation</button>
+      <button onclick="javascript:location.href='submission.php'" type="button" class="headline-button">Submit Innovation</button>
     </div>
   </div>
 
@@ -62,40 +202,32 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
       <div class="innovation-creators" style="margin-top: 0;">
         <div class="creators-info pointer" onclick="javascript:location.href='#'">
           <div>
-            <div class="user-stat-number">6</div>
+            <div class="user-stat-number"><?php echo $allCountTotal; ?></div>
             <div class="user-stat-detail">Total</div>
           </div>
           <div>
             <i class='bx bxs-box user-stat-icon'></i>
           </div>
         </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">1</div>
-            <div class="user-stat-detail">Thesis</div>
-          </div>
-          <div>
-            <i class='bx bxs-book-alt user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">1</div>
-            <div class="user-stat-detail">Internship</div>
-          </div>
-          <div>
-            <i class='bx bxs-briefcase user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">4</div>
-            <div class="user-stat-detail">Others</div>
-          </div>
-          <div>
-            <i class='bx bxs-grid-alt user-stat-icon'></i>
-          </div>
-        </div>
+        <?php
+        foreach ($categoryCounts as $categoryName => $count) {
+          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+          echo '<div>';
+          echo '<div class="user-stat-number">' . $count . '</div>';
+          echo '<div class="user-stat-detail">' . $categoryName . '</div>';
+          echo '</div>';
+          echo '<div>';
+          if ($categoryName == 'Thesis') {
+            echo '<i class=\'bx bxs-book-alt user-stat-icon\'></i>';
+          } elseif ($categoryName == 'Internship') {
+            echo '<i class=\'bx bxs-briefcase user-stat-icon\'></i>';
+          } elseif ($categoryName == 'Other Categories') {
+            echo '<i class=\'bx bxs-grid-alt user-stat-icon\'></i>';
+          }
+          echo '</div>';
+          echo '</div>';
+        }
+        ?>
       </div>
     </div>
 
@@ -117,42 +249,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">1</div>
-            <div class="user-stat-detail">Website</div>
-          </div>
-          <div>
-            <i class='bx bx-globe user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">2</div>
-            <div class="user-stat-detail">Desktop App</div>
-          </div>
-          <div>
-            <i class='bx bx-desktop user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">3</div>
-            <div class="user-stat-detail">Mobile App</div>
-          </div>
-          <div>
-            <i class='bx bx-mobile user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">0</div>
-            <div class="user-stat-detail">Others</div>
-          </div>
-          <div>
-            <i class='bx bx-dots-horizontal-rounded user-stat-icon'></i>
-          </div>
-        </div>
+        <?php
+        foreach ($typeCounts as $typeName => $count) {
+          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+          echo '<div>';
+          echo '<div class="user-stat-number">' . $count . '</div>';
+          echo '<div class="user-stat-detail">' . $typeName . '</div>';
+          echo '</div>';
+          echo '<div>';
+          if ($typeName == 'Website') {
+            echo '<i class=\'bx bx-globe user-stat-icon\'></i>';
+          } elseif ($typeName == 'Desktop App') {
+            echo '<i class=\'bx bx-desktop user-stat-icon\'></i>';
+          } elseif ($typeName == 'Mobile App') {
+            echo '<i class=\'bx bx-mobile user-stat-icon\'></i>';
+          } elseif ($typeName == 'Other Types') {
+            echo '<i class=\'bx bx-dots-horizontal-rounded user-stat-icon\'></i>';
+          }
+          echo '</div>';
+          echo '</div>';
+        }
+        ?>
       </div>
     </div>
 
@@ -174,119 +291,80 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">2</div>
-            <div class="user-stat-detail">Cybersecurity</div>
-          </div>
-          <div>
-            <i class='bx bxs-lock-alt user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">1</div>
-            <div class="user-stat-detail" style="text-align: right;">Management Information System</div>
-          </div>
-          <div>
-            <i class='bx bxs-business user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">2</div>
-            <div class="user-stat-detail">Engineering and Business Intelligence</div>
-          </div>
-          <div>
-            <i class='bx bxs-cog user-stat-icon'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="user-stat-number">1</div>
-            <div class="user-stat-detail">Others</div>
-          </div>
-          <div>
-            <i class='bx bx-dots-horizontal-rounded user-stat-icon'></i>
-          </div>
-        </div>
+        <?php
+        foreach ($concCounts as $concName => $count) {
+          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+          echo '<div>';
+          echo '<div class="user-stat-number">' . $count . '</div>';
+          echo '<div class="user-stat-detail">' . $concName . '</div>';
+          echo '</div>';
+          echo '<div>';
+          if ($concName == 'Cybersecurity') {
+            echo '<i class=\'bx bxs-lock-alt user-stat-icon\'></i>';
+          } elseif ($concName == 'Management Information System') {
+            echo '<i class=\'bx bxs-business user-stat-icon\'></i>';
+          } elseif ($concName == 'Engineering and Business Intelligence') {
+            echo '<i class=\'bx bx-mobile user-stat-icon\'></i>';
+          } elseif ($concName == 'Other Concentrations') {
+            echo '<i class=\'bx bxs-cog user-stat-icon\'></i>';
+          }
+          echo '</div>';
+          echo '</div>';
+        }
+        ?>
       </div>
     </div>
 
-    <div class="section-head" style="margin-top: 2.5rem;">
-      <div>
-        <h1 class="section-title">Newest Innovations</h1>
-      </div>
-      <div class="navbar-end">
-        <button onclick="javascript:location.href='catalogue.html';" class="general-button">View All</button>
-      </div>
-    </div>
-    <div class="owl-carousel owl-theme">
-      <div class="item">
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card2.jpg">
-          <div class="card-content">
-            <div>
-              <div class="card-title">Rudaya~Connect The Art
-              </div>
-              <div class="card-category"><a href="#">Internship</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
-              </div>
-              <div>September 9, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card4.jpg">
-          <div class="card-content">
-            <div>
-              <div class="card-title">Sistem Inovasi Prodi Sistem Informasi UNDIKSHA</div>
-              <div class="card-category"><a href="#">Thesis</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
-              </div>
-              <div>September 4, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card9.jpg">
-          <div class="card-content">
-            <div>
-              <div class="card-title">AI Image Detector Information System</div>
-              <div class="card-category"><a href="#">Others</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
-              </div>
-              <div>August 30, 2023</div>
-            </div>
-          </div>
-        </div>
-        <div class="items" onclick="javascript:location.href='#'">
-          <img src="photos\card10.jpg">
-          <div class="card-content">
-            <div>
-              <div class="card-title">Website Heatmap Analyzer Information System</div>
-              <div class="card-category"><a href="#">Internship</a></div>
-            </div>
-            <div class="card-details">
-              <div>
-                <i class='bx bx-calendar-alt' style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>
-              </div>
-              <div>August 29, 2023</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <?php
+      if (mysqli_num_rows($result) > 0) {
+        echo '<div class="section-head" style="margin-top: 2.5rem;">';
+        echo '<div>';
+        echo '<h1 class="section-title">Newest Innovations</h1>';
+        echo '</div>';
+        if ($allCountTotal > 4) {
+          echo '<div class="navbar-end">';
+          echo '<button onclick="javascript:location.href=\'catalogue.html\';" class="general-button">View All</button>';
+          echo '</div>';
+        }
+        echo '</div>';
+        echo '<div class="owl-carousel owl-theme">';
+        echo '<div class="item">';
+        while ($row = mysqli_fetch_assoc($result)) {
 
+          $IDInnov = $row['IDInnov'];
+          $nameInnov = $row['NameInnov'];
+          $nametype = $row['NameType'];
+          $nameConst = $row['NameConc'];
+          $creDate = date("F j, Y", strtotime($row['CreDate']));
+          $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+          $categoryName = $row['NameCateg'];
+          $images = explode(",", $row['Img']);
+
+          echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+          if (!empty($images[0])) {
+            echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
+          }
+          echo '<div class="card-content">';
+          echo '<div style="justify-content: normal;">';
+          echo '<div class="card-title">' . $nameInnov . '</div>';
+          echo '<div class="card-category">' . $categoryName . '</div>';
+          echo '</div>';
+          echo '<div class="card-details">';
+          echo '<div>';
+          echo '<i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>';
+          echo '</div>';
+          echo '<div>';
+          echo '<div>' . $creDate . '</div>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+        }
+        echo '</div>';
+        echo '</div>';
+      }
+    ?>
+    
     <div id="innovationsAll" class="tabcontent2">
       <div class="section-head" style="margin-top: 2.5rem;">
         <div>
@@ -305,64 +383,50 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status pending">Pending</span>Rudaya~Connect The Art</div>
-            <div class="creator-role bigger-margin">Submitted on September 12, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Informasi Manajemen Sampah Terpadu Milik Kita</div>
-            <div class="creator-role bigger-margin">Submitted on September 06, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-      </div>
-      <div class="innovation-creators">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status rejected">Rejected</span>Elektropedia</div>
-            <div class="creator-role bigger-margin">Submitted on September 04, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Inovasi Prodi Sistem Informasi UNDIKSHA</div>
-            <div class="creator-role bigger-margin">Submitted on September 01, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-      </div>
-      <div class="innovation-creators">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status pending">Pending</span>Sistem Prestasi Prodi Sistem Informasi UNDIKSHA</div>
-            <div class="creator-role bigger-margin">Submitted on September 01, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status rejected">Rejected</span>Sistem Perwalian Prodi Sistem Informasi UNDIKSHA</div>
-            <div class="creator-role bigger-margin">Submitted on September 01, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
+      <?php
+        $counter = 0;
+        if (mysqli_num_rows($allresult) > 0) {
+          while ($row = mysqli_fetch_assoc($allresult)) {
+
+            $IDInnov = $row['IDInnov'];
+            $nameInnov = $row['NameInnov'];
+            $status = $row['Status'];
+            $creDate = date("F j, Y", strtotime($row['CreDate']));
+            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+
+            if ($counter > 0 && $counter % 2 == 0) {
+              echo '</div>';
+              echo '<div class="innovation-creators">';
+            }
+
+            if ($status == 'Approved') {
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id='.$IDInnov.'\'">';
+            }
+            else {
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+            }
+            
+            echo '<div>';
+            echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
+            echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+            echo '</div>';
+            echo '<div>';
+            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+            echo '</div>';
+            echo '</div>';
+
+            $counter++;
+          }
+        }
+        else {
+          // No results found
+          echo '<div class="creators-info">';
+          echo '<div>No results found.</div>';
+          echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+          echo '</div>';
+        }
+        ?>
+        
       </div>
     </div>
 
@@ -384,24 +448,43 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Informasi Manajemen Sampah Terpadu Milik Kita</div>
-            <div class="creator-role bigger-margin">Submitted on September 06, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status accepted">Accepted</span>Sistem Inovasi Prodi Sistem Informasi UNDIKSHA</div>
-            <div class="creator-role bigger-margin">Submitted on September 01, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
+        <?php
+          $counter = 0;
+          if (mysqli_num_rows($acceptedresult) > 0) {
+            while ($row = mysqli_fetch_assoc($acceptedresult)) {
+
+              $IDInnov = $row['IDInnov'];
+              $nameInnov = $row['NameInnov'];
+              $status = $row['Status'];
+              $creDate = date("F j, Y", strtotime($row['CreDate']));
+              $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+
+              if ($counter > 0 && $counter % 2 == 0) {
+                echo '</div>';
+                echo '<div class="innovation-creators">';
+              }
+
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id='.$IDInnov.'\'">';
+              echo '<div>';
+              echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
+              echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+              echo '</div>';
+              echo '<div>';
+              echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+              echo '</div>';
+              echo '</div>';
+
+              $counter++;
+            }
+          }
+          else {
+            // No results found
+            echo '<div class="creators-info">';
+            echo '<div>No results found.</div>';
+            echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+            echo '</div>';
+          }
+        ?>
       </div>
     </div>
 
@@ -423,24 +506,43 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status pending">Pending</span>Rudaya~Connect The Art</div>
-            <div class="creator-role bigger-margin">Submitted on September 12, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status pending">Pending</span>Sistem Prestasi Prodi Sistem Informasi UNDIKSHA</div>
-            <div class="creator-role bigger-margin">Submitted on September 01, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
+      <?php
+          $counter = 0;
+          if (mysqli_num_rows($pendingresult) > 0) {
+            while ($row = mysqli_fetch_assoc($pendingresult)) {
+
+              $IDInnov = $row['IDInnov'];
+              $nameInnov = $row['NameInnov'];
+              $status = $row['Status'];
+              $creDate = date("F j, Y", strtotime($row['CreDate']));
+              $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+
+              if ($counter > 0 && $counter % 2 == 0) {
+                echo '</div>';
+                echo '<div class="innovation-creators">';
+              }
+
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+              echo '<div>';
+              echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
+              echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+              echo '</div>';
+              echo '<div>';
+              echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+              echo '</div>';
+              echo '</div>';
+
+              $counter++;
+            }
+          }
+          else {
+            // No results found
+            echo '<div class="creators-info">';
+            echo '<div>No results found.</div>';
+            echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+            echo '</div>';
+          }
+        ?>
       </div>
     </div>
 
@@ -462,46 +564,49 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status rejected">Rejected</span>Elektropedia</div>
-            <div class="creator-role bigger-margin">Submitted on September 04, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
-          <div>
-            <div class="creator-name"><span class="status rejected">Rejected</span>Sistem Perwalian Prodi Sistem Informasi UNDIKSHA</div>
-            <div class="creator-role bigger-margin">Submitted on September 01, 2023</div>
-          </div>
-          <div>
-            <i class='bx bx-chevron-right more-icon right'></i>
-          </div>
-        </div>
+      <?php
+          $counter = 0;
+          if (mysqli_num_rows($rejectedresult) > 0) {
+            while ($row = mysqli_fetch_assoc($rejectedresult)) {
+
+              $IDInnov = $row['IDInnov'];
+              $nameInnov = $row['NameInnov'];
+              $status = $row['Status'];
+              $creDate = date("F j, Y", strtotime($row['CreDate']));
+              $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+
+              if ($counter > 0 && $counter % 2 == 0) {
+                echo '</div>';
+                echo '<div class="innovation-creators">';
+              }
+
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+              echo '<div>';
+              echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
+              echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+              echo '</div>';
+              echo '<div>';
+              echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+              echo '</div>';
+              echo '</div>';
+
+              $counter++;
+            }
+          }
+          else {
+            // No results found
+            echo '<div class="creators-info">';
+            echo '<div>No results found.</div>';
+            echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+            echo '</div>';
+          }
+        ?>
       </div>
     </div>
 
   </div>
 
-  <footer>
-    <div>
-      <h3>Innovation System</h3>
-      © Universitas Pendidikan Ganesha<br>
-      Copyright 2023. All Rights Reserved
-    </div>
-    <div>
-      <h4>Pages</h4>
-      <a href="#">Dashboard</a>
-      <a href="#">Catalogue</a>
-    </div>
-    <div>
-      <h4>Others</h4>
-      <a href="#">Help</a>
-      <a href="#">Submit</a>
-    </div>
-  </footer>
+  <?php include "footer.php" ?>
 
   <script>
     $(function() {

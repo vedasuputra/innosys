@@ -18,7 +18,7 @@ include "loginfix.php";
 </head>
 
 <body>
-  <a href="dashboard.html">
+  <a href="home.php">
     <h2>Innovation System</h2>
   </a>
 

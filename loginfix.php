@@ -23,6 +23,7 @@ function loginUser($username, $password)
       $_SESSION['username'] = $username;
       $_SESSION['role'] = 'user';
       $_SESSION['nama'] = $row['Username'];
+      $_SESSION['IDUser'] = $row['IDUser'];
       header("Location: user.php");
       exit();
     }
@@ -37,7 +38,7 @@ function loginUser($username, $password)
     $_SESSION["loggedin"] = true;
     $_SESSION['username'] = $username;
     $_SESSION['role'] = 'admin';
-    header("Location: admin.html");
+    header("Location: admin.php");
     exit();
   }
 
