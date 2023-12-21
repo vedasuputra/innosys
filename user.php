@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+include "header.php";
+include "connect.php";
 
 // Periksa apakah pengguna sudah login
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION['role'] !== 'user') {
@@ -26,55 +28,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
   <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="userdropdown.js"></script>
 </head>
 
 <body>
-  <nav>
-    <div class="navbar-start">
-      <div style="padding-right: 13px;">
-        <a href="home.php">
-          <img src="photos\favicon.png" width="43px" height="43px">
-        </a>
-      </div>
-      <div class="title">
-        <a href="home.php">Innovation System</a>
-      </div>
-    </div>
-    <div class="navbar-end">
-      <div style="padding-right: 34px;">
-        <a class="navlinks" href="home.php">Homepage</a>
-        <a class="navlinks" href="catalogue.html">Catalogue</a>
-      </div>
-      <div>
-        <i class='bx bx-search icon-search' aria-hidden="trues" style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
-        <div class="search-form">
-          <div class="search-flex">
-            <div>
-              <i class='bx bx-search' style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem;"></i>
-            </div>
-            <div>
-              <form action="">
-                <input type="search" placeholder="Click here to search...">
-              </form>
-            </div>
-            <div>
-              <i class='bx bx-x search-close' style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
-            </div>
-          </div>
-        </div>
-        <i id="userIcon" class='bx bx-user-circle profilebtn' onclick="profileFunction()" style="font-size: 25px; padding-top: 0.3rem;"></i>
-        <div id="profileDropdown" class="user-dropdown">
-          <a class="droplinks" href="user.php">Dashboard</a>
-          <a class="droplinks" href="submit.html">Submit</a>
-          <a class="droplinks" href="help.html">Help</a>
-          <a class="droplinks" href="logout.php">Logout</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="navpadding"></div>
-
   <div class="headline user">
     <div class="headline-content">
       <h1 class="headline-title" style="overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Welcome, <?php echo $_SESSION["nama"]; ?></h1>
@@ -580,16 +537,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
   </script>
 
   <script>
-    $(".icon-search").on("click", function() {
-      $(".search-form").fadeToggle();
-    });
-
-    $(".search-close").on("click", function() {
-      $(".search-form").fadeToggle();
-    });
-  </script>
-
-  <script>
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function myFunction() {
@@ -732,28 +679,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
     window.onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function profileFunction() {
-      document.getElementById("profileDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.profilebtn')) {
-        var dropdowns = document.getElementsByClassName("user-dropdown");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
           var openDropdown = dropdowns[i];

@@ -1,5 +1,6 @@
 <?php
 
+include "header.php";
 include "connect.php";
 // error_reporting(0);
 
@@ -84,58 +85,10 @@ if (isset($_POST['submit'])) {
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="userdropdown.js"></script>
 </head>
 
 <body>
-  <nav>
-    <div class="navbar-start">
-      <div style="padding-right: 13px;">
-        <a href="home.html">
-          <img src="photos\favicon.png" width="43px" height="43px">
-        </a>
-      </div>
-      <div class="title">
-        <a href="home.html">Innovation System</a>
-      </div>
-    </div>
-    <div class="navbar-end">
-      <div style="padding-right: 34px;">
-        <a class="navlinks" href="home.html">Homepage</a>
-        <a class="navlinks" href="catalogue.html">Catalogue</a>
-      </div>
-      <div>
-        <i class='bx bx-search icon-search' aria-hidden="trues"
-          style="padding-right: 5px; font-size: 25px; z-index: 999; cursor: pointer; padding-top: 0.3rem;"></i>
-        <div class="search-form">
-          <div class="search-flex">
-            <div>
-              <i class='bx bx-search' style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem;"></i>
-            </div>
-            <div>
-              <form action="">
-                <input type="search" placeholder="Click here to search...">
-              </form>
-            </div>
-            <div>
-              <i class='bx bx-x search-close'
-                style="font-size: 32px; z-index: 999; padding-bottom: 0.9rem; cursor: pointer;"></i>
-            </div>
-          </div>
-        </div>
-        <i class='bx bx-user-circle profilebtn' onclick="profileFunction()"
-          style="font-size: 25px; padding-top: 0.3rem;"></i>
-        <div id="profileDropdown" class="user-dropdown">
-          <a class="droplinks" href="user.html">Dashboard</a>
-          <a class="droplinks" href="submit.html">Submit</a>
-          <a class="droplinks" href="help.html">Help</a>
-          <a class="droplinks" href="#">Logout</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="navpadding"></div>
-
   <div class="headline submission">
     <div class="headline-content">
       <h1 class="headline-title">Submit Your Innovation</h1>
@@ -275,38 +228,6 @@ if (isset($_POST['submit'])) {
       <a href="#">Submit</a>
     </div>
   </footer>
-
-  <script>
-    $(".icon-search").on("click", function () {
-      $(".search-form").fadeToggle();
-    });
-
-    $(".search-close").on("click", function () {
-      $(".search-form").fadeToggle();
-    });
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function profileFunction() {
-      document.getElementById("profileDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-      if (!event.target.matches('.profilebtn')) {
-        var dropdowns = document.getElementsByClassName("user-dropdown");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
 
   <script>
     $(".js-placeholder").select2({

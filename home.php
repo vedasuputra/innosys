@@ -1,7 +1,7 @@
 <?php
 
 include "connect.php";
-include "loginfix.php";
+include "header.php";
 include "statistics.php";
 
 // Display data from innovdata
@@ -86,80 +86,11 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
   <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="userdropdown.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </head>
 
 <body>
-  <nav>
-    <div class="navbar-start">
-      <div style="padding-right: 13px">
-        <a href="home.html">
-          <img src="photos\favicon.png" width="43px" height="43px" />
-        </a>
-      </div>
-      <div class="title">
-        <a href="home.html">Innovation System</a>
-      </div>
-    </div>
-    <div class="navbar-end">
-      <div style="padding-right: 34px">
-        <a class="navlinks" href="home.html">Homepage</a>
-        <a class="navlinks" href="catalogue.html">Catalogue</a>
-      </div>
-      <div>
-        <i class="bx bx-search icon-search" aria-hidden="trues" style="
-              padding-right: 5px;
-              font-size: 25px;
-              z-index: 999;
-              cursor: pointer;
-              padding-top: 0.3rem;
-            "></i>
-        <div class="search-form">
-          <div class="search-flex">
-            <div>
-              <i class="bx bx-search" style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem"></i>
-            </div>
-            <div>
-              <form action="">
-                <input type="search" placeholder="Click here to search..." />
-              </form>
-            </div>
-            <div>
-              <i class="bx bx-x search-close" style="
-                    font-size: 32px;
-                    z-index: 999;
-                    padding-bottom: 0.9rem;
-                    cursor: pointer;
-                  "></i>
-            </div>
-          </div>
-        </div>
-        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'user'): ?>
-          <i id="userIcon" class='bx bx-user-circle profilebtn' onclick="profileFunction()"
-            style="font-size: 25px; padding-top: 0.3rem;"></i>
-          <div id="profileDropdown" class="user-dropdown">
-            <a class="droplinks" href="user.php">Dashboard</a>
-            <a class="droplinks" href="submit.html">Submit</a>
-            <a class="droplinks" href="help.html">Help</a>
-            <a class="droplinks" href="logout.php">Logout</a>
-          </div>
-        <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-          <i id="userIcon" class="bx bx-shield profilebtn" onclick="profileFunction()"
-            style="font-size: 25px; padding-top: 0.3rem"></i>
-          <div id="profileDropdown" class="user-dropdown">
-            <a class="droplinks" href="user.html">Dashboard</a>
-            <a class="droplinks" href="logout.php">Logout</a>
-          </div>
-        <?php else: ?>
-          <a href="login.php"><i id="userIcon" class="bx bx-log-in-circle"
-              style="font-size: 26px; padding-top: 0.3rem"></i></a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </nav>
-
-  <div class="navpadding"></div>
-
   <div class="headline home">
     <div class="headline-content">
       <h1 class="headline-title">Welcome to Innovation System</h1>
@@ -197,6 +128,7 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
 
         while ($row = mysqli_fetch_assoc($result)) {
 
+          $IDInnov = $row['IDInnov'];
           $nameInnov = $row['NameInnov'];
           $nametype = $row['NameType'];
           $nameConst = $row['NameConc'];
@@ -210,7 +142,7 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
             echo '<div class="item">';
           }
 
-          echo '<div class="items" onclick="javascript:location.href=\'innovation.html\'">';
+          echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id='. $IDInnov .'\'">';
           if (!empty($images[0])) {
             echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
           }
@@ -380,7 +312,7 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
         <div class="statistics-left">
           <?php
           foreach ($typeCounts as $typeName => $count) {
-            echo '<div class="statistics-text" onclick="javascript:location.href=\'#\'">';
+            echo '<div class="statistics-text" onclick="javascript:location.href=\'innovation.php?id=\'">';
             echo '<h1>' . $count . '</h1>';
             echo '<span>' . $typeName . ' Innovations</span>';
             echo '</div>';
@@ -926,38 +858,6 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
 
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
-  </script>
-
-  <script>
-    $(".icon-search").on("click", function () {
-      $(".search-form").fadeToggle();
-    });
-
-    $(".search-close").on("click", function () {
-      $(".search-form").fadeToggle();
-    });
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function profileFunction() {
-      document.getElementById("profileDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function (event) {
-      if (!event.target.matches('.profilebtn')) {
-        var dropdowns = document.getElementsByClassName("user-dropdown");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
   </script>
 </body>
 

@@ -46,7 +46,7 @@ img {
 .slideshow::before {
   content: "";
   z-index: 10;
-  width: 10%;
+  width: 20%;
   height: 100%;
   display: block;
   position: absolute;
@@ -56,7 +56,7 @@ img {
 .slideshow::after {
   content: "";
   z-index: 10;
-  width: 10%;
+  width: 20%;
   height: 100%;
   display: block;
   position: absolute;
