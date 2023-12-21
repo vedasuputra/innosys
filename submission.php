@@ -66,8 +66,6 @@ if (isset($_POST['submit'])) {
     echo "<script>alert('Error. Please try again or contact the admin.'); </script>";
   }
 }
-
-
 ?>
 
 <html>

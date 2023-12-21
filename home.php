@@ -12,7 +12,7 @@ $query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdat
           JOIN concentration ON innovdata.IDConc = concentration.IDConc 
           JOIN category ON innovdata.IDCateg = category.IDCateg 
           WHERE innovdata.Status = 'Approved'
-          ORDER BY `innovdata`.`SubmDate` DESC
+          ORDER BY `innovdata`.`creDate` DESC
           LIMIT $recordsPerPage";
 $result = mysqli_query($koneksi, $query);
 
@@ -224,7 +224,7 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
           echo '<i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>';
           echo '</div>';
           echo '<div>';
-          echo '<div>' . $SubmDate . '</div>';
+          echo '<div>' . $creDate . '</div>';
           echo '</div>';
           echo '</div>';
           echo '</div>';
