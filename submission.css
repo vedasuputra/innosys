@@ -158,6 +158,8 @@ select option { color: #041f35; }
   font-weight: 500;
   border-radius: 4px!important;
   text-align: center;
+  width: 100%;
+  display: block;
 }
 
 input:disabled, select:disabled, input::placeholder, textarea:disabled {

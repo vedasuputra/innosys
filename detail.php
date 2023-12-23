@@ -251,7 +251,7 @@ include "header.php";
         echo '</div>';
       } elseif ($status == 'Rejected' && $_SESSION['role'] != 'admin') {
         echo '<div class="creators-info danger">';
-        echo '<div>Submission has been rejected because "' . $note . '." <strong><a href="edit.php?id=' . $id . '">Edit your submission?</a></strong></div>';
+        echo '<div>Submission has been rejected because "' . $note . '."</div>';
         echo '<div><span class="status right ' . $status . '">' . $status . '</span></div>';
         echo '</div>';
       } elseif ($status == 'Rejected' && $_SESSION['role'] == 'admin') {
@@ -396,6 +396,11 @@ include "header.php";
       <div style="pointer-events:none;" class="input-images">
         <div class="input-images-1" style="padding-top: .5rem;"></div>
       </div>
+
+      <?php if ($status == 'Rejected' && $_SESSION['role'] != 'admin') {
+        echo '<a class="submit" href="edit.php?id=' . $id . '">Edit</a>';
+      }
+      ?>
 
       <?php if ($_SESSION['role'] == 'admin' && $status == 'Pending') {
         echo '<div class="section-head" style="gap: 20px">';

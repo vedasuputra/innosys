@@ -125,7 +125,7 @@ if (isset($_POST['submitForm'])) {
       <div class="section-title" style="margin-bottom: 20px;">Submission Form</div>
 
       <div class="creators-info danger" style="margin-bottom: 15px">
-        <div>You will <strong>NOT</strong> be able to edit your submission until the admin has reviewed the submission. Please enter each information carefully.</div>
+        <div>You will <strong>NOT</strong> be able to edit your submission unless the admin rejects your submission. Please enter each information carefully.</div>
         <div><i class='bx bxs-error-circle right' style="font-size: 22px; line-height: 1;"></i></div>
       </div>
 
@@ -250,7 +250,7 @@ if (isset($_POST['submitForm'])) {
   <script>
     function confirmSubmission() {
       // Display a confirmation dialog
-      var isConfirmed = confirm('Are you sure you want to submit the form? You will NOT be able to edit your submission until the admin has reviewed the submission.');
+      var isConfirmed = confirm('Are you sure you want to submit the form? You will NOT be able to edit your submission unless the admin has rejected it.');
 
       if (!isConfirmed) {
         return false; // User clicked Cancel, do not submit the form

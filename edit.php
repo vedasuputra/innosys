@@ -403,7 +403,7 @@ if (isset($_POST['submitForm'])) {
   <script>
     function confirmSubmission() {
       // Display a confirmation dialog
-      var isConfirmed = confirm('Are you sure you want to edit the form? You will NOT be able to edit your submission again until the admin has reviewed the submission.');
+      var isConfirmed = confirm('Are you sure you want to edit the form? You will NOT be able to edit your submission unless the admin has rejected it.');
 
       if (!isConfirmed) {
         return false; // User clicked Cancel, do not submit the form
