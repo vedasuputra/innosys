@@ -20,16 +20,6 @@ url("photos/headlinecatalogue.jpg");
   margin-bottom: 21px;
 }
 
-.number {
-  padding-left: 13px;
-  padding-right: 13px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  font-size: 15px;
-  margin-right: 6px;
-  font-weight: 500;
-}
-
 .accordion {
   cursor: pointer;
   width: 100%;

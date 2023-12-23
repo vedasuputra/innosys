@@ -1,0 +1,32 @@
+input:disabled:active,
+input:disabled:focus,
+select:disabled:active,
+select:disabled:focus,
+textarea:disabled:active,
+textarea:disabled:focus {
+  box-shadow: 0px 0px 0px 0px !important;
+}
+
+.image-uploader {
+  background-color: rgba(239, 239, 239, 0.3) !important;
+  border-color: rgba(118, 118, 118, 0.7) !important;
+  cursor: not-allowed!important;
+}
+
+.image-uploader .uploaded .uploaded-image img {
+  border-color: rgba(118, 118, 118, 0.7) !important;
+}
+
+.red:hover {
+  background: #990001 !important;
+}
+
+.swipe-button {
+  padding: 9px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.red {
+  background: #CC0001 !important;
+}

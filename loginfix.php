@@ -43,16 +43,14 @@ function loginUser($username, $password)
   }
 
   // Login gagal
-  echo "<script> alert('Wrong username or password'); </script>";
+  echo "<script> alert('Error: Wrong username or password. Please try again.'); window.location.href = 'login.php';</script>";
   $koneksi->close();
 }
 
 // Proses login jika form login dikirimkan
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["loginForm"])) {
   $username = $_POST["username"];
   $password = $_POST["password"];
 
   loginUser($username, $password);
 }
-?>
-

@@ -7,11 +7,11 @@ try {
   $pdo = new PDO("mysql:host=localhost;database=$database", $username, $password);
   // Set the PDO error mode to exception
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e){
+} catch (PDOException $e) {
   die("ERROR: Could not connect. " . $e->getMessage());
 }
 
-try{
+try {
   $category = "SELECT YEAR(innovdata.CreDate) AS categoryyear,
   SUM(CASE WHEN innovdata.IDCateg = '1' THEN 1 ELSE 0 END) AS count_thesis,
   SUM(CASE WHEN innovdata.IDCateg = '2' THEN 1 ELSE 0 END) AS count_internship,
@@ -19,14 +19,14 @@ try{
   FROM `innosys`.`innovdata`
   WHERE innovdata.Status = 'Approved' 
   GROUP BY YEAR(innovdata.CreDate)
-  ORDER BY categoryyear ASC;"; 
+  ORDER BY categoryyear ASC;";
   $categoryResult = $pdo->query($category);
-  if($categoryResult->rowCount() > 0) {
+  if ($categoryResult->rowCount() > 0) {
     $categoryyear = array();
     $count_thesis = array();
     $count_internship = array();
     $count_othercategory = array();
-    while($row = $categoryResult->fetch()) {
+    while ($row = $categoryResult->fetch()) {
       $categoryyear[] = $row["categoryyear"];
       $count_thesis[] = $row["count_thesis"];
       $count_internship[] = $row["count_internship"];
@@ -35,13 +35,13 @@ try{
 
     unset($categoryResult);
   } else {
-    echo "No records matching your query were found.";
+    echo "<script>alert('Error: No records matching your query were found.');</script>";
   }
-} catch(PDOException $e){
+} catch (PDOException $e) {
   die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 }
 
-try{
+try {
   $type = "SELECT YEAR(innovdata.CreDate) AS typeyear,
   SUM(CASE WHEN innovdata.IDType = '1' THEN 1 ELSE 0 END) AS count_website,
   SUM(CASE WHEN innovdata.IDType = '2' THEN 1 ELSE 0 END) AS count_desktop,
@@ -50,15 +50,15 @@ try{
   FROM `innosys`.`innovdata`
   WHERE innovdata.Status = 'Approved' 
   GROUP BY YEAR(innovdata.CreDate)
-  ORDER BY typeyear ASC;"; 
+  ORDER BY typeyear ASC;";
   $typeResult = $pdo->query($type);
-  if($typeResult->rowCount() > 0) {
+  if ($typeResult->rowCount() > 0) {
     $typeyear = array();
     $count_website = array();
     $count_desktop = array();
     $count_mobile = array();
     $count_othertype = array();
-    while($row = $typeResult->fetch()) {
+    while ($row = $typeResult->fetch()) {
       $typeyear[] = $row["typeyear"];
       $count_website[] = $row["count_website"];
       $count_desktop[] = $row["count_desktop"];
@@ -68,13 +68,13 @@ try{
 
     unset($typeResult);
   } else {
-    echo "No records matching your query were found.";
+    echo "<script>alert('Error: No records matching your query were found.');</script>";
   }
-} catch(PDOException $e){
+} catch (PDOException $e) {
   die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 }
 
-try{
+try {
   $conc = "SELECT YEAR(innovdata.CreDate) AS concyear,
   SUM(CASE WHEN innovdata.IDConc = '1' THEN 1 ELSE 0 END) AS count_cyber,
   SUM(CASE WHEN innovdata.IDConc = '2' THEN 1 ELSE 0 END) AS count_msi,
@@ -83,15 +83,15 @@ try{
   FROM `innosys`.`innovdata`
   WHERE innovdata.Status = 'Approved' 
   GROUP BY YEAR(innovdata.CreDate)
-  ORDER BY concyear ASC;"; 
+  ORDER BY concyear ASC;";
   $concResult = $pdo->query($conc);
-  if($concResult->rowCount() > 0) {
+  if ($concResult->rowCount() > 0) {
     $concyear = array();
     $count_cyber = array();
     $count_msi = array();
     $count_rib = array();
     $count_otherconc = array();
-    while($row = $concResult->fetch()) {
+    while ($row = $concResult->fetch()) {
       $concyear[] = $row["concyear"];
       $count_cyber[] = $row["count_cyber"];
       $count_msi[] = $row["count_msi"];
@@ -101,9 +101,9 @@ try{
 
     unset($concResult);
   } else {
-    echo "No records matching your query were found.";
+    echo "<script>alert('Error: No records matching your query were found.');</script>";
   }
-} catch(PDOException $e){
+} catch (PDOException $e) {
   die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 }
 
@@ -112,6 +112,12 @@ $allCount = "SELECT COUNT(*) AS total FROM innovdata WHERE innovdata.Status = 'A
 $allCountResult = mysqli_query($koneksi, $allCount);
 $allCountRow = mysqli_fetch_assoc($allCountResult);
 $allCountTotal = $allCountRow['total'];
+
+// Pending count
+$pendingCount = "SELECT COUNT(*) AS total FROM innovdata WHERE innovdata.Status = 'Pending'";
+$pendingCountResult = mysqli_query($koneksi, $pendingCount);
+$pendingCountRow = mysqli_fetch_assoc($pendingCountResult);
+$pendingCountTotal = $pendingCountRow['total'];
 
 // Category count
 $categoryCount = "SELECT category.NameCateg, COUNT(*) as categoryCount 
@@ -160,9 +166,6 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
   $concentrationCountTotal = $row['concentrationCount'];
   $concentrationCounts[$concentrationName] = $concentrationCountTotal;
 }
- 
+
 // Close connection
 unset($pdo);
-?>
-
-

@@ -23,6 +23,116 @@ if ($_SESSION['role'] !== 'user') {
 
 $loggedInUserID = $_SESSION['username'];
 
+if (isset($_GET['id'])) {
+  $id = $_GET['id'];
+} else {
+  echo "<script>
+          alert('Error: An innovation ID is required.');
+          window.history.back();
+        </script>";
+  exit();
+}
+
+$previousSubmission = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Description, innovdata.Status, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, innovdata.Link, innovdata.LinkYouTube, innovdata.IDConc, innovdata.IDCateg, innovdata.IDType, category.NameCateg, concentration.NameConc, type.NameType, userinnov.IDUser, user.Username
+          FROM innovdata 
+          JOIN type ON innovdata.IDType = type.IDType 
+          JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+          JOIN category ON innovdata.IDCateg = category.IDCateg 
+          JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+          JOIN user ON userinnov.IDUser = user.IDUser
+          WHERE innovdata.IDInnov='$id'
+          ORDER BY `innovdata`.`creDate` DESC";
+
+$previousResult = mysqli_query($koneksi, $previousSubmission);
+$previousRow = mysqli_fetch_assoc($previousResult);
+
+// Your existing code for processing the row goes here
+$PreviousIDInnov = $previousRow['IDInnov'];
+$PreviousnameInnov = $previousRow['NameInnov'];
+$Previousdescription = $previousRow['Description'];
+$Previousstatus = $previousRow['Status'];
+$Previouslink = $previousRow['Link'];
+$Previouslinkyoutube = $previousRow['LinkYouTube'];
+$PreviousIDCateg = $previousRow['IDCateg'];
+$PreviousnameCateg = $previousRow['NameCateg'];
+$PreviousIDType = $previousRow['IDType'];
+$PreviousnameType = $previousRow['NameType'];
+$PreviousIDConc = $previousRow['IDConc'];
+$PreviousnameConc = $previousRow['NameConc'];
+$PreviouscreDate = date("Y-m-d", strtotime($previousRow['CreDate']));
+$PreviousSubmDate = date("Y-m-d", strtotime($previousRow['SubmDate']));
+$Previousimages = explode(",", $previousRow['Img']);
+$Previoususername = $previousRow['Username'];
+$Previousid_user_array = array($previousRow['IDUser']);
+
+if (!$previousRow) {
+  echo "<script>
+          alert('Error: Innovation with this ID can\'t be found.');
+          window.history.back();
+        </script>";
+  exit();
+}
+
+if ($Previousstatus == 'Approved') {
+  echo "<script>
+          alert('Error: Innovation with this ID has been approved by the admin. Go to the approved innovation page?');
+          window.location.href = 'innovation.php?id=' + $id;
+        </script>";
+  exit();
+}
+
+if ($Previousstatus == 'Pending') {
+  echo "<script>
+          alert('Error: You can\'t edit a submission that has not been validated by the admin.');
+          window.history.back();
+        </script>";
+  exit();
+}
+
+$creatorsQuery = "SELECT userinnov.IDUser, user.Username 
+                  FROM innovdata 
+                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                  JOIN user ON userinnov.IDUser = user.IDUser
+                  WHERE innovdata.IDInnov='$id'";
+
+$creatorsResult = mysqli_query($koneksi, $creatorsQuery);
+$creatorsResults = array();
+
+while ($creatorsRow = mysqli_fetch_assoc($creatorsResult)) {
+  $username = $creatorsRow['Username'];
+  $IDUser = $creatorsRow['IDUser'];
+  $creatorsResults[$IDUser] = array(
+    'username' => $username,
+    'IDUser' => $IDUser
+  );
+}
+
+foreach ($creatorsResults as $IDUser => $creatorData) {
+  $IDUser = $creatorData['IDUser'];
+  $username = $creatorData['username'];
+}
+
+if (!array_key_exists($loggedInUserID, $creatorsResults) && $_SESSION['role'] !== 'admin') {
+  // Redirect to a page indicating unauthorized access or handle it in another way
+  echo "<script>
+          alert('Error: You are not a part of this innovation\'s creators.');
+          window.history.back();
+        </script>";
+  exit();
+}
+
+if ($Previousstatus == 'Rejected') {
+  $rejectedQuery = "SELECT validation.Note 
+                  FROM innovdata 
+                  JOIN validation ON innovdata.IDInnov = validation.IDInnov
+                  WHERE innovdata.IDInnov='$id' AND innovdata.Status = 'Rejected'";
+
+  $rejectedResult = mysqli_query($koneksi, $rejectedQuery);
+  $rejectedRow = mysqli_fetch_assoc($rejectedResult);
+
+  $note = $rejectedRow['Note'];
+}
+
 $lecturer = "
     SELECT IDUser, Username FROM user 
     WHERE Role = 'Lecturer'
@@ -50,41 +160,60 @@ if (isset($_POST['submitForm'])) {
   $IDType = $_POST['IDType'];
   $id_user_array = $_POST['IDUser'];
 
-  $ImgArray = [];
-
-  if (is_array($_FILES['Img']['name'])) {
-    $totalFiles = count($_FILES['Img']['name']);
-
-    for ($i = 0; $i < $totalFiles; $i++) {
-      $Img = $_FILES['Img']['name'][$i];
-      $location = "image/" . $Img;
-      move_uploaded_file($_FILES['Img']['tmp_name'][$i], $location);
-      $ImgArray[] = $Img;
-    }
-    $ImgString = implode(",", $ImgArray);
-  } else {
-    $Img = $_FILES['Img']['name'];
-    $location = "image/" . $Img;
-    move_uploaded_file($_FILES['Img']['tmp_name'], $location);
-    $ImgString = $Img;
+  if (
+    $NameInnov == $PreviousnameInnov &&
+    $Description == $Previousdescription &&
+    $CreDate == $PreviouscreDate &&
+    $Link == $Previouslink &&
+    $LinkYT == $Previouslinkyoutube &&
+    $IDConc == $PreviousIDConc &&
+    $IDCateg == $PreviousIDCateg &&
+    $IDType == $PreviousIDType &&
+    $id_user_array == $Previousid_user_array
+  ) {
+    echo "<script>
+            alert('Error: No changes have been made. Please make changes before submitting.');
+            window.location.href = 'edit.php?id=' + $id;
+          </script>";
+    exit();
   }
 
-  $query = "INSERT INTO innovdata (NameInnov, Description, Status, SubmDate, CreDate, Link, Img, LinkYoutube, IDConc, IDCateg, IDType) VALUES
-     ('$NameInnov','$Description','Pending', CURDATE(), '$CreDate','$Link', '$ImgString', " . ($LinkYT !== NULL ? "'$LinkYT'" : "NULL") . ", '$IDConc', '$IDCateg', '$IDType')"; // Fix column name here
+  // Update the database with the merged images
+  $query = "UPDATE innovdata SET 
+          NameInnov='$NameInnov',
+          Description='$Description',
+          Status='Pending',
+          SubmDate=CURDATE(),
+          CreDate='$CreDate',
+          Link='$Link',
+          LinkYoutube=" . ($LinkYT !== NULL ? "'$LinkYT'" : "NULL") . ",
+          IDConc='$IDConc',
+          IDCateg='$IDCateg',
+          IDType='$IDType'
+          WHERE IDInnov='$id'";
 
   if (mysqli_query($koneksi, $query)) {
-    $IDInnov = mysqli_insert_id($koneksi);
 
+    // Remove the existing userinnov entries for this innovation
+    $deleteUserQuery = "DELETE FROM userinnov WHERE IDInnov='$id'";
+    mysqli_query($koneksi, $deleteUserQuery);
+
+    // Remove the existing validation entries for this innovation
+    $deleteValidationQuery = "DELETE FROM validation WHERE IDInnov='$id'";
+    mysqli_query($koneksi, $deleteValidationQuery);
+
+    // Insert new userinnov entries for this innovation
     foreach ($id_user_array as $IDUser) {
-      $query_user = "INSERT INTO userinnov (IDInnov, IDUser) VALUES ('$IDInnov', '$IDUser')";
+      $query_user = "INSERT INTO userinnov (IDInnov, IDUser) VALUES ('$id', '$IDUser')";
 
       if (!mysqli_query($koneksi, $query_user)) {
         echo "error:" . $query_user . "<br>" . mysqli_error($koneksi);
       }
     }
+
     echo "<script>
-            alert('Your form has been submitted.'); 
-            window.location.href = 'user.php';
+            alert('Your submission has been edited and is now eligible to be reviewed again by the admin.'); 
+            window.location.href = 'detail.php?id=' + $id;
           </script>";
   } else {
     echo "<script>alert('Error. Please try again or contact the admin.'); </script>";
@@ -95,12 +224,13 @@ if (isset($_POST['submitForm'])) {
 <html>
 
 <head>
-  <title>Submission Form | SIFORS Innovation System</title>
+  <title>Edit Submitted Form | SIFORS Innovation System</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="select2.css">
   <link rel="stylesheet" href="general.css">
   <link rel="stylesheet" href="submission.css">
+  <link rel="stylesheet" href="detail.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://christianbayer.github.io/image-uploader/dist/image-uploader.min.css">
@@ -110,6 +240,12 @@ if (isset($_POST['submitForm'])) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
   <script src="userdropdown.js"></script>
 </head>
+
+<style>
+  select:invalid {
+    color: #041f35;
+  }
+</style>
 
 <body>
   <div class="headline submission">
@@ -124,21 +260,23 @@ if (isset($_POST['submitForm'])) {
     <form method="POST" action="" enctype="multipart/form-data">
       <div class="section-title" style="margin-bottom: 20px;">Submission Form</div>
 
-      <div class="creators-info danger" style="margin-bottom: 15px">
-        <div>You will <strong>NOT</strong> be able to edit your submission until the admin has reviewed the submission. Please enter each information carefully.</div>
-        <div><i class='bx bxs-error-circle right' style="font-size: 22px; line-height: 1;"></i></div>
-      </div>
+      <?php
+      echo '<div class="creators-info danger" style="margin-bottom: 15px">';
+      echo '<div>Submission has been rejected because "' . $note . '." </div>';
+      echo '<div><span class="status right ' . $Previousstatus . '">' . $Previousstatus . '</span></div>';
+      echo '</div>';
+      ?>
 
       <div class="creators-info info">
-        <div>You must be one of the innovation's creators to submit this form.</div>
-        <div><i class='bx bxs-info-circle right' style="font-size: 22px; line-height: 1;"></i></div>
+        <div>You are not allowed to edit the images you have submitted. If you want to edit your images, please <strong><a href="submission.php">resubmit your submission.</a></strong></div>
+        <div><i class='bx bxs-error-circle right' style="font-size: 22px; line-height: 1;"></i></div>
       </div>
 
       <div class="submission-container">
         <div>
           <div style="margin-bottom: 16px;">
             <label for="NameInnov"> Name </label>
-            <input type="text" name="NameInnov" placeholder="Input the innovation name..." required>
+            <input type="text" name="NameInnov" placeholder="Input the innovation name..." value="<?php echo $PreviousnameInnov ?>" required>
           </div>
 
           <div class="submission-item">
@@ -146,14 +284,14 @@ if (isset($_POST['submitForm'])) {
               <div class="input-container">
                 <label for="CreDate">Creation Date</label>
                 <i class="bx bx-calendar-alt"></i>
-                <input id="creationdate" placeholder="Insert date here..." name="CreDate" required />
+                <input id="creationdate" placeholder="Insert date here..." name="CreDate" value="<?php echo $PreviouscreDate ?>" required />
               </div>
             </div>
 
             <div>
               <label for="IDCateg"> Category </label>
               <select name="IDCateg" required>
-                <option value="" disabled selected hidden>Select a category...</option>
+                <option value="<?php echo $PreviousIDCateg ?>" selected hidden><?php echo $PreviousnameCateg ?></option>
                 <option value="1"> Thesis</option>
                 <option value="2"> Internship</option>
                 <option value="3"> Other Categories</option>
@@ -165,7 +303,7 @@ if (isset($_POST['submitForm'])) {
             <div>
               <label for="IDType">Type</label>
               <select name="IDType" required>
-                <option value="" disabled selected hidden>Select a type...</option>
+                <option value="<?php echo $PreviousIDType ?>" selected hidden><?php echo $PreviousnameType ?></option>
                 <option value="1"> Website</option>
                 <option value="2"> Desktop App</option>
                 <option value="3"> Mobile App</option>
@@ -175,7 +313,7 @@ if (isset($_POST['submitForm'])) {
             <div>
               <label for="IDConc"> Concentration </label>
               <select name="IDConc" required>
-                <option value="" disabled selected hidden>Select a concentration...</option>
+                <option value="<?php echo $PreviousIDConc ?>" selected hidden><?php echo $PreviousnameConc ?></option>
                 <option value="1"> Cybersecurity</option>
                 <option value="2"> Management Information System</option>
                 <option value="3"> Engineering and Business Intelligence</option>
@@ -189,14 +327,20 @@ if (isset($_POST['submitForm'])) {
               <div class="input-container">
                 <label for="Link">Innovation Link</label>
                 <i class='bx bx-link'></i>
-                <input type="url" name="Link" placeholder="https://" required>
+                <input type="url" name="Link" placeholder="https://" value="<?php echo $Previouslink ?>" required>
               </div>
             </div>
             <div>
               <div class="input-container">
                 <label for="LinkYT">YouTube Link (Optional)</label>
                 <i class='bx bx-link'></i>
-                <input type="url" name="LinkYT" placeholder="https://">
+                <input type="url" name="LinkYT" <?php
+                                                if (is_null($Previouslinkyoutube)) {
+                                                  echo 'placeholder="No link submitted"';
+                                                } else {
+                                                  echo 'value="' . $Previouslinkyoutube . '"';
+                                                }
+                                                ?>>
               </div>
             </div>
           </div>
@@ -204,44 +348,53 @@ if (isset($_POST['submitForm'])) {
           <div class="field_wrapper">
             <div>
               <label for="user">Creators</label>
-              <div class="user-input">
-                <select class="js-placeholder js-states form-control" name="IDUser[]" required>
-                  <option></option>
-                  <optgroup label="Lecturers">
-                    <?php
-                    foreach ($lecturerresult as $row) {
-                      echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
-                    }
-                    ?>
-                  </optgroup>
-                  <optgroup label="Students">
-                    <?php
-                    foreach ($studentresult as $row) {
-                      echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
-                    }
-                    ?>
-                  </optgroup>
-                </select>
+              <?php
+              foreach ($creatorsResults as $IDUser => $creatorData) {
+                $IDUser = $creatorData['IDUser'];
+                $username = $creatorData['username'];
 
-                <a href="javascript:void(0);" class="add_button" title="Add field"><i class='bx bx-plus'></i></a>
-              </div>
+                echo '<div class="user-input">';
+                echo '<select class="js-placeholder js-states form-control" name="IDUser[]">';
+                echo '<option value="' . $IDUser . '">(' . $IDUser . ') ' . $username . ' </option>';
+
+                echo '<optgroup label="Lecturers">';
+                foreach ($lecturerresult as $row) {
+                  echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
+                }
+
+                echo '</optgroup>';
+
+                echo '<optgroup label="Students">';
+                foreach ($studentresult as $row) {
+                  echo '<option value="' . $row["IDUser"] . '">(' . $row["IDUser"] . ') ' . $row["Username"] . ' </option>';
+                }
+                echo '</optgroup>';
+                echo '</select>';
+                if ($IDUser === array_key_first($creatorsResults)) {
+                  echo '<a href="javascript:void(0);" class="add_button" title="Add field"><i class=\'bx bx-plus\'></i></a>';
+                } else {
+                  echo '<a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a>';
+                }
+                echo '</div>';
+              }
+              ?>
             </div>
           </div>
         </div>
 
         <div>
           <label for="Description">Description </label>
-          <textarea name="Description" placeholder="Add description here..." required></textarea>
+          <textarea name="Description" placeholder="Add description here..." required><?php echo $Previousdescription ?></textarea>
         </div>
 
       </div>
 
       <label for="Images">Images</label>
-      <div class="input-images">
+      <div style="pointer-events:none;" class="input-images">
         <div class="input-images-1" style="padding-top: .5rem;"></div>
       </div>
 
-      <input type="submit" value="Submit" class="submit" name="submitForm" onClick="return confirmSubmission();">
+      <input type="submit" value="Edit" class="submit" name="submitForm" onClick="return confirmSubmission();">
     </form>
   </div>
 
@@ -250,7 +403,7 @@ if (isset($_POST['submitForm'])) {
   <script>
     function confirmSubmission() {
       // Display a confirmation dialog
-      var isConfirmed = confirm('Are you sure you want to submit the form? You will NOT be able to edit your submission until the admin has reviewed the submission.');
+      var isConfirmed = confirm('Are you sure you want to edit the form? You will NOT be able to edit your submission again until the admin has reviewed the submission.');
 
       if (!isConfirmed) {
         return false; // User clicked Cancel, do not submit the form
@@ -264,13 +417,6 @@ if (isset($_POST['submitForm'])) {
         return false; // Prevent form submission
       }
 
-      // Check if at least one image is uploaded
-      var imagesInput = document.querySelector('input[type="file"]');
-      if (imagesInput.files.length === 0) {
-        alert('Please upload at least one image.');
-        return false; // Prevent form submission
-      }
-
       var selectedCreators = document.querySelectorAll('.js-placeholder');
       var selectedCreatorsArray = Array.from(selectedCreators).map(option => option.value);
       if (!selectedCreatorsArray.includes('<?php echo $loggedInUserID; ?>')) {
@@ -279,10 +425,6 @@ if (isset($_POST['submitForm'])) {
       }
 
       return true; // Allow form submission
-    }
-
-    function hasDuplicates(array) {
-      return new Set(array).size !== array.length;
     }
   </script>
 
@@ -357,10 +499,19 @@ if (isset($_POST['submitForm'])) {
   </script>
 
   <script>
+    let dynamicImages = <?php echo json_encode(array_values(array_filter($Previousimages))); ?>;
+
+    let preloaded = dynamicImages.map(function(image, index) {
+      return {
+        id: index + 1,
+        src: 'image/' + image
+      };
+    });
+
     $(function() {
       $('.input-images-1').imageUploader({
+        preloaded: preloaded,
         imagesInputName: 'Img',
-        label: 'Upload up to 6 images (Max 2MB per image)',
         maxSize: 2 * 1024 * 1024,
         maxFiles: 6
       });

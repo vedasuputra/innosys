@@ -37,7 +37,7 @@ include "loginfix.php";
         <i class='bx bxs-key'></i>
         <input type="password" id="password" placeholder="Insert your password here..." name="password" required value="">
       </div>
-      <input type="submit" value="Submit" class="submit" name="submit">
+      <input type="submit" value="Submit" class="submit" name="loginForm">
     </form>
   </div>
 

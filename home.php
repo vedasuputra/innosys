@@ -1,7 +1,6 @@
 <?php
 
 include "connect.php";
-include "header.php";
 include "statistics.php";
 
 // Display data from innovdata
@@ -16,6 +15,7 @@ $query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdat
           LIMIT $recordsPerPage";
 $result = mysqli_query($koneksi, $query);
 
+include "header.php";
 ?>
 
 <html>
@@ -27,8 +27,7 @@ $result = mysqli_query($koneksi, $query);
   <link rel="stylesheet" href="general.css" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
   <script src="https://kit.fontawesome.com/3a38bd7be5.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -86,7 +85,7 @@ $result = mysqli_query($koneksi, $query);
             echo '<div class="item">';
           }
 
-          echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id='. $IDInnov .'\'">';
+          echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
           if (!empty($images[0])) {
             echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
           }
@@ -194,10 +193,10 @@ $result = mysqli_query($koneksi, $query);
 
   </div>
 
-  <?php include "footer.php"?>
+  <?php include "footer.php" ?>
 
   <script>
-    $(function () {
+    $(function() {
       // Owl Carousel
       var owl = $(".owl-carousel");
       owl.owlCarousel({
@@ -212,11 +211,11 @@ $result = mysqli_query($koneksi, $query);
       var owl = $(".owl-carousel");
       owl.owlCarousel();
       // Go to the next item
-      $(".am-next").click(function () {
+      $(".am-next").click(function() {
         owl.trigger("next.owl.carousel");
       });
       // Go to the previous item
-      $(".am-prev").click(function () {
+      $(".am-prev").click(function() {
         // With optional speed parameter
         // Parameters has to be in square bracket '[]'
         owl.trigger("prev.owl.carousel", [300]);

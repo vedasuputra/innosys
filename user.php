@@ -4,10 +4,21 @@ include "header.php";
 include "connect.php";
 
 // Periksa apakah pengguna sudah login
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION['role'] !== 'user') {
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   session_unset();
   session_destroy();
-  header("Location: login.php");
+  echo "<script>
+          alert('You must be logged in as a user to access this page.');
+          window.location.href = 'login.php';
+        </script>";
+  exit();
+}
+
+if ($_SESSION['role'] !== 'user') {
+  echo "<script>
+          alert('You must be logged in as a user to access this page.');
+          window.history.back();
+        </script>";
   exit();
 }
 
@@ -22,7 +33,7 @@ $query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdat
           WHERE  innovdata.Status = 'Approved' AND userinnov.IDUser = ?
           ORDER BY `innovdata`.`creDate` DESC
           LIMIT $recordsPerPage";
-          
+
 $stmt = mysqli_prepare($koneksi, $query);
 mysqli_stmt_bind_param($stmt, 'i',  $_SESSION['username']);
 mysqli_stmt_execute($stmt);
@@ -36,7 +47,7 @@ $allSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, i
               JOIN category ON innovdata.IDCateg = category.IDCateg 
               JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
               WHERE userinnov.IDUser = ?
-              ORDER BY `innovdata`.`creDate` DESC";
+              ORDER BY `innovdata`.`SubmDate` DESC";
 
 $allstmt = mysqli_prepare($koneksi, $allSubmit);
 mysqli_stmt_bind_param($allstmt, 'i',  $_SESSION['username']);
@@ -51,7 +62,7 @@ $acceptedSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInn
                   JOIN category ON innovdata.IDCateg = category.IDCateg 
                   JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
                   WHERE userinnov.IDUser = ? AND innovdata.Status = 'Approved'
-                  ORDER BY `innovdata`.`creDate` DESC";
+                  ORDER BY `innovdata`.`SubmDate` DESC";
 
 $acceptedstmt = mysqli_prepare($koneksi, $acceptedSubmit);
 mysqli_stmt_bind_param($acceptedstmt, 'i',  $_SESSION['username']);
@@ -66,7 +77,7 @@ $pendingSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInno
                   JOIN category ON innovdata.IDCateg = category.IDCateg 
                   JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
                   WHERE userinnov.IDUser = ? AND innovdata.Status = 'Pending'
-                  ORDER BY `innovdata`.`creDate` DESC";
+                  ORDER BY `innovdata`.`SubmDate` DESC";
 
 $pendingstmt = mysqli_prepare($koneksi, $pendingSubmit);
 mysqli_stmt_bind_param($pendingstmt, 'i',  $_SESSION['username']);
@@ -81,7 +92,7 @@ $rejectedSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInn
                   JOIN category ON innovdata.IDCateg = category.IDCateg 
                   JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
                   WHERE userinnov.IDUser = ? AND innovdata.Status = 'Rejected'
-                  ORDER BY `innovdata`.`creDate` DESC";
+                  ORDER BY `innovdata`.`SubmDate` DESC";
 
 $rejectedstmt = mysqli_prepare($koneksi, $rejectedSubmit);
 mysqli_stmt_bind_param($rejectedstmt, 'i',  $_SESSION['username']);
@@ -316,55 +327,55 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
     </div>
 
     <?php
-      if (mysqli_num_rows($result) > 0) {
-        echo '<div class="section-head" style="margin-top: 2.5rem;">';
+    if (mysqli_num_rows($result) > 0) {
+      echo '<div class="section-head" style="margin-top: 2.5rem;">';
+      echo '<div>';
+      echo '<h1 class="section-title">Newest Innovations</h1>';
+      echo '</div>';
+      if ($allCountTotal > 4) {
+        echo '<div class="navbar-end">';
+        echo '<button onclick="javascript:location.href=\'catalogue.html\';" class="general-button">View All</button>';
+        echo '</div>';
+      }
+      echo '</div>';
+      echo '<div class="owl-carousel owl-theme">';
+      echo '<div class="item">';
+      while ($row = mysqli_fetch_assoc($result)) {
+
+        $IDInnov = $row['IDInnov'];
+        $nameInnov = $row['NameInnov'];
+        $nametype = $row['NameType'];
+        $nameConst = $row['NameConc'];
+        $creDate = date("F j, Y", strtotime($row['CreDate']));
+        $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+        $categoryName = $row['NameCateg'];
+        $images = explode(",", $row['Img']);
+
+        echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+        if (!empty($images[0])) {
+          echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
+        }
+        echo '<div class="card-content">';
+        echo '<div style="justify-content: normal;">';
+        echo '<div class="card-title">' . $nameInnov . '</div>';
+        echo '<div class="card-category">' . $categoryName . '</div>';
+        echo '</div>';
+        echo '<div class="card-details">';
         echo '<div>';
-        echo '<h1 class="section-title">Newest Innovations</h1>';
+        echo '<i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>';
         echo '</div>';
-        if ($allCountTotal > 4) {
-          echo '<div class="navbar-end">';
-          echo '<button onclick="javascript:location.href=\'catalogue.html\';" class="general-button">View All</button>';
-          echo '</div>';
-        }
+        echo '<div>';
+        echo '<div>' . $creDate . '</div>';
         echo '</div>';
-        echo '<div class="owl-carousel owl-theme">';
-        echo '<div class="item">';
-        while ($row = mysqli_fetch_assoc($result)) {
-
-          $IDInnov = $row['IDInnov'];
-          $nameInnov = $row['NameInnov'];
-          $nametype = $row['NameType'];
-          $nameConst = $row['NameConc'];
-          $creDate = date("F j, Y", strtotime($row['CreDate']));
-          $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
-          $categoryName = $row['NameCateg'];
-          $images = explode(",", $row['Img']);
-
-          echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
-          if (!empty($images[0])) {
-            echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
-          }
-          echo '<div class="card-content">';
-          echo '<div style="justify-content: normal;">';
-          echo '<div class="card-title">' . $nameInnov . '</div>';
-          echo '<div class="card-category">' . $categoryName . '</div>';
-          echo '</div>';
-          echo '<div class="card-details">';
-          echo '<div>';
-          echo '<i class="bx bx-calendar-alt" style="margin-right: 7px; font-size: 14px; line-height: 1.1;"></i>';
-          echo '</div>';
-          echo '<div>';
-          echo '<div>' . $creDate . '</div>';
-          echo '</div>';
-          echo '</div>';
-          echo '</div>';
-          echo '</div>';
-        }
+        echo '</div>';
         echo '</div>';
         echo '</div>';
       }
+      echo '</div>';
+      echo '</div>';
+    }
     ?>
-    
+
     <div id="innovationsAll" class="tabcontent2">
       <div class="section-head" style="margin-top: 2.5rem;">
         <div>
@@ -383,7 +394,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-      <?php
+        <?php
         $counter = 0;
         if (mysqli_num_rows($allresult) > 0) {
           while ($row = mysqli_fetch_assoc($allresult)) {
@@ -400,15 +411,14 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
             }
 
             if ($status == 'Approved') {
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id='.$IDInnov.'\'">';
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+            } else {
+              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
             }
-            else {
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
-            }
-            
+
             echo '<div>';
-            echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
-            echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
+            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
             echo '</div>';
             echo '<div>';
             echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
@@ -417,16 +427,15 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
 
             $counter++;
           }
-        }
-        else {
+        } else {
           // No results found
-          echo '<div class="creators-info">';
+          echo '<div class="creators-info info">';
           echo '<div>No results found.</div>';
-          echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
           echo '</div>';
         }
         ?>
-        
+
       </div>
     </div>
 
@@ -449,41 +458,40 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
         <?php
-          $counter = 0;
-          if (mysqli_num_rows($acceptedresult) > 0) {
-            while ($row = mysqli_fetch_assoc($acceptedresult)) {
+        $counter = 0;
+        if (mysqli_num_rows($acceptedresult) > 0) {
+          while ($row = mysqli_fetch_assoc($acceptedresult)) {
 
-              $IDInnov = $row['IDInnov'];
-              $nameInnov = $row['NameInnov'];
-              $status = $row['Status'];
-              $creDate = date("F j, Y", strtotime($row['CreDate']));
-              $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+            $IDInnov = $row['IDInnov'];
+            $nameInnov = $row['NameInnov'];
+            $status = $row['Status'];
+            $creDate = date("F j, Y", strtotime($row['CreDate']));
+            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
 
-              if ($counter > 0 && $counter % 2 == 0) {
-                echo '</div>';
-                echo '<div class="innovation-creators">';
-              }
-
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id='.$IDInnov.'\'">';
-              echo '<div>';
-              echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
-              echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+            if ($counter > 0 && $counter % 2 == 0) {
               echo '</div>';
-              echo '<div>';
-              echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-              echo '</div>';
-              echo '</div>';
-
-              $counter++;
+              echo '<div class="innovation-creators">';
             }
-          }
-          else {
-            // No results found
-            echo '<div class="creators-info">';
-            echo '<div>No results found.</div>';
-            echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+
+            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+            echo '<div>';
+            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
+            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
             echo '</div>';
+            echo '<div>';
+            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+            echo '</div>';
+            echo '</div>';
+
+            $counter++;
           }
+        } else {
+          // No results found
+          echo '<div class="creators-info info">';
+          echo '<div>No results found.</div>';
+          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
+          echo '</div>';
+        }
         ?>
       </div>
     </div>
@@ -506,42 +514,41 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-      <?php
-          $counter = 0;
-          if (mysqli_num_rows($pendingresult) > 0) {
-            while ($row = mysqli_fetch_assoc($pendingresult)) {
+        <?php
+        $counter = 0;
+        if (mysqli_num_rows($pendingresult) > 0) {
+          while ($row = mysqli_fetch_assoc($pendingresult)) {
 
-              $IDInnov = $row['IDInnov'];
-              $nameInnov = $row['NameInnov'];
-              $status = $row['Status'];
-              $creDate = date("F j, Y", strtotime($row['CreDate']));
-              $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+            $IDInnov = $row['IDInnov'];
+            $nameInnov = $row['NameInnov'];
+            $status = $row['Status'];
+            $creDate = date("F j, Y", strtotime($row['CreDate']));
+            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
 
-              if ($counter > 0 && $counter % 2 == 0) {
-                echo '</div>';
-                echo '<div class="innovation-creators">';
-              }
-
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
-              echo '<div>';
-              echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
-              echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+            if ($counter > 0 && $counter % 2 == 0) {
               echo '</div>';
-              echo '<div>';
-              echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-              echo '</div>';
-              echo '</div>';
-
-              $counter++;
+              echo '<div class="innovation-creators">';
             }
-          }
-          else {
-            // No results found
-            echo '<div class="creators-info">';
-            echo '<div>No results found.</div>';
-            echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+
+            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
+            echo '<div>';
+            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
+            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
             echo '</div>';
+            echo '<div>';
+            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+            echo '</div>';
+            echo '</div>';
+
+            $counter++;
           }
+        } else {
+          // No results found
+          echo '<div class="creators-info info">';
+          echo '<div>No results found.</div>';
+          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
+          echo '</div>';
+        }
         ?>
       </div>
     </div>
@@ -564,42 +571,41 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-      <?php
-          $counter = 0;
-          if (mysqli_num_rows($rejectedresult) > 0) {
-            while ($row = mysqli_fetch_assoc($rejectedresult)) {
+        <?php
+        $counter = 0;
+        if (mysqli_num_rows($rejectedresult) > 0) {
+          while ($row = mysqli_fetch_assoc($rejectedresult)) {
 
-              $IDInnov = $row['IDInnov'];
-              $nameInnov = $row['NameInnov'];
-              $status = $row['Status'];
-              $creDate = date("F j, Y", strtotime($row['CreDate']));
-              $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+            $IDInnov = $row['IDInnov'];
+            $nameInnov = $row['NameInnov'];
+            $status = $row['Status'];
+            $creDate = date("F j, Y", strtotime($row['CreDate']));
+            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
 
-              if ($counter > 0 && $counter % 2 == 0) {
-                echo '</div>';
-                echo '<div class="innovation-creators">';
-              }
-
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
-              echo '<div>';
-              echo '<div class="creator-name"><span class="status '.$status.'">'.$status.'</span>' . $nameInnov . '</div>';
-              echo '<div class="creator-role bigger-margin">Submitted on '.$SubmDate.'</div>';
+            if ($counter > 0 && $counter % 2 == 0) {
               echo '</div>';
-              echo '<div>';
-              echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-              echo '</div>';
-              echo '</div>';
-
-              $counter++;
+              echo '<div class="innovation-creators">';
             }
-          }
-          else {
-            // No results found
-            echo '<div class="creators-info">';
-            echo '<div>No results found.</div>';
-            echo '<div><i class=\'bx bx-x right\' style="font-size: 22px; line-height: 1;"></i></div>';
+
+            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
+            echo '<div>';
+            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
+            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
             echo '</div>';
+            echo '<div>';
+            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+            echo '</div>';
+            echo '</div>';
+
+            $counter++;
           }
+        } else {
+          // No results found
+          echo '<div class="creators-info info">';
+          echo '<div>No results found.</div>';
+          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
+          echo '</div>';
+        }
         ?>
       </div>
     </div>

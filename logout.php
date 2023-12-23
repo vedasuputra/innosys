@@ -7,6 +7,7 @@ session_unset();
 // Hancurkan sesi
 session_destroy();
 
-// Redirect ke halaman login (ganti "login.php" dengan halaman login Anda)
+// Make sure no content is outputted before this point
 header("Location: home.php");
 exit();
+?>
