@@ -74,7 +74,7 @@ url("photos/headlinecatalogue.jpg");
   width: 100%;
 }
 
-input[type="checkbox"] {
+input[type="radio"] {
   -webkit-appearance: none;
   appearance: none;
   background-color: #fff;
@@ -82,21 +82,21 @@ input[type="checkbox"] {
   width: 1em;
   height: 1em;
   border: 1px solid #041f35;
-  border-radius: 3px;
+  border-radius: 50%;
   display: grid;
   place-content: center;
   transform: translateY(0.2em);
   cursor: pointer;
 }
 
-input[type="checkbox"]:checked::before {
+input[type="radio"]:checked::before {
   content: '\f00c';
   font-family: FontAwesome;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
 }
 
-input[type="checkbox"]:checked {
+input[type="radio"]:checked {
   background: #041f35;
   color: #f3f4f6;
 }
@@ -128,6 +128,7 @@ input[type="checkbox"]:checked {
   padding-top: 19px;
   padding-bottom: 19px;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .count {

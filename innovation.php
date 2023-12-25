@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-$query = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Description, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType, userinnov.IDUser, user.Username, user.Role, user.Email, innovdata.Link, innovdata.LinkYoutube 
+$query = "SELECT innovdata.Status, innovdata.IDCateg, innovdata.IDType, innovdata.IDConc, innovdata.IDInnov, innovdata.NameInnov, innovdata.Description, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType, userinnov.IDUser, user.Username, user.Role, user.Email, innovdata.Link, innovdata.LinkYoutube 
         FROM innovdata 
         JOIN type ON innovdata.IDType = type.IDType 
         JOIN concentration ON innovdata.IDConc = concentration.IDConc 
@@ -34,8 +34,11 @@ if (!$row) {
 
 $nameInnov = $row['NameInnov'];
 $category = $row['NameCateg'];
+$IDCateg = $row['IDCateg'];
 $type = $row['NameType'];
+$IDType = $row['IDType'];
 $conc = $row['NameConc'];
+$IDConc = $row['IDConc'];
 $creDate = date("F j, Y", strtotime($row['CreDate']));
 $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
 $description = $row['Description'];
@@ -106,7 +109,8 @@ while ($creatorsRow = mysqli_fetch_assoc($creatorsResult)) {
     $creatorsResults[$IDUser] = array(
         'username' => $username,
         'role' => $role,
-        'email' => $email
+        'email' => $email,
+        'IDUser' => $IDUser
     );
 }
 
@@ -184,6 +188,7 @@ while ($creatorsRow = mysqli_fetch_assoc($creatorsResult)) {
                 $counter = 0;
 
                 foreach ($creatorsResults as $IDUser => $creatorData) {
+                    $IDUser = $creatorData['IDUser'];
                     $username = $creatorData['username'];
                     $role = $creatorData['role'];
                     $email = $creatorData['email'];
@@ -193,7 +198,7 @@ while ($creatorsRow = mysqli_fetch_assoc($creatorsResult)) {
                         echo '<div class="innovation-creators">';
                     }
 
-                    echo '<div class="creators-info" title="' . $username . '" onclick="javascript:location.href=\'#\'">';
+                    echo '<div class="creators-info" title="' . $username . '" onclick="window.open(\'catalogue.php?user='.$IDUser.'\');">';
                     echo '<div>';
                     echo '<div class="creator-name"><span class="status ' . $role . '">' . $role . '</span>' . $username . '</div>';
                     echo '<span class="creator-role">' . $email . '</span>';
@@ -210,19 +215,19 @@ while ($creatorsRow = mysqli_fetch_assoc($creatorsResult)) {
         <div class="innovation-right">
             <div>
                 <h4>Category</h4>
-                <div onclick="javascript:location.href='#'" class="filter-button"><?php echo $category ?></div>
-            </div>
-            <div>
-                <h4>Concentration</h4>
-                <div onclick="javascript:location.href='#'" class="filter-button"><?php echo $conc ?></div>
+                <div onclick="window.open('catalogue.php?category=<?php echo $IDCateg?>');" class="filter-button"><?php echo $category ?></div>
             </div>
             <div>
                 <h4>Type</h4>
-                <div onclick="javascript:location.href='#'" class="filter-button"><?php echo $type ?></div>
+                <div onclick="window.open('catalogue.php?type=<?php echo $IDType?>');" class="filter-button"><?php echo $type ?></div>
+            </div>
+            <div>
+                <h4>Concentration</h4>
+                <div onclick="window.open('catalogue.php?concentration=<?php echo $IDConc?>');" class="filter-button"><?php echo $conc ?></div>
             </div>
             <div>
                 <h4>Link</h4>
-                <div class="innovation-link" onclick="javascript:location.href='<?php echo $link ?>'">
+                <div class="innovation-link" onclick="window.open('<?php echo $link ?>'">
                     <div>
                         <i class='bx bx-link' style="font-size: 70px;"></i>
                     </div>

@@ -106,7 +106,7 @@ $allresult = mysqli_stmt_get_result($allstmt);
             echo '<div class="innovation-creators">';
           }
 
-          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
+          echo '<div class="creators-info pointer" onclick="window.open(\'detail.php?id=' . $IDInnov . '\');">';
           echo '<div>';
           echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
           echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
@@ -133,7 +133,7 @@ $allresult = mysqli_stmt_get_result($allstmt);
         <h1 class="section-title">Innovations History</h1>
       </div>
       <div class="navbar-end">
-        <button onclick="javascript:location.href='history.php';" class="general-button">
+        <button onclick="window.open('history.php');" class="general-button">
           View All
         </button>
       </div>
@@ -157,9 +157,9 @@ $allresult = mysqli_stmt_get_result($allstmt);
           }
 
           if ($status == 'Approved') {
-            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+            echo '<div class="creators-info pointer" onclick="window.open(\'innovation.php?id=' . $IDInnov . '\');">';
           } else {
-            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
+            echo '<div class="creators-info pointer" onclick="window.open(\'detail.php?id=' . $IDInnov . '\');">';
           }
 
           echo '<div>';

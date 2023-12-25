@@ -7,11 +7,11 @@
   <div>
     <h4>Pages</h4>
     <a href="home.php">Home</a>
-    <a href="catalogue.html">Catalogue</a>
+    <a href="catalogue.php">Catalogue</a>
   </div>
   <div>
     <h4>Others</h4>
-    <a href="#">Help</a>
+    <a href="help.php">Help</a>
     <a href="submission.php">Submit</a>
   </div>
 </footer>

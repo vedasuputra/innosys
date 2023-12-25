@@ -262,7 +262,7 @@ if (isset($_POST['submitForm'])) {
 
       <?php
       echo '<div class="creators-info danger" style="margin-bottom: 15px">';
-      echo '<div>Submission has been rejected because "' . $note . '." </div>';
+      echo '<div>Submission has been rejected because "' . $note . '" </div>';
       echo '<div><span class="status right ' . $Previousstatus . '">' . $Previousstatus . '</span></div>';
       echo '</div>';
       ?>
@@ -294,7 +294,7 @@ if (isset($_POST['submitForm'])) {
                 <option value="<?php echo $PreviousIDCateg ?>" selected hidden><?php echo $PreviousnameCateg ?></option>
                 <option value="1"> Thesis</option>
                 <option value="2"> Internship</option>
-                <option value="3"> Other Categories</option>
+                <option value="3"> Others</option>
               </select>
             </div>
           </div>
@@ -307,7 +307,7 @@ if (isset($_POST['submitForm'])) {
                 <option value="1"> Website</option>
                 <option value="2"> Desktop App</option>
                 <option value="3"> Mobile App</option>
-                <option value="4"> Other Types</option>
+                <option value="4"> Others</option>
               </select>
             </div>
             <div>
@@ -317,7 +317,7 @@ if (isset($_POST['submitForm'])) {
                 <option value="1"> Cybersecurity</option>
                 <option value="2"> Management Information System</option>
                 <option value="3"> Engineering and Business Intelligence</option>
-                <option value="4"> Other Concentrations</option>
+                <option value="4"> Others</option>
               </select>
             </div>
           </div>

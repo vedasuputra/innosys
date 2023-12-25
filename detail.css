@@ -30,3 +30,7 @@ textarea:disabled:focus {
 .red {
   background: #CC0001 !important;
 }
+
+label {
+  color: rgb(84, 84, 84, 0.7)!important;
+}

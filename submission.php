@@ -156,7 +156,7 @@ if (isset($_POST['submitForm'])) {
                 <option value="" disabled selected hidden>Select a category...</option>
                 <option value="1"> Thesis</option>
                 <option value="2"> Internship</option>
-                <option value="3"> Other Categories</option>
+                <option value="3"> Others</option>
               </select>
             </div>
           </div>
@@ -169,7 +169,7 @@ if (isset($_POST['submitForm'])) {
                 <option value="1"> Website</option>
                 <option value="2"> Desktop App</option>
                 <option value="3"> Mobile App</option>
-                <option value="4"> Other Types</option>
+                <option value="4"> Others</option>
               </select>
             </div>
             <div>
@@ -179,7 +179,7 @@ if (isset($_POST['submitForm'])) {
                 <option value="1"> Cybersecurity</option>
                 <option value="2"> Management Information System</option>
                 <option value="3"> Engineering and Business Intelligence</option>
-                <option value="4"> Other Concentrations</option>
+                <option value="4"> Others</option>
               </select>
             </div>
           </div>

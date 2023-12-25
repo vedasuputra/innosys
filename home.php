@@ -43,7 +43,7 @@ include "header.php";
         Check out all the innovations made by the students and the lecturers
         of UNDIKSHA’s Information System study program here.
       </p>
-      <button onclick="javascript:location.href='catalogue.html'" type="button" class="headline-button">
+      <button onclick="window.open('catalogue.html');" type="button" class="headline-button">
         View Catalogue
       </button>
     </div>
@@ -85,7 +85,7 @@ include "header.php";
             echo '<div class="item">';
           }
 
-          echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+          echo '<div class="items" onclick="window.open(\'innovation.php?id=' . $IDInnov . '\');">';
           if (!empty($images[0])) {
             echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
           }
@@ -116,7 +116,7 @@ include "header.php";
       <div>
         <h1 class="section-title">Categories</h1>
         <div class="category-container">
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?category=1');">
             <i class="category-icon bx bxs-book-alt"></i>
             <div class="category-details">
               <h2>Thesis</h2>
@@ -125,7 +125,7 @@ include "header.php";
               </div>
             </div>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?category=2');">
             <i class="category-icon bx bxs-briefcase"></i>
             <div class="category-details">
               <h2>Internship</h2>
@@ -134,7 +134,7 @@ include "header.php";
               </div>
             </div>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?category=3');">
             <i class="category-icon bx bxs-grid-alt"></i>
             <div class="category-details">
               <h2>Others</h2>
@@ -148,19 +148,19 @@ include "header.php";
       <div>
         <h1 class="section-title">Type</h1>
         <div class="type-container">
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?type=1');">
             <div class="type-name">Website</div>
             <i class="type-icon bx bx-globe"></i>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?type=2');">
             <div class="type-name">Desktop App</div>
             <i class="type-icon bx bx-desktop"></i>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?type=3');">
             <div class="type-name">Mobile App</div>
             <i class="type-icon bx bx-mobile"></i>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?type=4');">
             <div class="type-name">Others</div>
             <i class="type-icon bx bx-dots-horizontal-rounded"></i>
           </div>
@@ -169,19 +169,19 @@ include "header.php";
       <div>
         <h1 class="section-title">Concentration</h1>
         <div class="type-container">
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?concentration=1');">
             <div class="type-name">Cybersecurity</div>
             <i class="type-icon bx bxs-lock-alt"></i>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?concentration=2');">
             <div class="type-name">Management Information System</div>
             <i class="type-icon bx bxs-business"></i>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?concentration=3');">
             <div class="type-name">Engineering and Business Intelligence</div>
             <i class="type-icon bx bxs-cog"></i>
           </div>
-          <div onclick="javascript:location.href='#'">
+          <div onclick="window.open('catalogue.php?concentration=4');">
             <div class="type-name">Others</div>
             <i class="type-icon bx bx-dots-horizontal-rounded"></i>
           </div>

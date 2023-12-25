@@ -251,7 +251,7 @@ include "header.php";
         echo '</div>';
       } elseif ($status == 'Rejected' && $_SESSION['role'] != 'admin') {
         echo '<div class="creators-info danger">';
-        echo '<div>Submission has been rejected because "' . $note . '."</div>';
+        echo '<div>Submission has been rejected because "' . $note . '"</div>';
         echo '<div><span class="status right ' . $status . '">' . $status . '</span></div>';
         echo '</div>';
       } elseif ($status == 'Rejected' && $_SESSION['role'] == 'admin') {

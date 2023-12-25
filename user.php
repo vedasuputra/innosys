@@ -22,8 +22,48 @@ if ($_SESSION['role'] !== 'user') {
   exit();
 }
 
+$recordsPerPage = 8;
+
+$status2 = isset($_GET['status']) ? $_GET['status'] : 'all';
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $recordsPerPage;
+
+if ($status2 === 'all') {
+  $historyquery = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+                    FROM innovdata 
+                    JOIN type ON innovdata.IDType = type.IDType 
+                    JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+                    JOIN category ON innovdata.IDCateg = category.IDCateg 
+                    JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                    WHERE userinnov.IDUser = ? 
+                    ORDER BY `innovdata`.`SubmDate` DESC
+                    LIMIT ? OFFSET ?";
+  $historystmt = $koneksi->prepare($historyquery);
+  $historystmt->bind_param("sii", $_SESSION['username'], $recordsPerPage, $offset);
+  $historystmt->execute();
+  $historyresult = $historystmt->get_result();
+} 
+
+else {
+  $historyquery = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
+                    FROM innovdata 
+                    JOIN type ON innovdata.IDType = type.IDType 
+                    JOIN concentration ON innovdata.IDConc = concentration.IDConc 
+                    JOIN category ON innovdata.IDCateg = category.IDCateg 
+                    JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                    WHERE userinnov.IDUser = ? AND innovdata.Status = ?
+                    ORDER BY `innovdata`.`SubmDate` DESC
+                    LIMIT ? OFFSET ?";
+  $historystmt = $koneksi->prepare($historyquery);
+  $historystmt->bind_param("ssii", $_SESSION['username'], $status2, $recordsPerPage, $offset);
+  $historystmt->execute();
+  $historyresult = $historystmt->get_result();
+}
+
+$totalPages = ceil($koneksi->query("SELECT COUNT(*) FROM innovdata JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov WHERE userinnov.IDUser = '{$_SESSION['username']}'" . ($status2 === 'all' ? '' : " AND status = '$status2'"))->fetch_row()[0] / $recordsPerPage);
+
 // Newest innovation
-$recordsPerPage = 4;
+$recordsPerPage2 = 4;
 $query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
           FROM innovdata 
           JOIN type ON innovdata.IDType = type.IDType 
@@ -32,72 +72,12 @@ $query = "SELECT innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdat
           JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
           WHERE  innovdata.Status = 'Approved' AND userinnov.IDUser = ?
           ORDER BY `innovdata`.`creDate` DESC
-          LIMIT $recordsPerPage";
+          LIMIT $recordsPerPage2";
 
 $stmt = mysqli_prepare($koneksi, $query);
 mysqli_stmt_bind_param($stmt, 'i',  $_SESSION['username']);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
-
-// All submitted innovations
-$allSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
-              FROM innovdata 
-              JOIN type ON innovdata.IDType = type.IDType 
-              JOIN concentration ON innovdata.IDConc = concentration.IDConc 
-              JOIN category ON innovdata.IDCateg = category.IDCateg 
-              JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
-              WHERE userinnov.IDUser = ?
-              ORDER BY `innovdata`.`SubmDate` DESC";
-
-$allstmt = mysqli_prepare($koneksi, $allSubmit);
-mysqli_stmt_bind_param($allstmt, 'i',  $_SESSION['username']);
-mysqli_stmt_execute($allstmt);
-$allresult = mysqli_stmt_get_result($allstmt);
-
-// Accepted submitted innovations
-$acceptedSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
-                  FROM innovdata 
-                  JOIN type ON innovdata.IDType = type.IDType 
-                  JOIN concentration ON innovdata.IDConc = concentration.IDConc 
-                  JOIN category ON innovdata.IDCateg = category.IDCateg 
-                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
-                  WHERE userinnov.IDUser = ? AND innovdata.Status = 'Approved'
-                  ORDER BY `innovdata`.`SubmDate` DESC";
-
-$acceptedstmt = mysqli_prepare($koneksi, $acceptedSubmit);
-mysqli_stmt_bind_param($acceptedstmt, 'i',  $_SESSION['username']);
-mysqli_stmt_execute($acceptedstmt);
-$acceptedresult = mysqli_stmt_get_result($acceptedstmt);
-
-// Pending submitted innovations
-$pendingSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
-                  FROM innovdata 
-                  JOIN type ON innovdata.IDType = type.IDType 
-                  JOIN concentration ON innovdata.IDConc = concentration.IDConc 
-                  JOIN category ON innovdata.IDCateg = category.IDCateg 
-                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
-                  WHERE userinnov.IDUser = ? AND innovdata.Status = 'Pending'
-                  ORDER BY `innovdata`.`SubmDate` DESC";
-
-$pendingstmt = mysqli_prepare($koneksi, $pendingSubmit);
-mysqli_stmt_bind_param($pendingstmt, 'i',  $_SESSION['username']);
-mysqli_stmt_execute($pendingstmt);
-$pendingresult = mysqli_stmt_get_result($pendingstmt);
-
-// Rejected submitted innovations
-$rejectedSubmit = "SELECT innovdata.Status, innovdata.IDInnov, innovdata.NameInnov, innovdata.Img, innovdata.CreDate, innovdata.SubmDate, category.NameCateg, concentration.NameConc, type.NameType 
-                  FROM innovdata 
-                  JOIN type ON innovdata.IDType = type.IDType 
-                  JOIN concentration ON innovdata.IDConc = concentration.IDConc 
-                  JOIN category ON innovdata.IDCateg = category.IDCateg 
-                  JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
-                  WHERE userinnov.IDUser = ? AND innovdata.Status = 'Rejected'
-                  ORDER BY `innovdata`.`SubmDate` DESC";
-
-$rejectedstmt = mysqli_prepare($koneksi, $rejectedSubmit);
-mysqli_stmt_bind_param($rejectedstmt, 'i',  $_SESSION['username']);
-mysqli_stmt_execute($rejectedstmt);
-$rejectedresult = mysqli_stmt_get_result($rejectedstmt);
 ?>
 
 <?php
@@ -112,11 +92,12 @@ $allCountTotal = $allCountRow['total'];
 
 // Category count
 $categoryCount = "SELECT 
-                  category.NameCateg,
+                  category.NameCateg, category.IDCateg,
                   COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDCateg END) as categoryCount
                   FROM category
                   LEFT JOIN innovdata ON category.IDCateg = innovdata.IDCateg
                   LEFT JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+                  WHERE innovdata.Status = 'Approved'
                   GROUP BY category.NameCateg
                   ORDER BY category.IDCateg ASC";
 $categoryCountResult = mysqli_query($koneksi, $categoryCount);
@@ -124,17 +105,19 @@ $categoryCounts = array();
 
 while ($row = mysqli_fetch_assoc($categoryCountResult)) {
   $categoryName = $row['NameCateg'];
+  $categoryID = $row['IDCateg'];
   $categoryCountTotal = $row['categoryCount'];
   $categoryCounts[$categoryName] = $categoryCountTotal;
 }
 
 // Type count
 $typeCount = "SELECT 
-              type.NameType,
+              type.NameType, type.IDType,
               COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDType END) as typeCount
               FROM type
               LEFT JOIN innovdata ON type.IDType = innovdata.IDType
               LEFT JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+              WHERE innovdata.Status = 'Approved'
               GROUP BY type.NameType
               ORDER BY type.IDType ASC";
 $typeCountResult = mysqli_query($koneksi, $typeCount);
@@ -142,17 +125,19 @@ $typeCounts = array();
 
 while ($row = mysqli_fetch_assoc($typeCountResult)) {
   $typeName = $row['NameType'];
+  $typeID = $row['IDType'];
   $typeCountTotal = $row['typeCount'];
   $typeCounts[$typeName] = $typeCountTotal;
 }
 
 // Concentration count
 $concCount = "SELECT 
-              concentration.NameConc,
-              COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDType END) as concCount
+              concentration.NameConc, concentration.IDConc,
+              COUNT(CASE WHEN innovdata.Status = 'Approved' AND userinnov.IDUser = {$_SESSION["username"]} THEN innovdata.IDConc END) as concCount
               FROM concentration
               LEFT JOIN innovdata ON concentration.IDConc = innovdata.IDConc
               LEFT JOIN userinnov ON innovdata.IDInnov = userinnov.IDInnov
+              WHERE innovdata.Status = 'Approved'
               GROUP BY concentration.NameConc
               ORDER BY concentration.IDConc ASC";
 $concCountResult = mysqli_query($koneksi, $concCount);
@@ -160,6 +145,7 @@ $concCounts = array();
 
 while ($row = mysqli_fetch_assoc($concCountResult)) {
   $concName = $row['NameConc'];
+  $concID = $row['IDConc'];
   $concCountTotal = $row['concCount'];
   $concCounts[$concName] = $concCountTotal;
 }
@@ -187,7 +173,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
     <div class="headline-content">
       <h1 class="headline-title" style="overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Welcome, <?php echo $_SESSION["nama"]; ?></h1>
       <p>This is your dashboard, where you can view the approved, pending, and rejected innovations that you have submitted.</p>
-      <button onclick="javascript:location.href='submission.php'" type="button" class="headline-button">Submit Innovation</button>
+      <button onclick="window.open('submission.php');" type="button" class="headline-button">Submit Innovation</button>
     </div>
   </div>
 
@@ -211,7 +197,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         </div>
       </div>
       <div class="innovation-creators" style="margin-top: 0;">
-        <div class="creators-info pointer" onclick="javascript:location.href='#'">
+        <div class="creators-info pointer" onclick="window.open('catalogue.php');">
           <div>
             <div class="user-stat-number"><?php echo $allCountTotal; ?></div>
             <div class="user-stat-detail">Total</div>
@@ -222,7 +208,13 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         </div>
         <?php
         foreach ($categoryCounts as $categoryName => $count) {
-          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+          if ($categoryName == 'Thesis') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?category=1\');">';
+          } elseif ($categoryName == 'Internship') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?category=2\');">';
+          } elseif ($categoryName == 'Others') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?category=3\');">';
+          }
           echo '<div>';
           echo '<div class="user-stat-number">' . $count . '</div>';
           echo '<div class="user-stat-detail">' . $categoryName . '</div>';
@@ -232,7 +224,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
             echo '<i class=\'bx bxs-book-alt user-stat-icon\'></i>';
           } elseif ($categoryName == 'Internship') {
             echo '<i class=\'bx bxs-briefcase user-stat-icon\'></i>';
-          } elseif ($categoryName == 'Other Categories') {
+          } elseif ($categoryName == 'Others') {
             echo '<i class=\'bx bxs-grid-alt user-stat-icon\'></i>';
           }
           echo '</div>';
@@ -262,7 +254,15 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
       <div class="innovation-creators" style="margin-top: 0;">
         <?php
         foreach ($typeCounts as $typeName => $count) {
-          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+          if ($typeName == 'Website') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?type=1\');">';
+          } elseif ($typeName == 'Desktop App') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?type=2\');">';
+          } elseif ($typeName == 'Mobile App') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?type=3\');">';
+          } elseif ($typeName == 'Others') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?type=4\');">';
+          }
           echo '<div>';
           echo '<div class="user-stat-number">' . $count . '</div>';
           echo '<div class="user-stat-detail">' . $typeName . '</div>';
@@ -274,7 +274,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
             echo '<i class=\'bx bx-desktop user-stat-icon\'></i>';
           } elseif ($typeName == 'Mobile App') {
             echo '<i class=\'bx bx-mobile user-stat-icon\'></i>';
-          } elseif ($typeName == 'Other Types') {
+          } elseif ($typeName == 'Others') {
             echo '<i class=\'bx bx-dots-horizontal-rounded user-stat-icon\'></i>';
           }
           echo '</div>';
@@ -304,7 +304,15 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
       <div class="innovation-creators" style="margin-top: 0;">
         <?php
         foreach ($concCounts as $concName => $count) {
-          echo '<div class="creators-info pointer" onclick="javascript:location.href=\'#\'">';
+          if ($concName == 'Cybersecurity') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?concentration=1\');">';
+          } elseif ($concName == 'Management Information System') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?concentration=2\');">';
+          } elseif ($concName == 'Engineering and Business Intelligence') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?concentration=3\');">';
+          } elseif ($concName == 'Others') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'catalogue.php?concentration=4\');">';
+          }
           echo '<div>';
           echo '<div class="user-stat-number">' . $count . '</div>';
           echo '<div class="user-stat-detail">' . $concName . '</div>';
@@ -316,7 +324,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
             echo '<i class=\'bx bxs-business user-stat-icon\'></i>';
           } elseif ($concName == 'Engineering and Business Intelligence') {
             echo '<i class=\'bx bx-mobile user-stat-icon\'></i>';
-          } elseif ($concName == 'Other Concentrations') {
+          } elseif ($concName == 'Others') {
             echo '<i class=\'bx bxs-cog user-stat-icon\'></i>';
           }
           echo '</div>';
@@ -334,7 +342,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
       echo '</div>';
       if ($allCountTotal > 4) {
         echo '<div class="navbar-end">';
-        echo '<button onclick="javascript:location.href=\'catalogue.html\';" class="general-button">View All</button>';
+        echo '<button onclick="window.open(\'catalogue.php?user=' . $_SESSION['username'] . '\');" class="general-button">View All</button>';
         echo '</div>';
       }
       echo '</div>';
@@ -351,7 +359,7 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         $categoryName = $row['NameCateg'];
         $images = explode(",", $row['Img']);
 
-        echo '<div class="items" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
+        echo '<div class="items" onclick="window.open(\'innovation.php?id=' . $IDInnov . '\');">';
         if (!empty($images[0])) {
           echo '<div><img src="image/' . $images[0] . '" alt="' . $nameInnov . '" ></div>';
         }
@@ -376,468 +384,180 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
     }
     ?>
 
-    <div id="innovationsAll" class="tabcontent2">
-      <div class="section-head" style="margin-top: 2.5rem;">
-        <div>
-          <h1 class="section-title">Innovations History</h1>
-        </div>
-        <div class="navbar-end">
-          <div class="dropdown">
-            <button onclick="myFunction4()" class="dropbtn">All</button>
-            <div id="myDropdown4" class="dropdown-content">
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAll')" id="defaultOpen2">All</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAccepted')">Accepted</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsPending')">Pending</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsRejected')">Rejected</a>
-            </div>
+    <div class="section-head" style="margin-top: 2.5rem;">
+      <div>
+        <h1 class="section-title">Innovations History</h1>
+      </div>
+      <div class="navbar-end">
+        <div class="dropdown">
+          <button onclick="myFunction4()" class="dropbtn"><?php echo ucfirst($status2) ?></button>
+          <div id="myDropdown4" class="dropdown-content">
+            <a class="droplinks" href="user.php?status=all">All</a>
+            <a class="droplinks" href="user.php?status=approved">Approved</a>
+            <a class="droplinks" href="user.php?status=pending">Pending</a>
+            <a class="droplinks" href="user.php?status=rejected">Rejected</a>
           </div>
         </div>
       </div>
-      <div class="innovation-creators" style="margin-top: 0;">
-        <?php
+    </div>
+    <div class="innovation-creators" style="margin-top: 0;">
+      <?php
+        if ($historyresult->num_rows > 0) {
         $counter = 0;
-        if (mysqli_num_rows($allresult) > 0) {
-          while ($row = mysqli_fetch_assoc($allresult)) {
 
-            $IDInnov = $row['IDInnov'];
-            $nameInnov = $row['NameInnov'];
-            $status = $row['Status'];
-            $creDate = date("F j, Y", strtotime($row['CreDate']));
-            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+        while ($row = mysqli_fetch_assoc($historyresult)) {
 
-            if ($counter > 0 && $counter % 2 == 0) {
-              echo '</div>';
-              echo '<div class="innovation-creators">';
-            }
+          $IDInnov = $row['IDInnov'];
+          $nameInnov = $row['NameInnov'];
+          $status = $row['Status'];
+          $creDate = date("F j, Y", strtotime($row['CreDate']));
+          $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
 
-            if ($status == 'Approved') {
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
-            } else {
-              echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
-            }
-
-            echo '<div>';
-            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
-            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
+          if ($counter > 0 && $counter % 2 == 0) {
             echo '</div>';
-            echo '<div>';
-            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-            echo '</div>';
-            echo '</div>';
-
-            $counter++;
+            echo '<div class="innovation-creators">';
           }
-        } else {
-          // No results found
-          echo '<div class="creators-info info">';
+
+          if ($status == 'Approved') {
+            echo '<div class="creators-info pointer" onclick="window.open(\'innovation.php?id=' . $IDInnov . '\');">';
+          } else {
+            echo '<div class="creators-info pointer" onclick="window.open(\'detail.php?id=' . $IDInnov . '\');">';
+          }
+
+          echo '<div>';
+          echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
+          echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
+          echo '</div>';
+          echo '<div>';
+          echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
+          echo '</div>';
+          echo '</div>';
+
+          $counter++;
+        }
+      
+        echo '</div>';
+        echo '<div class="pagination-container" style="margin-top: 25px;">';
+
+        $prev_page = $page - 1;
+        echo "<a href='user.php?status=$status2&page=$prev_page'><button class='swipe-button white'><i class='bx bx-chevron-left' style='font-size: 30px;'></i></button></a>";
+        echo '<div style="text-align: center;">';
+
+        for ($i = 1; $i <= $totalPages; $i++) { $buttonClass=($i==$page) ? 'swipe-button number' : 'swipe-button white number' ; 
+          echo "<a href='user.php?status=$status2&page=$i'><button class='$buttonClass'>$i</button></a>" ; 
+        } 
+        
+        echo '</div>'; 
+        echo '<div style="text-align: right;">' ; $next_page=$page + 1; 
+        echo "<a href='user.php?status=$status2&page=$next_page' class='pagination-link'><button class='swipe-button white'><i class='bx bx-chevron-right' style='font-size: 30px;'></i></button></a>" ; 
+        echo '</div>'; 
+        echo '</div>'; 
+
+        }
+        else {
+          echo '<div class="creators-info info" style="width: 10fr!important">';
           echo '<div>No results found.</div>';
           echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
           echo '</div>';
-        }
-        ?>
-
-      </div>
-    </div>
-
-    <div id="innovationsAccepted" class="tabcontent2">
-      <div class="section-head" style="margin-top: 2.5rem;">
-        <div>
-          <h1 class="section-title">Innovations History</h1>
-        </div>
-        <div class="navbar-end">
-          <div class="dropdown">
-            <button onclick="myFunction5()" class="dropbtn">Accepted</button>
-            <div id="myDropdown5" class="dropdown-content">
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAll')">All</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAccepted')">Accepted</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsPending')">Pending</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsRejected')">Rejected</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="innovation-creators" style="margin-top: 0;">
-        <?php
-        $counter = 0;
-        if (mysqli_num_rows($acceptedresult) > 0) {
-          while ($row = mysqli_fetch_assoc($acceptedresult)) {
-
-            $IDInnov = $row['IDInnov'];
-            $nameInnov = $row['NameInnov'];
-            $status = $row['Status'];
-            $creDate = date("F j, Y", strtotime($row['CreDate']));
-            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
-
-            if ($counter > 0 && $counter % 2 == 0) {
-              echo '</div>';
-              echo '<div class="innovation-creators">';
-            }
-
-            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'innovation.php?id=' . $IDInnov . '\'">';
-            echo '<div>';
-            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
-            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
-            echo '</div>';
-            echo '<div>';
-            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-            echo '</div>';
-            echo '</div>';
-
-            $counter++;
-          }
-        } else {
-          // No results found
-          echo '<div class="creators-info info">';
-          echo '<div>No results found.</div>';
-          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
           echo '</div>';
         }
-        ?>
-      </div>
+      ?>
     </div>
 
-    <div id="innovationsPending" class="tabcontent2">
-      <div class="section-head" style="margin-top: 2.5rem;">
-        <div>
-          <h1 class="section-title">Innovations History</h1>
-        </div>
-        <div class="navbar-end">
-          <div class="dropdown">
-            <button onclick="myFunction6()" class="dropbtn">Pending</button>
-            <div id="myDropdown6" class="dropdown-content">
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAll')">All</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAccepted')">Accepted</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsPending')">Pending</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsRejected')">Rejected</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="innovation-creators" style="margin-top: 0;">
-        <?php
-        $counter = 0;
-        if (mysqli_num_rows($pendingresult) > 0) {
-          while ($row = mysqli_fetch_assoc($pendingresult)) {
+          <?php include "footer.php" ?>
 
-            $IDInnov = $row['IDInnov'];
-            $nameInnov = $row['NameInnov'];
-            $status = $row['Status'];
-            $creDate = date("F j, Y", strtotime($row['CreDate']));
-            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
+          <script>
+            $(function() {
+              // Owl Carousel
+              var owl = $(".owl-carousel");
+              owl.owlCarousel({
+                items: 1,
+                margin: 20,
+                loop: false,
+                nav: false,
+                dots: false,
+                pagination: false,
+                mouseDrag: false,
+                touchDrag: false,
+                pullDrag: false,
+                freeDrag: false,
+              });
 
-            if ($counter > 0 && $counter % 2 == 0) {
-              echo '</div>';
-              echo '<div class="innovation-creators">';
+              var owl = $('.owl-carousel');
+              owl.owlCarousel();
+              // Go to the next item
+              $('.am-next').click(function() {
+                owl.trigger('next.owl.carousel');
+              })
+              // Go to the previous item
+              $('.am-prev').click(function() {
+                // With optional speed parameter
+                // Parameters has to be in square bracket '[]'
+                owl.trigger('prev.owl.carousel', [300]);
+              })
+
+            });
+          </script>
+
+          <script>
+            function openTab(evt, tabName) {
+              var j, tabcontent, droplinks;
+              tabcontent = document.getElementsByClassName("tabcontent");
+              for (j = 0; j < tabcontent.length; j++) {
+                tabcontent[j].style.display = "none";
+              }
+              droplinks = document.getElementsByClassName("tablinks");
+              for (j = 0; j < droplinks.length; j++) {
+                droplinks[j].className = droplinks[i].className.replace(
+                  " active",
+                  ""
+                );
+              }
+              document.getElementById(tabName).style.display = "block";
+              evt.currentTarget.className += " active";
             }
 
-            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
-            echo '<div>';
-            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
-            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
-            echo '</div>';
-            echo '<div>';
-            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-            echo '</div>';
-            echo '</div>';
+            // Get the element with id="defaultOpen" and click on it
+            document.getElementById("defaultOpen").click();
+          </script>
 
-            $counter++;
-          }
-        } else {
-          // No results found
-          echo '<div class="creators-info info">';
-          echo '<div>No results found.</div>';
-          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
-          echo '</div>';
-        }
-        ?>
-      </div>
-    </div>
-
-    <div id="innovationsRejected" class="tabcontent2">
-      <div class="section-head" style="margin-top: 2.5rem;">
-        <div>
-          <h1 class="section-title">Innovations History</h1>
-        </div>
-        <div class="navbar-end">
-          <div class="dropdown">
-            <button onclick="myFunction7()" class="dropbtn">Rejected</button>
-            <div id="myDropdown7" class="dropdown-content">
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAll')">All</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsAccepted')">Accepted</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsPending')">Pending</a>
-              <a class="droplinks" onclick="openTab2(event, 'innovationsRejected')">Rejected</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="innovation-creators" style="margin-top: 0;">
-        <?php
-        $counter = 0;
-        if (mysqli_num_rows($rejectedresult) > 0) {
-          while ($row = mysqli_fetch_assoc($rejectedresult)) {
-
-            $IDInnov = $row['IDInnov'];
-            $nameInnov = $row['NameInnov'];
-            $status = $row['Status'];
-            $creDate = date("F j, Y", strtotime($row['CreDate']));
-            $SubmDate = date("F j, Y", strtotime($row['SubmDate']));
-
-            if ($counter > 0 && $counter % 2 == 0) {
-              echo '</div>';
-              echo '<div class="innovation-creators">';
+          <script>
+            /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+            function myFunction() {
+              document.getElementById("myDropdown").classList.toggle("show");
             }
 
-            echo '<div class="creators-info pointer" onclick="javascript:location.href=\'detail.php?id=' . $IDInnov . '\'">';
-            echo '<div>';
-            echo '<div class="creator-name"><span class="status ' . $status . '">' . $status . '</span>' . $nameInnov . '</div>';
-            echo '<div class="creator-role bigger-margin">Submitted on ' . $SubmDate . '</div>';
-            echo '</div>';
-            echo '<div>';
-            echo '<i class=\'bx bx-chevron-right more-icon right\'></i>';
-            echo '</div>';
-            echo '</div>';
+            /* When the user clicks on the button, 
+            toggle between hiding and showing the dropdown content */
+            function myFunction2() {
+              document.getElementById("myDropdown2").classList.toggle("show");
+            }
 
-            $counter++;
-          }
-        } else {
-          // No results found
-          echo '<div class="creators-info info">';
-          echo '<div>No results found.</div>';
-          echo '<div><i class=\'bx bxs-info-circle right\' style="font-size: 22px; line-height: 1;"></i></div>';
-          echo '</div>';
-        }
-        ?>
-      </div>
-    </div>
+            /* When the user clicks on the button, 
+            toggle between hiding and showing the dropdown content */
+            function myFunction3() {
+              document.getElementById("myDropdown3").classList.toggle("show");
+            }
 
-  </div>
+            // When the user clicks on the button, toggle between hiding and showing the dropdown content
+            function myFunction4() {
+              document.getElementById("myDropdown4").classList.toggle("show");
+            }
 
-  <?php include "footer.php" ?>
-
-  <script>
-    $(function() {
-      // Owl Carousel
-      var owl = $(".owl-carousel");
-      owl.owlCarousel({
-        items: 1,
-        margin: 20,
-        loop: false,
-        nav: false,
-        dots: false,
-        pagination: false,
-        mouseDrag: false,
-        touchDrag: false,
-        pullDrag: false,
-        freeDrag: false,
-      });
-
-      var owl = $('.owl-carousel');
-      owl.owlCarousel();
-      // Go to the next item
-      $('.am-next').click(function() {
-        owl.trigger('next.owl.carousel');
-      })
-      // Go to the previous item
-      $('.am-prev').click(function() {
-        // With optional speed parameter
-        // Parameters has to be in square bracket '[]'
-        owl.trigger('prev.owl.carousel', [300]);
-      })
-
-    });
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction2() {
-      document.getElementById("myDropdown2").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction3() {
-      document.getElementById("myDropdown3").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction4() {
-      document.getElementById("myDropdown4").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction5() {
-      document.getElementById("myDropdown5").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction6() {
-      document.getElementById("myDropdown6").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction7() {
-      document.getElementById("myDropdown7").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-
-  <script>
-    function openTab(evt, tabName) {
-      var j, tabcontent, droplinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (j = 0; j < tabcontent.length; j++) {
-        tabcontent[j].style.display = "none";
-      }
-      droplinks = document.getElementsByClassName("tablinks");
-      for (j = 0; j < droplinks.length; j++) {
-        droplinks[j].className = droplinks[i].className.replace(" active", "");
-      }
-      document.getElementById(tabName).style.display = "block";
-      evt.currentTarget.className += " active";
-    }
-
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-  </script>
-
-  <script>
-    function openTab2(evt, tabName) {
-      var j, tabcontent2, droplinks;
-      tabcontent2 = document.getElementsByClassName("tabcontent2");
-      for (j = 0; j < tabcontent2.length; j++) {
-        tabcontent2[j].style.display = "none";
-      }
-      droplinks = document.getElementsByClassName("tablinks");
-      for (j = 0; j < droplinks.length; j++) {
-        droplinks[j].className = droplinks[i].className.replace(" active", "");
-      }
-      document.getElementById(tabName).style.display = "block";
-      evt.currentTarget.className += " active";
-    }
-
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen2").click();
-  </script>
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+              if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                  }
+                }
+              }
+            }
+          </script>
 
 
 

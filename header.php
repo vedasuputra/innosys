@@ -1,6 +1,8 @@
 <?php
 include "connect.php";
 include "loginfix.php";
+
+$user = isset($_GET['user']) ? $_GET['user'] : '';
 ?>
 
 <nav>
@@ -17,7 +19,7 @@ include "loginfix.php";
   <div class="navbar-end">
     <div style="padding-right: 34px">
       <a class="navlinks" href="home.php">Homepage</a>
-      <a class="navlinks" href="catalogue.html">Catalogue</a>
+      <a class="navlinks" href="catalogue.php">Catalogue</a>
     </div>
     <div>
       <i class="bx bx-search icon-search" aria-hidden="trues" style="
@@ -33,8 +35,9 @@ include "loginfix.php";
             <i class="bx bx-search" style="font-size: 25px; z-index: 999; padding-bottom: 0.9rem"></i>
           </div>
           <div>
-            <form action="">
-              <input type="search" placeholder="Click here to search..." />
+            <form action="catalogue.php" method="get">
+              <input type="search" name="search" placeholder="Click here to search..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '';?>"/>
+              <input type="hidden" name="user" value="<?php echo $user?>">
             </form>
           </div>
           <div>
@@ -52,7 +55,7 @@ include "loginfix.php";
         <div id="profileDropdown" class="user-dropdown">
           <a class="droplinks" href="user.php">Dashboard</a>
           <a class="droplinks" href="submission.php">Submit</a>
-          <a class="droplinks" href="help.html">Help</a>
+          <a class="droplinks" href="help.php">Help</a>
           <a class="droplinks" onclick="confirmLogout()">Logout</a>
         </div>
       <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') : ?>

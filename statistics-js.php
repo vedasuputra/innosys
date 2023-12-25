@@ -19,7 +19,7 @@
 
   <div class="statistics-container">
     <div class="statistics-left">
-      <div class="statistics-text" onclick="javascript:location.href='#'">
+      <div class="statistics-text" onclick="window.open('catalogue.php');">
         <h1>
           <?php echo $allCountTotal; ?>
         </h1>
@@ -27,7 +27,7 @@
       </div>
       <?php
       foreach ($categoryCounts as $categoryName => $count) {
-        echo '<div class="statistics-text" onclick="javascript:location.href=\'#\'">';
+        echo '<div class="statistics-text" onclick="window.open(\'catalogue.php?category='.$categoryID.'\');">';
         echo '<h1>' . $count . '</h1>';
         echo '<span>' . $categoryName . ' Innovations</span>';
         echo '</div>';
@@ -60,7 +60,7 @@
     <div class="statistics-left">
       <?php
       foreach ($typeCounts as $typeName => $count) {
-        echo '<div class="statistics-text" onclick="javascript:location.href=\'innovation.php?id=\'">';
+        echo '<div class="statistics-text" onclick="window.open(\'catalogue.php?type='.$typeID.'\');">';
         echo '<h1>' . $count . '</h1>';
         echo '<span>' . $typeName . ' Innovations</span>';
         echo '</div>';
@@ -95,7 +95,7 @@
     <div class="statistics-left">
       <?php
       foreach ($concentrationCounts as $concentrationName => $count) {
-        echo '<div class="statistics-text" onclick="javascript:location.href=\'#\'">';
+        echo '<div class="statistics-text" onclick="window.open(\'catalogue.php?concentration='.$concentrationID.'\');">';
         echo '<h1>' . $count . '</h1>';
         echo '<span>' . $concentrationName . ' Innovations</span>';
         echo '</div>';

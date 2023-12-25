@@ -120,7 +120,7 @@ $pendingCountRow = mysqli_fetch_assoc($pendingCountResult);
 $pendingCountTotal = $pendingCountRow['total'];
 
 // Category count
-$categoryCount = "SELECT category.NameCateg, COUNT(*) as categoryCount 
+$categoryCount = "SELECT category.NameCateg, category.IDCateg, COUNT(*) as categoryCount 
                   FROM innovdata 
                   JOIN category ON innovdata.IDCateg = category.IDCateg 
                   WHERE innovdata.Status = 'Approved'
@@ -131,12 +131,13 @@ $categoryCounts = array();
 
 while ($row = mysqli_fetch_assoc($categoryCountResult)) {
   $categoryName = $row['NameCateg'];
+  $categoryID = $row['IDCateg'];
   $categoryCountTotal = $row['categoryCount'];
   $categoryCounts[$categoryName] = $categoryCountTotal;
 }
 
 // Type count
-$typeCount = "SELECT type.NameType, COUNT(*) as typeCount 
+$typeCount = "SELECT type.NameType, type.IDType, COUNT(*) as typeCount 
               FROM innovdata 
               JOIN type ON innovdata.IDType = type.IDType 
               WHERE innovdata.Status = 'Approved'
@@ -147,12 +148,13 @@ $typeCounts = array();
 
 while ($row = mysqli_fetch_assoc($typeCountResult)) {
   $typeName = $row['NameType'];
+  $typeID = $row['IDType'];
   $typeCountTotal = $row['typeCount'];
   $typeCounts[$typeName] = $typeCountTotal;
 }
 
 // Concentration count
-$concentrationCount = "SELECT concentration.NameConc, COUNT(*) as concentrationCount 
+$concentrationCount = "SELECT concentration.NameConc, concentration.IDConc, COUNT(*) as concentrationCount 
                        FROM innovdata 
                        JOIN concentration ON innovdata.IDConc = concentration.IDConc 
                        WHERE innovdata.Status = 'Approved'
@@ -163,6 +165,7 @@ $concentrationCounts = array();
 
 while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
   $concentrationName = $row['NameConc'];
+  $concentrationID = $row['IDConc'];
   $concentrationCountTotal = $row['concentrationCount'];
   $concentrationCounts[$concentrationName] = $concentrationCountTotal;
 }

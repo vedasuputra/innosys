@@ -228,6 +228,12 @@ nav {
 .section-title {
   font-weight: 500;
   font-size: 30px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+ -webkit-line-clamp: 1;
+ display: -webkit-box;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .swipe-button {
@@ -646,8 +652,7 @@ select:active,
   border: solid 0;
 }
 
-.tabcontent,
-.tabcontent2 {
+.tabcontent {
   display: none;
 }
 
