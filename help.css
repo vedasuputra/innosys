@@ -1,0 +1,20 @@
+.help {
+  background: linear-gradient(90deg,
+  rgba(5, 46, 75, 0.8),
+  rgba(0, 0, 0, 0.3) 80%),
+url("photos/help.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: 50%;
+}
+
+.filters-container {
+  flex: 4;
+  margin: 0;
+}
+
+.innovation-creators {
+  align-items: flex-start;
+  margin-bottom: 21px;
+}

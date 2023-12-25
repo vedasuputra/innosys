@@ -336,7 +336,8 @@ select:focus,
 select:active,
 .add_button:hover, 
 .remove_button:hover,
-.submit:hover {
+.submit:hover,
+.filters-container:hover {
   box-shadow: 5px 5px 20px 0px rgba(12, 102, 171, 0.14);
 }
 
@@ -354,7 +355,8 @@ select:active,
 .image-uploader:hover,
 .add_button:hover, 
 .remove_button:hover,
-.submit:hover
+.submit:hover,
+.filters-container:hover
 {
   transition: all 0.5s ease-in-out;
 }
@@ -844,8 +846,8 @@ footer a:hover {
   font-size: 15px;  
   padding-left: 7px;
   padding-top: 8px;
-
 }
+
 .input-container {
   width: 100%;
 }

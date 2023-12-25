@@ -57,6 +57,10 @@ url("photos/headlinecatalogue.jpg");
   min-height: 0;
 }
 
+.bx-calendar-alt {
+  transition: max-height 0.2s ease-out;
+}
+
 .filter {
   display: grid;
   grid-template-columns: 1em auto;
@@ -129,6 +133,7 @@ input[type="radio"]:checked {
   padding-bottom: 19px;
   margin-bottom: 20px;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .count {

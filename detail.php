@@ -200,7 +200,7 @@ include "header.php";
 <html>
 
 <head>
-  <title>Review Form | SIFORS Innovation System</title>
+  <title>Submission Detail | SIFORS Innovation System</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="select2.css">

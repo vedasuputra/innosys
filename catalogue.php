@@ -494,14 +494,18 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
 
     for (i = 0; i < acc.length; i++) {
       var panel = acc[i].nextElementSibling;
+      var calendarIcon = panel.querySelector(".bx-calendar-alt");
       panel.style.maxHeight = panel.scrollHeight + "px";
       acc[i].onclick = function() {
+        event.preventDefault();
         this.classList.toggle("turnedon");
         var panel = this.nextElementSibling;
         if (panel.style.maxHeight) {
           panel.style.maxHeight = null;
+          calendarIcon.style.display = "none";
         } else {
           panel.style.maxHeight = panel.scrollHeight + "px";
+          calendarIcon.style.display = "block";
         }
       }
     }

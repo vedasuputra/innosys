@@ -224,7 +224,7 @@ if (isset($_POST['submitForm'])) {
 <html>
 
 <head>
-  <title>Edit Submitted Form | SIFORS Innovation System</title>
+  <title>Edit Submission | SIFORS Innovation System</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="select2.css">

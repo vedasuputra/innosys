@@ -43,7 +43,7 @@ include "header.php";
         Check out all the innovations made by the students and the lecturers
         of UNDIKSHA’s Information System study program here.
       </p>
-      <button onclick="window.open('catalogue.html');" type="button" class="headline-button">
+      <button onclick="window.open('catalogue.php');" type="button" class="headline-button">
         View Catalogue
       </button>
     </div>
