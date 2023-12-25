@@ -268,7 +268,7 @@ if (isset($_POST['submitForm'])) {
       ?>
 
       <div class="creators-info info">
-        <div>You are not allowed to edit the images you have submitted. If you want to edit your images, please <strong><a href="submission.php">resubmit your submission.</a></strong></div>
+        <div>You are not allowed to edit the images you have submitted. If you want to change your images, please <strong><a href="submission.php">resubmit your submission.</a></strong></div>
         <div><i class='bx bxs-error-circle right' style="font-size: 22px; line-height: 1;"></i></div>
       </div>
 

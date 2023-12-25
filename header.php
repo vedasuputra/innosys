@@ -5,6 +5,30 @@ include "loginfix.php";
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 ?>
 
+<style>
+
+  .reminder {
+    width: 100%;
+    height: 100%;
+    z-index: 999999999999999999999999;
+    display: none;
+    background: #0c67ab;
+    color: #fff !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 75px;
+    font-size: 20px;
+  }
+@media only screen and (min-width: 1px) and (max-width: 1024px) {
+  .reminder { display: block; }
+}
+</style>
+
+<div class="reminder">
+  <center style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">This site is only viewable via desktop. Sorry about that.</center>
+</div>
+
 <nav>
   <div class="navbar-start">
     <div style="padding-right: 13px">

@@ -100,6 +100,10 @@ if ($concentration != '0') {
 if (!empty($start) && !empty($end)) {
   $query .= " AND innovdata.CreDate BETWEEN '$start' AND '$end'";
   $total_pages_sql .= " AND innovdata.CreDate BETWEEN '$start' AND '$end'";
+  $allCount .= " AND innovdata.CreDate BETWEEN '$start' AND '$end'";
+  $categoryCount .= " AND innovdata.CreDate BETWEEN '$start' AND '$end'";
+  $typeCount .= " AND innovdata.CreDate BETWEEN '$start' AND '$end'";
+  $concentrationCount .= " AND innovdata.CreDate BETWEEN '$start' AND '$end'";
 }
 
 if (!empty($search)) {
