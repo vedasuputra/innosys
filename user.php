@@ -439,7 +439,13 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         echo '</div>';
         echo '<div class="pagination-container" style="margin-top: 25px;">';
 
-        $prev_page = $page - 1;
+        if ($page == 1) {
+          $prev_page = $page - 0;
+        }
+        else {
+          $prev_page = $page - 1;
+        }
+
         echo "<a href='user.php?status=$status2&page=$prev_page'><button class='swipe-button white'><i class='bx bx-chevron-left' style='font-size: 30px;'></i></button></a>";
         echo '<div style="text-align: center;">';
 
@@ -448,7 +454,15 @@ while ($row = mysqli_fetch_assoc($concCountResult)) {
         } 
         
         echo '</div>'; 
-        echo '<div style="text-align: right;">' ; $next_page=$page + 1; 
+        echo '<div style="text-align: right;">' ;
+
+        if ($page == $totalPages) {
+          $next_page = $page + 0;
+        }
+        else {
+          $next_page = $page + 1;
+        }
+
         echo "<a href='user.php?status=$status2&page=$next_page' class='pagination-link'><button class='swipe-button white'><i class='bx bx-chevron-right' style='font-size: 30px;'></i></button></a>" ; 
         echo '</div>'; 
         echo '</div>'; 
