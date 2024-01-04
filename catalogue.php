@@ -184,6 +184,16 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
   <script src="userdropdown.js"></script>
 </head>
 
+<style>
+  .red {
+    background: #CC0001 !important;
+  }
+
+  .red:hover {
+    background: #990001 !important;
+  }
+</style>
+
 <body>
   <div class="headline catalogue">
     <div class="headline-content">
@@ -200,9 +210,6 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
           <div class="section-head" style="margin: 0">
             <div>
               <h1 class="section-title" style="margin: 0">Filters</h1>
-            </div>
-            <div class="navbar-end" style="margin: 0">
-              <input type="submit" value="Submit" class="general-button" style="padding: 8px 12px; margin: 0">
             </div>
           </div>
           <div class="filters-container">
@@ -366,6 +373,11 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
               </div>
             </div>
           </div>
+
+          <div style="display: flex; gap: 15px;">
+            <input type="button" value="Clear" class="general-button red" onclick="clearFilters()" style="margin: 0; width: 100%">
+            <input type="submit" value="Submit" class="general-button" style="margin: 0; width: 100%">
+          </div>
       </div>
       <input type="hidden" name="search" value="<?php echo $search ?>">
       <input type="hidden" name="user" value="<?php echo $user ?>">
@@ -472,6 +484,20 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
   <?php include "footer.php" ?>
 
   <script>
+    function clearFilters() {
+      // Reset radio buttons
+      $('input[type="radio"]').prop('checked', false);
+
+      // Clear the date picker
+      picker.setDateRange('2018-01-01', null);
+
+      // Submit the form
+      $('form').submit();
+    }
+  </script>
+
+
+  <script>
     $(function() {
       // Owl Carousel
       var owl = $(".owl-carousel");
@@ -540,6 +566,7 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
         'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
         'https://cdn.jsdelivr.net/npm/@easepick/range-plugin@1.2.1/dist/index.css',
         'https://cdn.jsdelivr.net/npm/@easepick/preset-plugin@1.2.1/dist/index.css',
+        'https://cdn.jsdelivr.net/npm/@easepick/lock-plugin@1.2.1/dist/index.css',
         'easepick.css',
       ],
       zIndex: 9999999,
@@ -549,15 +576,18 @@ while ($row = mysqli_fetch_assoc($concentrationCountResult)) {
           months: true,
           years: true,
         },
-        resetButton: true,
       },
-      plugins: ['RangePlugin', 'PresetPlugin', 'AmpPlugin'],
+      plugins: ['RangePlugin', 'PresetPlugin', 'AmpPlugin', 'LockPlugin'],
       PresetPlugin: {
         position: 'left',
       },
       RangePlugin: {
         startDate: '<?php echo $start; ?>',
         endDate: '<?php echo $end; ?>',
+      },
+      LockPlugin: {
+        minDate: "2018-01-01",
+        maxDate: new Date(),
       },
     });
   </script>

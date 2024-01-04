@@ -302,14 +302,18 @@ if (isset($_POST['submitForm'])) {
                                                                                                                                                                                                             } ?></optgroup></select><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="bx bx-minus"></i></a></div>'; //New input field html 
       var x = 1; //Initial field counter is 1
 
-      // Once add button is clicked
-      $(addButton).click(function() {
-        x++; //Increase field counter
-        $(wrapper).append(fieldHTML); //Add field html
+    // Once add button is clicked
+    $(addButton).click(function() {
+      if (x < maxField) {
+        x++; // Increase field counter
+        $(wrapper).append(fieldHTML); // Add field html
         $(".js-placeholder").select2({
           placeholder: "Input the creator's data...",
         });
-      });
+      } else {
+        alert('Maximum ' + maxField + ' fields allowed.');
+      }
+    });
 
       // Once remove button is clicked
       $(wrapper).on('click', '.remove_button', function(e) {
@@ -325,6 +329,7 @@ if (isset($_POST['submitForm'])) {
       element: "#creationdate",
       css: [
         'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
+        'https://cdn.jsdelivr.net/npm/@easepick/lock-plugin@1.2.1/dist/index.css',
         'easepick.css',
       ],
       zIndex: 9999999,
@@ -334,7 +339,10 @@ if (isset($_POST['submitForm'])) {
           years: true
         }
       },
-      plugins: ['AmpPlugin']
+      LockPlugin: {
+        maxDate: new Date(),
+      },
+      plugins: ['AmpPlugin', 'LockPlugin']
     });
   </script>
 

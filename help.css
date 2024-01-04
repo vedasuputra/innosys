@@ -18,3 +18,8 @@ url("photos/help.jpg");
   align-items: flex-start;
   margin-bottom: 21px;
 }
+
+.accordion {
+  line-height: 1.25;
+  padding-top: 0;
+}

@@ -230,8 +230,8 @@ nav {
   font-size: 30px;
   overflow: hidden;
   -webkit-box-orient: vertical;
- -webkit-line-clamp: 1;
- display: -webkit-box;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
   min-width: 0;
   max-width: 100%;
 }

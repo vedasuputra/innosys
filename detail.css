@@ -17,10 +17,6 @@ textarea:disabled:focus {
   border-color: rgba(118, 118, 118, 0.7) !important;
 }
 
-.red:hover {
-  background: #990001 !important;
-}
-
 .swipe-button {
   padding: 9px;
   padding-top: 9px;
@@ -29,6 +25,10 @@ textarea:disabled:focus {
 
 .red {
   background: #CC0001 !important;
+}
+
+.red:hover {
+  background: #990001 !important;
 }
 
 label {
