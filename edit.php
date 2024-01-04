@@ -168,8 +168,7 @@ if (isset($_POST['submitForm'])) {
     $LinkYT == $Previouslinkyoutube &&
     $IDConc == $PreviousIDConc &&
     $IDCateg == $PreviousIDCateg &&
-    $IDType == $PreviousIDType &&
-    $id_user_array == $Previousid_user_array
+    $IDType == $PreviousIDType 
   ) {
     echo "<script>
             alert('Error: No changes have been made. Please make changes before submitting.');
