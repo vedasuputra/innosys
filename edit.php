@@ -445,11 +445,15 @@ if (isset($_POST['submitForm'])) {
 
       // Once add button is clicked
       $(addButton).click(function() {
-        x++; //Increase field counter
-        $(wrapper).append(fieldHTML); //Add field html
-        $(".js-placeholder").select2({
-          placeholder: "Input the creator's data...",
-        });
+          if (x < maxField) {
+          x++; // Increase field counter
+          $(wrapper).append(fieldHTML); // Add field html
+          $(".js-placeholder").select2({
+            placeholder: "Input the creator's data...",
+          });
+        } else {
+          alert('Maximum ' + maxField + ' fields allowed.');
+        }
       });
 
       // Once remove button is clicked
