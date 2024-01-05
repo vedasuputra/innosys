@@ -30,7 +30,3 @@ textarea:disabled:focus {
 .red:hover {
   background: #990001 !important;
 }
-
-label {
-  color: rgb(84, 84, 84, 0.7)!important;
-}

@@ -217,6 +217,10 @@ include "header.php";
   <script src="userdropdown.js"></script>
 </head>
 
+<style>
+  label {color: rgb(84, 84, 84, 0.7)!important;}
+</style>
+
 <body>
   <div class="headline submission">
     <div class="headline-content">
